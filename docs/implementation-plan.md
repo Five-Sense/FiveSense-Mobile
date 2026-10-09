@@ -19,7 +19,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Humano aprovou a remoção de 12 documentos (feita) e o escopo geral.
 - [x] Documentação da API recebida e incorporada em `data-model.md`.
 - [ ] Humano decidir as lacunas entre requisitos e API (`data-model.md`, tabela de lacunas).
-- [ ] Humano enviar exports do Figma (opcional).
+- [x] Revisar docs com Fundamentos e catálogo/propriedades disponíveis de Componentes (2026-10-09); registrar fontes, divergências e limites da leitura.
+- [ ] Resolver divergências de Badge 5S, alvo de Button-SM e variantes genéricas; completar propriedades detalhadas não lidas por limite do Figma (`design-guidelines.md`).
 
 ### Fase 1 - Scaffold técnico
 
@@ -28,8 +29,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [ ] Remover telas e componentes de exemplo do template Expo.
 - [ ] Instalar e configurar NativeWind, Montserrat, Lucide e demais dependências aprovadas.
 - [ ] Ajustar `app.json` (orientação livre, tema claro).
-- [ ] Tokens do tema em `src/global.css`.
-- [ ] Componentes base de `ui/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination).
+- [ ] Tokens do tema em `src/global.css`, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
+- [ ] Componentes base de `ui/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
 - [ ] Cliente de API com `AppError`, sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
@@ -77,7 +78,7 @@ Não concluir fase com checklist aberto. Mudança de ordem ou critério exige ap
 
 1. API: token/expiração, vínculo usuário-equipe, endpoints de senha (ver lacunas em `data-model.md`).
 2. Decisões humanas sobre as lacunas.
-3. Figma acessível ou exports das telas.
+3. Conferir as composições de telas na fase de implementação; complementar detalhes e decisões pendentes da revisão Figma em `design-guidelines.md` (leitura parcial de propriedades limitada pela cota).
 
 ## Critérios globais de aceite
 

@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-001 (Revisão documental de Fundamentos e Componentes)
+
+- **Fase:** Fase 0 - Documentação do projeto; permanecem decisões abertas.
+- **O que foi feito:** Revisão via Figma das páginas 01 · Fundamentos (`3:12`) e 02 · Componentes (`3:13`), tokens/estilos locais, catálogo e propriedades de componentes selecionados. Corrigidos botões, sidebar/Nav, sombras, exceção tipográfica do rodapé e seleção de representantes. Acrescentados mapa de tokens, catálogo rastreável, divergências e critérios de conferência visual. Removida a afirmação vigente de impossibilidade de ler o Figma; a entrada histórica anterior foi preservada.
+- **Arquivos modificados:** `docs/design-guidelines.md`, `docs/coding-standards.md`, `docs/testing.md`, `docs/issues.md`, `docs/implementation-plan.md`, `docs/decision-log.md`, `docs/deployment-log.md`.
+- **Checks:** comparação documental com valores obtidos do Figma; revisão de diff, referências locais e contagem/mapeamento de tokens. `npm run lint` falhou porque o executável expo não está disponível; `npx --no-install --offline tsc --noEmit` falhou com ENOTCACHED, sem TypeScript local/cache disponível. A pasta não possui node_modules. Nenhuma dependência instalada; não houve verificação de UI em execução.
+- **Docs atualizados:** os sete documentos acima. Nenhum arquivo de documentação criado/removido no repositório; código e Figma preservados.
+- **Riscos/Débito técnico:** limite de chamadas do plano Figma interrompeu a inspeção detalhada dos componentes restantes; páginas de telas/estados não auditadas. Pendentes os conflitos de Badge 5S, alvo de Button-SM, variantes genéricas e identidade. Contrato de sessão, senha e calendário permanece limitado pela API e pelas decisões já registradas.
+
 ## [2026-10-09] - Entrega: ISSUE-001 (Adaptação dos docs ao projeto)
 
 - **Fase:** Fase 0 - Documentação do projeto
