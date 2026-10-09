@@ -19,7 +19,7 @@ Qualquer dependência nova exige aprovação humana. Instale sempre com `npx exp
 
 1. **Spec antes de código.** Não implemente fora do escopo aprovado em `docs/issues.md` e `docs/implementation-plan.md`.
 2. **Humano navega, IA pilota.** Peça decisão para escopo, arquitetura, dependências, segurança, modelo de dados e remoção de documentos.
-3. **Toda chamada de API trata erro.** Use somente o cliente em `src/lib/api`; nunca `fetch` direto em telas. Erros viram `AppError` tipado (rede, 401, 403, validação, não encontrado, servidor).
+3. **Toda chamada de API trata erro.** Use somente o cliente em `src/services/api`; nunca `fetch` direto em telas. Erros viram `AppError` tipado (rede, 401, 403, validação, não encontrado, servidor).
 4. **Toda lista tem:** skeleton no carregamento, pull to refresh, estado vazio, estado de erro com "Tentar novamente".
 5. **Permissão por perfil:** ações sem permissão ficam ocultas; o backend continua sendo a autoridade (ver `docs/security.md`).
 6. **Design:** siga `docs/design-guidelines.md` (tokens, 48 px de toque, tema claro, erro por texto além de cor). Não invente paleta, fonte ou ícone.
@@ -48,15 +48,19 @@ Lint e typecheck devem passar antes de dar qualquer tarefa como concluída.
 
 ## Estrutura
 
+Feature Driven Architecture:
+
 ```text
-src/app/          rotas (apenas telas e layouts)
-src/components/ui componentes reutilizáveis (Button, Input, Badge, Modal, Skeleton...)
-src/features/     auth, users, problems, occurrences, teams, materials (api, hooks, schemas, componentes)
-src/lib/          cliente de API, sessão, erros, permissões
+src/app/          rotas finas (importam a screen da feature)
+src/features/<x>/ auth, users, problems, materials, teams, occurrences, cada uma com
+                  screens, components (em subpastas por função), hooks, services,
+                  schemas, types, constants, utils, contexts (só se necessário), index.ts
+src/components/   globais, agrupados por função (forms, feedback, overlays, data-display, navigation, layout, actions)
+src/hooks/ src/services/ src/contexts/ src/utils/ src/constants/ src/types/   globais
 src/global.css    tokens do tema (Tailwind)
 ```
 
-Detalhes em `docs/architecture.md`.
+Regras: tudo nasce na feature; ao ser usado por uma segunda feature, sobe para o global na raiz. Feature nunca importa outra feature; global nunca importa feature. Não acumule componentes soltos numa pasta: agrupe por função e divida em partes menores. Detalhes em `docs/architecture.md`.
 
 ## Mapa de documentos
 

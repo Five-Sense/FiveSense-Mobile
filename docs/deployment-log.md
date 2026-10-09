@@ -1,4 +1,4 @@
-# Deployment Log
+﻿# Deployment Log
 
 Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada referencia issue/fase, arquivos, checks e riscos. Decisões duradouras vão em `decision-log.md`; estado vivo em `issues.md`.
 
@@ -17,6 +17,7 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+<<<<<<< HEAD
 ## [2026-10-09] - Entrega: ISSUE-002 (Limpeza do template Expo)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
@@ -34,6 +35,25 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Checks:** `npx tsc --noEmit` sem erros; ESLint sem erros nos arquivos novos; `expo export` para web e Android concluem com o Button no bundle e as classes geradas. `npx expo lint` global falha por erro preexistente do template (`src/hooks/use-color-scheme.web.ts`, setState em effect). Não verificado em dispositivo/emulador: aparência de cada estado, anel de foco (`outline`) e cor do ícone/spinner via `styled`.
 - **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
 - **Riscos/Débito técnico:** NativeWind v5 é RC. Button ainda não é usado em nenhuma tela. `expo-doctor` não executado. Hover/pressed do secondary (`surface-hover`/`brand-soft`) e do destructive são escolhas minhas, a confirmar com o design.
+=======
+## [2026-10-09] - Entrega: ISSUE-002 (Dependências e NativeWind)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial)
+- **O que foi feito:** Removidos `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-web-browser`, o script/arquivo `reset-project` e os arquivos de exemplo do template. Instalados `nativewind@5.0.0-rc.0`, `react-native-css@3.1.0-rc.0`, `tailwindcss` e `@tailwindcss/postcss` 4.1.12, `lightningcss@1.30.1` (com `overrides`), `postcss`, `react-native-svg`, `lucide-react-native`, `@expo-google-fonts/montserrat`, `expo-secure-store`, `expo-image-picker`, `zod` 4, `@tanstack/react-query` e, exigidos pelo `expo lint`, `eslint` e `eslint-config-expo`. Criados `metro.config.js`, `postcss.config.mjs`, `nativewind-env.d.ts`, `src/types/assets.d.ts`, tokens de cor em `src/global.css`, `_layout.tsx` e `index.tsx` mínimos (placeholder). `app.json`: orientação livre, tema claro e plugins de image-picker e secure-store. `expo-image` mantido.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `tsconfig.json` (NativeWind incluiu `nativewind-env.d.ts`), `eslint.config.js`, os arquivos criados acima e as remoções em `src/components`, `src/constants`, `src/hooks` e `scripts`.
+- **Checks:** `npx tsc --noEmit` OK; `npx expo lint` OK; `npx expo-doctor` 21/21; `expo export --platform web` gerou o CSS com os tokens. Não testado em dispositivo, simulador ou Expo Go.
+- **Docs atualizados:** `docs/implementation-plan.md`, `docs/deployment-log.md`.
+- **Riscos/Débito técnico:** NativeWind v5 é RC. `npm audit` aponta 31 vulnerabilidades (11 moderadas, 20 altas), não analisadas nem corrigidas. Fonte Montserrat instalada, mas ainda não carregada. `zod` 4 (a doc não fixava a versão).
+
+## [2026-10-09] - Entrega: ISSUE-002 (Esqueleto de pastas)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial)
+- **O que foi feito:** Criadas 69 pastas (globais, rotas `(auth)`/`(app)` e 6 features) conforme `architecture.md`, cada uma com `.gitkeep`. Criado `.env.example` com `EXPO_PUBLIC_API_URL`.
+- **Arquivos modificados:** `src/**` (apenas pastas e `.gitkeep`), `.env.example`, `docs/architecture.md`, `docs/implementation-plan.md`, `docs/issues.md`, `docs/deployment-log.md`
+- **Checks:** listagem das pastas criadas. Lint/typecheck não executados (sem código novo). A API em `https://fivesense-api.onrender.com` não respondeu em 60 s numa chamada de teste (possível cold start); não foi validada.
+- **Docs atualizados:** os listados acima.
+- **Riscos/Débito técnico:** arquivos do template Expo ainda fora da estrutura; remover na Fase 1.
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
 
 ## [2026-10-09] - Entrega: ISSUE-001 (Revisão documental de Fundamentos e Componentes)
 
@@ -52,3 +72,4 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Checks:** revisão documental. Nenhum código; lint/typecheck não aplicáveis. Figma não pôde ser lido (exige login).
 - **Docs atualizados:** os listados acima.
 - **Riscos/Débito técnico:** API pública, sem token nem autorização; 16 lacunas entre requisitos e API em `data-model.md`; enums de `role`/`status` não confirmados; NativeWind v5 está em release candidate; docs sujeitos a ajuste após ver o Figma.
+

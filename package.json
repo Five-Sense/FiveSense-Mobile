@@ -4,19 +4,34 @@
   "version": "1.0.0",
   "dependencies": {
     "@expo-google-fonts/montserrat": "0.4.2",
+<<<<<<< HEAD
     "@tailwindcss/postcss": "4.3.3",
     "expo": "~57.0.27",
     "expo-constants": "~57.0.21",
     "expo-font": "~57.0.4",
+=======
+    "@tanstack/react-query": "5.104.1",
+    "expo": "~57.0.27",
+    "expo-constants": "~57.0.21",
+    "expo-font": "~57.0.4",
+    "expo-image": "~57.0.5",
+    "expo-image-picker": "~57.0.20",
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
     "expo-linking": "~57.0.12",
     "expo-router": "~57.0.25",
+    "expo-secure-store": "~57.0.4",
     "expo-splash-screen": "~57.0.9",
     "expo-status-bar": "~57.0.1",
     "expo-system-ui": "~57.0.4",
+<<<<<<< HEAD
     "expo-web-browser": "~57.0.3",
     "lucide-react-native": "1.54.0",
     "nativewind": "5.0.0-rc.0",
     "postcss": "8.5.29",
+=======
+    "lucide-react-native": "1.54.0",
+    "nativewind": "5.0.0-rc.0",
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
@@ -28,12 +43,23 @@
     "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1",
+<<<<<<< HEAD
     "tailwindcss": "4.3.3"
+=======
+    "zod": "4.6.5"
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "4.1.12",
     "@types/react": "~19.2.2",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~57.0.2",
+<<<<<<< HEAD
+=======
+    "lightningcss": "1.30.1",
+    "postcss": "8.5.29",
+    "tailwindcss": "4.1.12",
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
     "typescript": "~6.0.3"
   },
   "scripts": {
