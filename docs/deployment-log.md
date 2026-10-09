@@ -17,6 +17,16 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: (Alterar para novo padrão) (Componente global Alert)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial; primeiro componente global de UI).
+- **O que foi feito:** Criado o componente `Alert` em `src/components/feedback/`, 100% fiel ao componente Alert do Figma (node `33:2952`, variantes Error, Info, Success e Warning): superfície branca, sombra Elevation/Card, raio 8 (`rounded-lg`), padding 16 (`p-4`), gap 8 entre título e descrição, título Montserrat SemiBold 16/24 e descrição Regular 14/20 na cor de texto semântica (error `#b91c1c`, info `#1e40af`, success `#166534`, warning `#92400e`, já presentes nos tokens de `global.css`). Sem ícone, sem borda e sem ação, como no Figma. Props: `variant`, `title`, `description` (texto ou nó) e `className`. Import direto de `feedback/alert` (sem barrel). Removido o `.gitkeep` da pasta.
+- **Divergência registrada (acessibilidade):** o componente do Figma transmite o estado apenas pela cor do texto, o que diverge de "estado nunca só por cor" (coding-standards.md). O humano optou pela fidelidade total ao Figma; ícone e ação ficam a cargo de outro componente de feedback quando necessário. Registrado em `decision-log.md` 0007.
+- **Arquivos modificados:** `src/components/feedback/alert.tsx` (novo), `src/components/feedback/.gitkeep` (removido), `docs/implementation-plan.md`, `docs/issues.md`, `docs/decision-log.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit` OK; `npx expo lint` OK; `npx eslint src/components/feedback/*.ts* --max-warnings 0` OK. Não verificado em simulador/dispositivo/web em execução; a conferência visual foi feita contra o screenshot do Figma (node `33:2952`).
+- **Docs atualizados:** os quatro listados acima.
+- **Riscos/Débito técnico:** a sombra usa o preset `shadow-md shadow-black/25`, aproximação do efeito Elevation/Card do Figma (`0 4 4 rgba(0,0,0,0.25)`), não um valor exato por plataforma. Sombras em RN variam entre iOS/Android/web; conferir no dispositivo. Componente ainda não exercitado em tela real.
+
 ## [2026-10-09] - Entrega: (Alterar para novo padrão) (Componentes Input e PasswordInput)
 
 - **Fase:** Fase 1 - Scaffold técnico (incremento de inputs).
