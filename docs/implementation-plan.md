@@ -24,13 +24,13 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 1 - Scaffold técnico
 
-**Status:** Planejada
+**Status:** Em andamento
 
 - [ ] Remover telas e componentes de exemplo do template Expo.
-- [ ] Instalar e configurar NativeWind, Montserrat, Lucide e demais dependências aprovadas.
+- [x] Instalar e configurar NativeWind, Montserrat e Lucide (2026-10-09). Pendentes: `expo-secure-store`, `expo-image-picker`, `zod`, `@tanstack/react-query`, quando forem necessários.
 - [ ] Ajustar `app.json` (orientação livre, tema claro).
-- [ ] Tokens do tema em `src/global.css`, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
-- [ ] Componentes base de `ui/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
+- [x] Tokens do tema em `src/global.css` (cores, raios, botão); ainda falta conferir espaçamentos e demais estilos de texto.
+- [ ] Componentes base de `ui/` (Button feito em 2026-10-09; faltam Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
 - [ ] Cliente de API com `AppError`, sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
