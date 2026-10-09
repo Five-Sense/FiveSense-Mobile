@@ -1,0 +1,59 @@
+# Issues
+
+Estado vivo do trabalho. Status: `Planejada`, `Em andamento`, `Concluida`, `Bloqueada`. Cada issue tem `### Estado atual` com notas datadas. Regra: issue em execução fica `Em andamento`; ao concluir, `Concluida` (salvo bloqueio).
+
+## ISSUE-001 - Documentação SpecFirst do projeto
+
+**Tipo:** Docs
+**Status:** Em andamento
+**Fase:** Fase 0
+
+### Objetivo
+
+Adaptar o framework ao Five Sense App e obter aprovação humana do escopo antes de codificar.
+
+### Critérios de aceite
+
+- Docs refletem requisitos, design, arquitetura, dados e segurança do projeto.
+- Documentos desnecessários removidos após aprovação, sem referências quebradas.
+- Pendências de decisão listadas e respondidas.
+
+### Estado atual
+
+- **2026-10-09 (IA):** Docs adaptados. Remoções aprovadas e executadas (12 arquivos); `CLAUDE.md` mantido e reduzido. Documentação da API incorporada; lacunas entre requisitos e API listadas em `data-model.md` aguardando decisão humana. Nenhum código criado.
+
+## ISSUE-002 - Scaffold técnico
+
+**Tipo:** Chore | **Status:** Planejada | **Fase:** Fase 1
+
+Objetivo: NativeWind, fontes, ícones, tokens, componentes base de UI, cliente de API, sessão e permissões. Aceite: app abre no Android/iOS/web com tema, lint e typecheck passando.
+
+## ISSUE-003 - Autenticação e conta
+
+**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 2
+
+Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/403. Aceite: login/logout com erro tratado e navegação por perfil.
+
+## ISSUE-004 - Materiais e Problemas
+
+**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 3
+
+Objetivo: RF009 a RF013 e RF027 a RF033. Aceite: CRUD por perfil, lista com skeleton/refresh/vazio/erro, confirmações de alteração e exclusão.
+
+## ISSUE-005 - Equipes
+
+**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 4
+
+Objetivo: RF017 a RF026. Aceite: status de 5S, representantes, calendário e permissão da própria equipe.
+
+## ISSUE-006 - Ocorrências e Usuários
+
+**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 5
+
+Objetivo: RF005 a RF008 e RF014 a RF016. Aceite: envio com imagem até 5 MB, falhas de envio tratadas, criar/listar/ver/editar usuários pelo Administrador.
+
+## ISSUE-007 - Responsividade e fechamento
+
+**Tipo:** Chore | **Status:** Planejada | **Fase:** Fase 6
+
+Objetivo: layouts celular/tablet/desktop, acessibilidade e revisão final.
