@@ -25,7 +25,9 @@ Adaptar o framework ao Five Sense App e obter aprovação humana do escopo antes
 
 ## ISSUE-002 - Scaffold técnico
 
-**Tipo:** Chore | **Status:** Planejada | **Fase:** Fase 1
+**Tipo:** Chore | **Status:** Em andamento | **Fase:** Fase 1
+
+Estado atual: 2026-10-09 (IA) esqueleto de pastas e `.env.example` criados. Restam dependências, tema, cliente de API e componentes base.
 
 Objetivo: NativeWind, fontes, ícones, tokens, componentes base de UI, cliente de API, sessão e permissões. Aceite: app abre no Android/iOS/web com tema, lint e typecheck passando.
 

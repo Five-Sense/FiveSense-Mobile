@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Esqueleto de pastas)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial)
+- **O que foi feito:** Criadas 69 pastas (globais, rotas `(auth)`/`(app)` e 6 features) conforme `architecture.md`, cada uma com `.gitkeep`. Criado `.env.example` com `EXPO_PUBLIC_API_URL`.
+- **Arquivos modificados:** `src/**` (apenas pastas e `.gitkeep`), `.env.example`, `docs/architecture.md`, `docs/implementation-plan.md`, `docs/issues.md`, `docs/deployment-log.md`
+- **Checks:** listagem das pastas criadas. Lint/typecheck não executados (sem código novo). A API em `https://fivesense-api.onrender.com` não respondeu em 60 s numa chamada de teste (possível cold start); não foi validada.
+- **Docs atualizados:** os listados acima.
+- **Riscos/Débito técnico:** arquivos do template Expo ainda fora da estrutura; remover na Fase 1.
+
 ## [2026-10-09] - Entrega: ISSUE-001 (Revisão documental de Fundamentos e Componentes)
 
 - **Fase:** Fase 0 - Documentação do projeto; permanecem decisões abertas.

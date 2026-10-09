@@ -41,7 +41,19 @@ src/
   global.css               tokens do tema (Tailwind)
 ```
 
-Pastas internas só são criadas quando têm conteúdo. Não criar `contexts/` ou `utils/` vazios por simetria.
+### Estado do esqueleto (2026-10-09)
+
+As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (apague o `.gitkeep` ao criar o primeiro arquivo da pasta):
+
+- Globais: `src/components/{actions,data-display,feedback,forms,layout,navigation,overlays}`, `src/hooks`, `src/services/{api,storage}`, `src/contexts`, `src/utils`, `src/constants`, `src/types`.
+- Rotas: `src/app/(auth)` e `src/app/(app)`.
+- Features, cada uma com `screens`, `hooks`, `services`, `schemas`, `types` e `components/<função>`:
+  - `auth` (`components/form`, `components/account`)
+  - `users`, `problems`, `materials` (`components/{list,form,details}`, `constants`)
+  - `teams` (`components/{list,form,details,status,calendar}`, `constants`)
+  - `occurrences` (`components/{form,image}`, `constants`)
+- Não foram criadas `utils/` e `contexts/` dentro das features: criar só quando houver necessidade real.
+- Ainda existem os arquivos do template Expo (`src/app/index.tsx`, `explore.tsx`, `src/components/*.tsx`, `src/components/ui`, `src/constants/theme.ts`, `src/hooks/use-*`), a remover na Fase 1 por não seguirem esta estrutura.
 
 ## Regra de ouro: local primeiro, global quando compartilhado
 
@@ -74,7 +86,7 @@ Pastas internas só são criadas quando têm conteúdo. Não criar `contexts/` o
 
 ## Cliente de API (`src/services/api`)
 
-- Único ponto de saída HTTP. Base URL em `EXPO_PUBLIC_API_URL` (a API usa o prefixo `/api/v1`); sem segredos no app.
+- Único ponto de saída HTTP. Host em `EXPO_PUBLIC_API_URL` (`https://fivesense-api.onrender.com`, ver `.env.example`); o prefixo `/api/v1` é constante em `src/services/api`. O host parece estar em hospedagem Render: a primeira chamada após inatividade pode demorar (não verificado), então o timeout inicial deve ser generoso e o estado de carregamento tolerar espera; sem segredos no app.
 - Contrato real da API em `data-model.md`. Se a API passar a emitir token, o cliente injeta `Authorization: Bearer` (NF001); hoje não há token.
 - Timeout em toda chamada. Respostas e erros convertidos para tipos do app (não vazar formato bruto da API para as telas).
 - Erros da API chegam como ProblemDetail (RFC 9457). Erro sempre vira `AppError` com `kind`: `network`, `unauthorized` (401), `forbidden` (403), `validation` (400/422, com erros por campo), `notFound` (404), `conflict` (409, ex.: excluir item referenciado), `server` (5xx), `unknown`.
