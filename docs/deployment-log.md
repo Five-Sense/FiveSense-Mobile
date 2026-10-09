@@ -17,6 +17,24 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Limpeza do template Expo)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Removidos rotas e componentes de exemplo (`explore`, tabs, `themed-*`, `animated-icon`, `hint-row`, `web-badge`, `external-link`, `collapsible`), `src/constants/theme.ts`, `src/hooks/*`, `scripts/reset-project.js` e o script `reset-project`, e imagens não usadas em `assets/images`. `src/app/_layout.tsx` agora é um `Stack` sem cabeçalho que carrega Montserrat e esconde o splash; `src/app/index.tsx` é uma tela vazia. `app.json`: orientação destravada, `userInterfaceStyle: light`, fundo do splash `#FCFCFC`. Dependências do template removidas: `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-image` (reinstalar `expo-image` quando houver imagens).
+- **Arquivos modificados:** `src/app/*`, `app.json`, `package.json`, `package-lock.json`, remoções listadas.
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web conclui (rotas `/`, `/_sitemap`, `/+not-found`). `expo-doctor` não concluiu (travou por 15 min). Não testado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** ícone do app, splash e `expo.icon` ainda são do template (identidade pendente).
+
+## [2026-10-09] - Entrega: ISSUE-002 (Componente Button e base de estilo)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** `Button` em `src/components/ui/button` com `variant` (`primary` | `secondary` | `destructive`), `disabled`, `loading`/`loadingLabel`, `icon` (Lucide), foco visível e acessibilidade. Mapeamento do Figma: Default, Hover, Pressed e Disabled são estados de `primary` (`hover:`/`active:` e `disabled`); Secondary é variante. Altura 48 em todas as variantes (Figma mede 50 no Secondary; borda dentro dos 48). `destructive-pressed` (#991B1B) é complemento sem origem no Figma. Ícone: slot 32 com desenho 24 (regra do design-guidelines). NativeWind v5, Tailwind 4, Montserrat e Lucide instalados com versões fixas; `lightningcss` fixado em 1.30.1 via `overrides` (versões maiores quebram o `global.css`).
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `tsconfig.json`, `metro.config.js`, `postcss.config.mjs`, `nativewind-env.d.ts`, `eslint.config.js` (gerado pelo `expo lint`), `src/global.css`, `src/app/_layout.tsx`, `src/components/ui/button/{button.tsx,index.ts}`.
+- **Checks:** `npx tsc --noEmit` sem erros; ESLint sem erros nos arquivos novos; `expo export` para web e Android concluem com o Button no bundle e as classes geradas. `npx expo lint` global falha por erro preexistente do template (`src/hooks/use-color-scheme.web.ts`, setState em effect). Não verificado em dispositivo/emulador: aparência de cada estado, anel de foco (`outline`) e cor do ícone/spinner via `styled`.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** NativeWind v5 é RC. Button ainda não é usado em nenhuma tela. `expo-doctor` não executado. Hover/pressed do secondary (`surface-hover`/`brand-soft`) e do destructive são escolhas minhas, a confirmar com o design.
+
 ## [2026-10-09] - Entrega: ISSUE-001 (Revisão documental de Fundamentos e Componentes)
 
 - **Fase:** Fase 0 - Documentação do projeto; permanecem decisões abertas.
