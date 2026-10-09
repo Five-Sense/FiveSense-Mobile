@@ -99,3 +99,17 @@ Registrar em `design-guidelines.md` fonte, data, IDs, nomes de tokens e variante
 
 ### Consequências
 Button-SM e Badge 5S requerem resolução antes de implementação fiel; estados de calendário não viram enum da API; duração da sessão continua pendente. O limite do plano Figma impediu concluir a leitura detalhada de todos os componentes. Nenhum novo fluxo, dependência, arquitetura ou remoção de documento foi aprovado por esta revisão.
+
+## 0007 - Alert: fidelidade total ao Figma (sem ícone nem ação)
+
+- **Data:** 2026-10-09
+- **Estado:** Aceita (decisão do humano: componente 100% fiel ao Figma)
+
+### Contexto
+O componente Alert do Figma (`33:2952`) distingue as variantes Error, Info, Success e Warning apenas pela cor do texto, sem ícone, borda ou ação. Numa primeira versão foram adicionados ícone semântico (padrão) e ação de recuperação opcional, visando a regra "estado nunca só por cor" (`coding-standards.md`). O humano pediu fidelidade total ao Figma, mantendo apenas a sombra (que consta no Figma).
+
+### Decisão
+Implementar o Alert exatamente como o Figma: superfície branca, sombra Elevation/Card, raio 8, padding 16, gap 8, título 16/24 600 e descrição 14/20 na cor de texto semântica. Sem ícone, sem borda e sem ação. Props: `variant`, `title`, `description`, `className`.
+
+### Consequências
+O estado passa a ser transmitido só pela cor do texto neste componente, divergindo da regra interna de acessibilidade; divergência aceita pelo humano em favor da fidelidade ao Figma e registrada em `design-guidelines.md`. Se um alerta precisar de ícone ou ação de recuperação (ex.: erro de carregamento), isso será tratado por outro componente de feedback (ex.: `ErrorState`) e não pelo `Alert`.
