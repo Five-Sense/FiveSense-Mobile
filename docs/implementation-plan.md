@@ -26,9 +26,9 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 **Status:** Em andamento
 
-- [ ] Remover telas e componentes de exemplo do template Expo.
+- [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
 - [x] Instalar e configurar NativeWind, Montserrat e Lucide (2026-10-09). Pendentes: `expo-secure-store`, `expo-image-picker`, `zod`, `@tanstack/react-query`, quando forem necessários.
-- [ ] Ajustar `app.json` (orientação livre, tema claro).
+- [x] Ajustar `app.json` (orientação livre, tema claro) (2026-10-09). Ícone do app e splash ainda são do template (identidade pendente).
 - [x] Tokens do tema em `src/global.css` (cores, raios, botão); ainda falta conferir espaçamentos e demais estilos de texto.
 - [ ] Componentes base de `ui/` (Button feito em 2026-10-09; faltam Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
 - [ ] Cliente de API com `AppError`, sessão e permissões.

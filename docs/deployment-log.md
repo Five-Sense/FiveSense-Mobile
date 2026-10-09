@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Limpeza do template Expo)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Removidos rotas e componentes de exemplo (`explore`, tabs, `themed-*`, `animated-icon`, `hint-row`, `web-badge`, `external-link`, `collapsible`), `src/constants/theme.ts`, `src/hooks/*`, `scripts/reset-project.js` e o script `reset-project`, e imagens não usadas em `assets/images`. `src/app/_layout.tsx` agora é um `Stack` sem cabeçalho que carrega Montserrat e esconde o splash; `src/app/index.tsx` é uma tela vazia. `app.json`: orientação destravada, `userInterfaceStyle: light`, fundo do splash `#FCFCFC`. Dependências do template removidas: `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-image` (reinstalar `expo-image` quando houver imagens).
+- **Arquivos modificados:** `src/app/*`, `app.json`, `package.json`, `package-lock.json`, remoções listadas.
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web conclui (rotas `/`, `/_sitemap`, `/+not-found`). `expo-doctor` não concluiu (travou por 15 min). Não testado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** ícone do app, splash e `expo.icon` ainda são do template (identidade pendente).
+
 ## [2026-10-09] - Entrega: ISSUE-002 (Componente Button e base de estilo)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
