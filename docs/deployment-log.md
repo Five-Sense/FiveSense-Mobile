@@ -17,6 +17,24 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Componente Footer)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Criado `Footer` institucional exclusivo do tablet, com superfície branca, borda `border-subtle`, padding 8, altura mínima 32 e largura fluida. O texto padrão é “© 2026 Five Sense Group. Todos os direitos reservados.” em Montserrat 400, 12/15; pode ser substituído pela prop `text` e o componente cresce se houver ampliação de fonte ou quebra de linha. O Header foi ajustado para documentar o escopo somente Tablet.
+- **Arquivos modificados:** `src/static/components/Footer.tsx`, `src/static/components/Header.tsx`, `docs/design-guidelines.md`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit`, `npx expo lint` e `git diff --check` sem erros.
+- **Docs atualizados:** `design-guidelines.md`, `issues.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** o Footer ainda não está composto em uma tela, pois a estrutura de telas permanece pendente.
+
+## [2026-10-09] - Entrega: ISSUE-002 (Componente Header)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Criado `Header` para Tablet com 72 de altura, fundo `surface`, padding horizontal de 24, logo oficial existente à esquerda e ação de saída à direita com `LogOut` do Lucide. A largura é fluida (`w-full`) e acompanha o contêiner pai. A ação é exposta por `onLogout`; quando ela não é fornecida, o controle permanece visível, mas desabilitado e corretamente anunciado por acessibilidade.
+- **Arquivos modificados:** `src/static/components/Header.tsx`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit`, `npx expo lint` e `git diff --check` sem erros.
+- **Docs atualizados:** `issues.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** a variante de Header para celular não existe no catálogo Figma lido; a adaptação final será feita na fase de responsividade.
+
 ## [2026-10-09] - Entrega: ISSUE-002 (Limpeza do template Expo)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
