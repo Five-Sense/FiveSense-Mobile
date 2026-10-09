@@ -1,4 +1,4 @@
-# Deployment Log
+﻿# Deployment Log
 
 Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada referencia issue/fase, arquivos, checks e riscos. Decisões duradouras vão em `decision-log.md`; estado vivo em `issues.md`.
 
@@ -16,6 +16,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 ```
 
 ## Entradas
+
+## [2026-10-09] - Entrega: ISSUE-002 (Dependências e NativeWind)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial)
+- **O que foi feito:** Removidos `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-web-browser`, o script/arquivo `reset-project` e os arquivos de exemplo do template. Instalados `nativewind@5.0.0-rc.0`, `react-native-css@3.1.0-rc.0`, `tailwindcss` e `@tailwindcss/postcss` 4.1.12, `lightningcss@1.30.1` (com `overrides`), `postcss`, `react-native-svg`, `lucide-react-native`, `@expo-google-fonts/montserrat`, `expo-secure-store`, `expo-image-picker`, `zod` 4, `@tanstack/react-query` e, exigidos pelo `expo lint`, `eslint` e `eslint-config-expo`. Criados `metro.config.js`, `postcss.config.mjs`, `nativewind-env.d.ts`, `src/types/assets.d.ts`, tokens de cor em `src/global.css`, `_layout.tsx` e `index.tsx` mínimos (placeholder). `app.json`: orientação livre, tema claro e plugins de image-picker e secure-store. `expo-image` mantido.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `tsconfig.json` (NativeWind incluiu `nativewind-env.d.ts`), `eslint.config.js`, os arquivos criados acima e as remoções em `src/components`, `src/constants`, `src/hooks` e `scripts`.
+- **Checks:** `npx tsc --noEmit` OK; `npx expo lint` OK; `npx expo-doctor` 21/21; `expo export --platform web` gerou o CSS com os tokens. Não testado em dispositivo, simulador ou Expo Go.
+- **Docs atualizados:** `docs/implementation-plan.md`, `docs/deployment-log.md`.
+- **Riscos/Débito técnico:** NativeWind v5 é RC. `npm audit` aponta 31 vulnerabilidades (11 moderadas, 20 altas), não analisadas nem corrigidas. Fonte Montserrat instalada, mas ainda não carregada. `zod` 4 (a doc não fixava a versão).
 
 ## [2026-10-09] - Entrega: ISSUE-002 (Esqueleto de pastas)
 
@@ -43,3 +52,4 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Checks:** revisão documental. Nenhum código; lint/typecheck não aplicáveis. Figma não pôde ser lido (exige login).
 - **Docs atualizados:** os listados acima.
 - **Riscos/Débito técnico:** API pública, sem token nem autorização; 16 lacunas entre requisitos e API em `data-model.md`; enums de `role`/`status` não confirmados; NativeWind v5 está em release candidate; docs sujeitos a ajuste após ver o Figma.
+

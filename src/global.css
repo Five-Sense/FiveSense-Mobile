@@ -1,9 +1,45 @@
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
+@import 'nativewind/theme';
+
+/* Tokens do design (docs/design-guidelines.md). Valores do Figma/briefing. */
+@theme {
+  --color-brand-primary: #000080;
+  --color-brand-action: #4747d4;
+  --color-brand-action-hover: #3737b8;
+  --color-brand-dark: #0e0e55;
+  --color-brand-accent: #8080ff;
+  --color-brand-soft: #eeeeff;
+
+  --color-text-primary: #111111;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+
+  --color-page: #fcfcfc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-hover: #f8fafc;
+
+  --color-border-subtle: #e2e8f0;
+  --color-border-control: #64748b;
+  --color-disabled-bg: #e2e8f0;
+  --color-disabled-text: #64748b;
+  --color-focus-ring: #4747d4;
+
+  --color-success-text: #166534;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #15803d;
+  --color-warning-text: #92400e;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #b45309;
+  --color-error-text: #b91c1c;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #b91c1c;
+  --color-info-text: #1e40af;
+  --color-info-bg: #eff6ff;
+  --color-info-border: #2563eb;
+  --color-neutral-text: #475569;
+  --color-neutral-bg: #f1f5f9;
+  --color-neutral-border: #64748b;
 }

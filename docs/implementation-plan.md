@@ -1,4 +1,4 @@
-# Implementation Plan
+﻿# Implementation Plan
 
 ## Objetivo
 
@@ -24,12 +24,12 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 1 - Scaffold técnico
 
-**Status:** Planejada
+**Status:** Em andamento
 
-- [ ] Remover telas e componentes de exemplo do template Expo.
-- [ ] Instalar e configurar NativeWind, Montserrat, Lucide e demais dependências aprovadas.
-- [ ] Ajustar `app.json` (orientação livre, tema claro).
-- [ ] Tokens do tema em `src/global.css`, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
+- [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
+- [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query (falta carregar a fonte Montserrat).
+- [x] Ajustar `app.json` (orientação livre, tema claro).
+- [ ] Tokens do tema em `src/global.css` (cores prontas; faltam tipografia e espaçamento), com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
 - [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
@@ -87,3 +87,4 @@ Não concluir fase com checklist aberto. Mudança de ordem ou critério exige ap
 - Toda chamada de API trata erro; toda lista tem skeleton, pull to refresh, vazio e erro.
 - Lint e typecheck sem erros; fluxos verificados manualmente.
 - Visual conforme `design-guidelines.md`.
+
