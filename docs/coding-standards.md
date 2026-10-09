@@ -4,26 +4,27 @@
 
 - TypeScript `strict`. Sem `any` sem justificativa em comentário.
 - Tipar props de componentes e retornos de funções de API/hooks.
-- Tipos de domínio ficam em `src/features/<dominio>`; tipos da API não vazam para as telas (converter na fronteira).
+- Tipos de domínio ficam em `src/features/<dominio>/types`; tipos da API não vazam para as telas (converter na fronteira).
 
 ## Organização
 
-- `src/app/`: só rotas. Sem `fetch`, sem regra de negócio.
-- `src/components/ui/`: visual genérico, sem conhecer API.
-- `src/features/<dominio>/`: API, hooks, schemas e componentes do domínio.
-- `src/lib/`: cliente de API, sessão, permissões.
+- `src/app/`: só rotas finas. Sem `fetch`, sem regra de negócio.
+- `src/features/<x>/`: `screens`, `components` (subpastas por função), `hooks`, `services`, `schemas`, `types`, `constants`, `utils`, `contexts`. Tudo que só a feature usa fica aqui.
+- Raiz (`src/components`, `hooks`, `services`, `contexts`, `utils`, `constants`, `types`): somente o que é usado por mais de uma feature. Ao ganhar um segundo uso, mover para a raiz.
+- Feature nunca importa outra feature; global nunca importa feature.
+- Componentes: um por arquivo, agrupados por função em subpastas, divididos em partes menores quando crescem.
 - Nomes de arquivo em kebab-case (padrão do template Expo). Textos de interface em português.
 
 ## Estilo
 
 - NativeWind (`className`) com tokens do tema; não usar hex solto. Escala de 4 px é o padrão de espaçamento; medidas específicas verificadas no Figma (ex.: sidebar 222, botão secundário 50) são exceções rastreadas em `design-guidelines.md`, não novos tokens globais automáticos. Não aplicar essa escala como arredondamento de tipografia, bordas ou dimensões de conteúdo.
 - Mapear nomes/variantes/slots do Figma para props semânticas conforme o catálogo de `design-guidelines.md`; nomes genéricos como Variant2/Variant3 não definem comportamento por si só. Preservar composição por conteúdo e distinguir dimensão visual de alvo de toque.
-- Reutilizar componentes de `ui/` antes de criar novos. Não criar abstração para um único uso.
+- Reutilizar componentes globais (`src/components/<função>/`) e da própria feature antes de criar novos. Não criar abstração para um único uso.
 - Ícones apenas Lucide. Fonte apenas Montserrat.
 
 ## API e erros
 
-- Toda chamada passa por `src/lib/api` e retorna dado tipado ou lança `AppError`.
+- Toda chamada passa por `src/services/api` e retorna dado tipado ou lança `AppError`.
 - Nenhum `catch` vazio. Todo erro tem apresentação ao usuário (campo, alerta ou `ErrorState` com retry).
 - Mutações bloqueiam toque repetido enquanto processam.
 

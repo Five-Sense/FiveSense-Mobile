@@ -56,7 +56,21 @@ Menos código próprio para cache/refetch e validação. Alternativa mais enxuta
 Toda chamada de API trata erro via `AppError` tipado; toda lista tem skeleton screen e pull to refresh.
 
 ### Consequências
-Cliente de API único em `src/lib/api`; componentes padrão de loading/vazio/erro.
+Cliente de API único em `src/services/api`; componentes padrão de loading/vazio/erro.
+
+## 0006 - Feature Driven Architecture
+
+- **Data:** 2026-10-09
+- **Estado:** Aceita (pedido do humano)
+
+### Contexto
+A arquitetura inicial (camadas globais `components/ui`, `lib`, `features`) tendia a concentrar componentes numa só pasta.
+
+### Decisão
+Adotar Feature Driven Architecture: cada feature contém screens, components (em subpastas por função), hooks, services, schemas, types, constants, utils e contexts. O que for usado por mais de uma feature sobe para a raiz de `src/`. Componentes globais e de feature são agrupados por função e divididos em partes menores.
+
+### Consequências
+Ao surgir um segundo uso, é preciso mover o arquivo para a raiz e ajustar imports. Features não se importam entre si. `src/lib` foi substituído por `src/services`, `src/utils` e `src/contexts`.
 
 ## 0005 - API sem token e sem autorização
 
