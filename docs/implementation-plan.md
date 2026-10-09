@@ -30,8 +30,9 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [ ] Instalar e configurar NativeWind, Montserrat, Lucide e demais dependências aprovadas.
 - [ ] Ajustar `app.json` (orientação livre, tema claro).
 - [ ] Tokens do tema em `src/global.css`, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
-- [ ] Componentes base de `ui/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
-- [ ] Cliente de API com `AppError`, sessão e permissões.
+- [ ] Estrutura de pastas global e de features conforme `architecture.md`.
+- [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
+- [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
 
