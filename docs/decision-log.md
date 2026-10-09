@@ -71,3 +71,17 @@ O app guarda os dados da sessão em armazenamento seguro, esconde ações por pe
 
 ### Consequências
 Risco aceito e registrado em `security.md`. Recuperação/alteração de senha e identificação da "própria equipe" ficam bloqueadas até a API suportá-las.
+
+## 0006 - Rastreabilidade entre Figma, briefing e contrato da API
+
+- **Data:** 2026-10-09
+- **Estado:** Aceita para a revisão documental solicitada pelo humano; escolhas visuais conflitantes continuam pendentes.
+
+### Contexto
+Fundamentos e Componentes puderam ser consultados diretamente. A base documental estava majoritariamente alinhada, mas apresentava medidas antigas, componentes sem referência e afirmação de Figma não lido. Há conflitos internos de acessibilidade e diferenças entre demonstrações do protótipo e a API.
+
+### Decisão
+Registrar em `design-guidelines.md` fonte, data, IDs, nomes de tokens e variantes, distinguindo propriedades confirmadas de orientações do briefing e complementos necessários. Corrigir diferenças visuais verificadas dentro do pedido atual. Preservar o contrato de dados, segurança e critérios existentes de toque/leitura enquanto as divergências específicas aguardam decisão; não interpretar protótipo como nova regra de negócio.
+
+### Consequências
+Button-SM e Badge 5S requerem resolução antes de implementação fiel; estados de calendário não viram enum da API; duração da sessão continua pendente. O limite do plano Figma impediu concluir a leitura detalhada de todos os componentes. Nenhum novo fluxo, dependência, arquitetura ou remoção de documento foi aprovado por esta revisão.

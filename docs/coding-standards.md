@@ -16,7 +16,8 @@
 
 ## Estilo
 
-- NativeWind (`className`) com tokens do tema; não usar hex solto nem valores fora da escala de 4 px.
+- NativeWind (`className`) com tokens do tema; não usar hex solto. Escala de 4 px é o padrão de espaçamento; medidas específicas verificadas no Figma (ex.: sidebar 222, botão secundário 50) são exceções rastreadas em `design-guidelines.md`, não novos tokens globais automáticos. Não aplicar essa escala como arredondamento de tipografia, bordas ou dimensões de conteúdo.
+- Mapear nomes/variantes/slots do Figma para props semânticas conforme o catálogo de `design-guidelines.md`; nomes genéricos como Variant2/Variant3 não definem comportamento por si só. Preservar composição por conteúdo e distinguir dimensão visual de alvo de toque.
 - Reutilizar componentes de `ui/` antes de criar novos. Não criar abstração para um único uso.
 - Ícones apenas Lucide. Fonte apenas Montserrat.
 
