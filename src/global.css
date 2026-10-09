@@ -59,6 +59,17 @@
   --font-montserrat-semibold: Montserrat_600SemiBold;
   --text-button: 16px;
   --text-button--line-height: 24px;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-label: 14px;
+  --text-label--line-height: 20px;
+  --text-helper: 14px;
+  --text-helper--line-height: 20px;
+  --text-card: 18px;
+  --text-card--line-height: 26px;
+  --text-section: 24px;
+  --text-section--line-height: 32px;
+  --container-showcase: 960px;
 }
 
 :root {

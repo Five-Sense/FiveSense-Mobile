@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Componentes Input e PasswordInput)
+
+- **Fase:** Fase 1 - Scaffold técnico (incremento de inputs).
+- **O que foi feito:** Implementados os componentes reutilizáveis `Input` (`src/components/ui/input.tsx`) e `PasswordInput` (`src/components/ui/password-input.tsx`) com fidelidade às variantes do Figma: Default com borda #64748B, Error com borda vermelha #B91C1C (e olho vermelho no PasswordInput, sem texto de erro no input, cuja função é delegada ao Alert), e Focus com borda de 2px em #4747D4. Alternância de visibilidade da senha com `Eye`/`EyeOff` da Lucide com alvo de toque de 48x48 px. Adicionados tokens de tipografia em `src/global.css`. Arquivos temporários de teste/showcase removidos, mantendo apenas os componentes de entrada na UI e `src/app/index.tsx` restaurado limpo.
+- **Arquivos modificados:** `src/global.css`, `src/components/ui/input.tsx`, `src/components/ui/password-input.tsx`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit` aprovado com 0 erros; `npx expo lint` aprovado com 0 erros.
+- **Docs atualizados:** `docs/issues.md`, `docs/deployment-log.md`.
+- **Riscos/Débito técnico:** Demais componentes de UI da Fase 1 (modais, alerts, skeletons, cards de equipes/materiais) e integração com a API v1 seguem conforme o planejamento da Fase 1.
+
 ## [2026-10-09] - Entrega: ISSUE-002 (Limpeza do template Expo)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
