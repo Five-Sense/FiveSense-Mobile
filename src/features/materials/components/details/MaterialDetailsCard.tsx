@@ -5,11 +5,8 @@ import { Pressable, Text, View } from 'react-native';
 import { Icon } from '@/components/data-display/icon';
 
 export type MaterialDetailsCardProps = {
-  /** Codigo exibido, ex.: "MAT-024". A API v1 ainda nao tem este campo (ver MaterialItem). */
   code: string;
-  /** Nome do material (a API limita a 55 caracteres). */
   name: string;
-  /** `stockQuantity` da API (0 a 999). */
   stockQuantity: number;
   onClose: () => void;
 };
