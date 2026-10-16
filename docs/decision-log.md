@@ -127,3 +127,11 @@ Implementar como no Figma: badge 10/20 com "Fazendo 5S" (texto `brand-action`) e
 
 ### Consequências
 Badge de 10 px e vermelho para "Sem fazer 5s" divergem das regras de acessibilidade e de semântica do briefing, aceitas pelo humano; pode exigir revisão se o design reconciliar. Preto puro no código é provável descuido do design (não há token): confirmar com o design. A Badge `TeamStatusBadge` nasceu local em `features/teams` (não existia em nenhuma branch); sobe para o global se outra feature a usar.
+
+## 0009 - Cliente do Visualizador e remoção da demonstração
+
+- **Data:** 2026-10-16
+- **Estado:** Aceita (pedido explícito do humano)
+- **Contexto:** o catálogo geral foi usado para conferir os componentes; o humano pediu sua remoção, a retirada de código de Gestor/Admin e de Sidebar/NavItem e a ausência de feedback como "Estoque baixo" nos cards de material.
+- **Decisão:** cliente exclusivo do Visualizador; remover os exemplos e esqueletos exclusivos de users/problems, Sidebar/NavItem e seus tokens exclusivos. Preservar MenuButton/AppMenu. MaterialItem não aceita mais `lowStock`; detalhes mantêm código, nome e quantidade sem aviso. Conservar correções funcionais dos componentes identificadas durante a demonstração.
+- **Consequências:** cadastros/edições/exclusões de gestão e administração ficam fora do plano do cliente. Seleção de problema ao registrar ocorrência continua no escopo do Visualizador. Documentação do contrato externo da API e histórico de entregas permanecem como referência, sem implementar seus perfis/avisos excluídos. Esta decisão prevalece sobre os trechos anteriores conflitantes de plano, catálogo Figma e requisitos.

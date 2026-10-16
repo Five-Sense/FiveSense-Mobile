@@ -4,7 +4,7 @@ Contrato universal do projeto. Leia antes de qualquer tarefa. Detalhes ficam em 
 
 ## Propósito
 
-Camada de apresentação mobile (Android, iOS e web/desktop responsivo) do Five Sense, sistema de gestão de 5S: equipes, materiais, problemas e ocorrências, com acesso por perfil (Administrador, Gestor, Visualizador). O app consome a Five Sense API v1 (`/api/v1`, contrato em `docs/data-model.md`). Não há backend neste repositório.
+Camada de apresentação mobile (Android, iOS e web/desktop responsivo) do Five Sense, sistema de gestão de 5S, com cliente exclusivo do Visualizador: consulta de equipes e materiais, registro de ocorrências e status da própria equipe. Código de gestão/administração, Sidebar/NavItem e demonstrações estão fora do escopo (decisão 0009). O app consome a Five Sense API v1 (`/api/v1`, contrato em `docs/data-model.md`). Não há backend neste repositório.
 
 ## Stack
 
@@ -52,7 +52,7 @@ Feature Driven Architecture:
 
 ```text
 src/app/          rotas finas (importam a screen da feature)
-src/features/<x>/ auth, users, problems, materials, teams, occurrences, cada uma com
+src/features/<x>/ auth, materials, teams, occurrences, cada uma com
                   screens, components (em subpastas por função), hooks, services,
                   schemas, types, constants, utils, contexts (só se necessário), index.ts
 src/shared/       pastas globais (compartilhadas por múltiplas features)

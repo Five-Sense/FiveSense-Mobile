@@ -1,15 +1,16 @@
 # Security
 
-## Perfis e permissões (NF002, RN002)
+## Permissões do cliente (NF002, RN002)
 
-| Recurso | Administrador | Gestor | Visualizador |
-| --- | --- | --- | --- |
-| Usuários | Listar, ver, criar, editar | - | - |
-| Problemas | - | CRUD | Seleção na ocorrência |
-| Ocorrências | - | Recebe por e-mail | Cria |
-| Equipes | - | CRUD, vê status | Consulta, altera status da própria, calendário |
-| Materiais | - | CRUD | Consulta |
-| Conta | Logout | Logout | Logout |
+Escopo exclusivo do Visualizador (decisão 0009, 2026-10-16). A interface não oferece fluxos administrativos ou de gestão.
+
+| Recurso | Visualizador |
+| --- | --- |
+| Problemas | Seleção na ocorrência |
+| Ocorrências | Cria |
+| Equipes | Consulta, altera status da própria, calendário |
+| Materiais | Consulta |
+| Conta | Login, informações e logout |
 
 ## Situação da API (risco alto)
 
