@@ -173,6 +173,7 @@ export function Select<T extends string | number>({
           accessibilityRole="menuitem"
           accessibilityLabel={option.label}
           accessibilityState={{ selected: isSelected, disabled: Boolean(option.disabled) }}
+          disabled={option.disabled}
           onPress={() => handleSelect(option)}
           className={`min-h-control flex-row items-center justify-between gap-[8px] rounded-control px-[16px] ${rowBackground}`}
         >
@@ -193,6 +194,8 @@ export function Select<T extends string | number>({
           accessibilityLabel={fullLabel}
           accessibilityValue={{ text: selected?.label ?? placeholder }}
           accessibilityState={{ expanded: open, disabled }}
+          aria-expanded={open}
+          aria-valuetext={selected?.label ?? placeholder}
           disabled={disabled}
           onPress={openMenu}
           onFocus={() => setFocused(true)}

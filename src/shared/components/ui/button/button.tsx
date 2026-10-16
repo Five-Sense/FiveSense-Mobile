@@ -26,7 +26,6 @@ export type ButtonProps = {
 
 const ICON_SIZE = 24;
 
-
 type VariantClasses = {
   /** Fundo e borda por estado de interacao. */
   container: string;

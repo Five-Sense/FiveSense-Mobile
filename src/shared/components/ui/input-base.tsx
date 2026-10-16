@@ -119,4 +119,3 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
   );
 });
 
-

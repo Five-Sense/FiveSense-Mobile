@@ -4,12 +4,11 @@
 
 Organizações que praticam 5S precisam controlar equipes, materiais e ocorrências de forma centralizada, com acesso restrito por função. O app entrega essa operação em dispositivos móveis e tablets.
 
-## Perfis
+## Perfil atendido
 
-- **Administrador:** CRUD de usuários (Administrador, Gestor, Visualizador).
-- **Gestor:** CRUD de Problemas, Equipes e Materiais; acompanha o status de 5S das equipes; recebe ocorrências por e-mail.
 - **Visualizador:** consulta Equipes e Materiais, registra Ocorrências, altera o status da própria equipe e consulta o calendário de 5S.
-- **Todos:** login, logout, recuperação e alteração de senha.
+- Login, logout, recuperação e alteração de senha, respeitando as lacunas da API.
+- Decisão 0009 (2026-10-16): gestão e administração fora do cliente.
 
 ## Objetivo
 
@@ -18,8 +17,8 @@ Implementar a apresentação mobile do sistema conforme o Documento de Requisito
 ## Escopo
 
 - Login e logout (RF001, RF002). Recuperação e alteração de senha (RF003, RF004) dependem de endpoints que a API ainda não tem.
-- Usuários (RF005 a RF008), Problemas (RF009 a RF013), Ocorrências (RF014 a RF016).
-- Equipes (RF017 a RF026), Materiais (RF027 a RF033).
+- Ocorrências (RF014 a RF016), incluindo seleção de problema existente.
+- Consulta de Equipes e Materiais, status da própria equipe e calendário (RF023 a RF026, RF032, RF033), conforme suporte da API.
 - Controle de acesso por perfil na interface (NF002).
 - Pull to refresh, skeleton e tratamento de erro em todas as listas e chamadas de API.
 
@@ -34,6 +33,7 @@ Implementar a apresentação mobile do sistema conforme o Documento de Requisito
 - Integrações com outras APIs externas.
 - Backend, envio de e-mails e geração de token (responsabilidade da API).
 - Modo escuro.
+- Gestão/administração de usuários, problemas, equipes e materiais; Sidebar/NavItem; catálogo de demonstração; feedback de estoque baixo nos cards de materiais.
 
 ## Simplicidade
 

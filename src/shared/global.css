@@ -45,8 +45,7 @@
   --color-neutral-border: #64748b;
 }
 
-
-/* Base restaurada conforme docs/design-guidelines.md; componentes compartilhados e login. */
+/* Base restaurada conforme docs/design-guidelines.md; componentes compartilhados. */
 @theme {
   --color-on-brand: #ffffff;
   --color-destructive: #b91c1c;
@@ -67,6 +66,8 @@
   --text-button--line-height: 24px;
   --text-nav: 16px;
   --text-nav--line-height: 24px;
+  --text-button: 16px;
+  --text-button--line-height: 24px;
   --text-body: 16px;
   --text-body--line-height: 24px;
   --text-label: 14px;

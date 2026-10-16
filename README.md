@@ -1,6 +1,6 @@
 # Five Sense App
 
-Aplicativo (Android, iOS e web/desktop responsivo) do Five Sense, sistema de gestão de 5S. Permite que Administradores, Gestores e Visualizadores gerenciem usuários, equipes, materiais, problemas e ocorrências, com acesso por perfil.
+Aplicativo (Android, iOS e web/desktop responsivo) do Five Sense, sistema de gestão de 5S. Cliente do Visualizador para consulta de equipes e materiais, registro de ocorrências e atualização do status da própria equipe. Gestão e administração ficam fora deste aplicativo (decisão 0009).
 
 Este repositório contém apenas a camada de apresentação. Os dados vêm de uma API externa.
 

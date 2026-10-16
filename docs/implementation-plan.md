@@ -1,5 +1,7 @@
 # Implementation Plan
 
+> **Escopo vigente (2026-10-16, pedido do humano; decisão 0009):** cliente exclusivo do Visualizador. Remover a demonstração `/components`, código de Administrador/Gestor, Sidebar/NavItem e feedback de estoque em MaterialItem/MaterialDetailsCard. MenuButton/AppMenu e os dados de quantidade permanecem. O catálogo lido do Figma deixa de definir o inventário do cliente; o contrato da API externa permanece documentado como referência.
+
 ## Objetivo
 
 Entregar o app Five Sense (Android, iOS, tablet e web/desktop) conforme o Documento de Requisitos 5S v1.0, o briefing de design e o Figma, consumindo a API do projeto.
@@ -27,15 +29,16 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento
 
 - [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
-- [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query (falta carregar a fonte Montserrat).
+- [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query; Montserrat carregada em `_layout.tsx` e conferida no catálogo em 2026-10-16.
 - [x] Ajustar `app.json` (orientação livre, tema claro).
-- [x] Tokens do tema em `src/global.css` a partir de `colors.tokens.json` (cores, raios, dimensão, escala `space` e estilos de texto); falta conferir os demais estilos de texto, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
+- [x] Tokens do tema em `src/shared/global.css`, conforme `colors.tokens.json` e `design-guidelines.md`. Base de fontes, raios, dimensões e tipografia restaurada após perdas no merge; conferida nos componentes em web (2026-10-16).
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
 - [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Button** (hoje em `src/components/ui/button`, a mover para `actions/`), **Select** e **MaterialItem** (feature `materials`) criados em 2026-10-09; **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
-- [x] Componentes reutilizáveis Nav/AppSidebar com estados e slots (conferidos em web em 2026-10-16, branch `feature/nav-component`). Demonstração e rota temporária removidas a pedido do humano; somente componentes e tokens permanecem.
+- [x] Nav/AppSidebar entregues anteriormente; componentes e tokens exclusivos retirados do escopo pelo humano em 2026-10-16 (decisão 0009).
 - [x] MenuButton e AppMenu horizontais, em componentes separados, conforme Figma e imagens de 2026-10-16; sem tela de demonstração. Tipos, lint e conferência web aprovados.
 - [x] Demonstração de MenuButton/AppMenu criada e conferida em 2026-10-16; removida por novo pedido do humano na mesma data. Permanecem somente os componentes.
 - [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
+- [x] Catálogo geral entregue e verificado anteriormente; removido por novo pedido do humano em 2026-10-16. Correções reais dos componentes permanecem.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
@@ -48,36 +51,40 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [ ] Sessão expirada (401) e acesso negado (403), tratados no cliente de API.
 - [ ] Recuperação, redefinição e alteração de senha: bloqueadas até a API ter os endpoints.
 
-### Fase 3 - Materiais e Problemas (Gestor)
+### Fase 3 - Consulta de materiais
 
 **Status:** Em andamento (apenas o componente de detalhes do material, a pedido do humano; telas e API seguem planejadas)
 
 - [x] Componente `MaterialDetailsCard` (Figma `208:7927`), somente apresentação (2026-10-16).
-- [ ] Materiais: lista (Gestor e Visualizador), detalhes, criar, editar, excluir, alerta de estoque.
-- [ ] Problemas: lista paginada, detalhes, criar, editar, excluir.
+- [ ] Materiais: lista e detalhes para o Visualizador, sem feedback de estoque baixo; exibir quantidade como dado.
+- Gestão de problemas e CRUD de materiais fora do escopo; seleção de problema na ocorrência continua dependendo da API.
 
 ### Fase 4 - Equipes
 
 **Status:** Em andamento (apenas componentes de card, a pedido do humano; telas e API seguem planejadas)
 
 - [x] Componentes `TeamCard` (Figma `228:7974`), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` e `TeamStatusBadge`, somente apresentação (2026-10-16).
-- [ ] Lista paginada com status, detalhes; Gestor cria, edita, exclui e gerencia representantes.
+- [ ] Lista paginada com status e detalhes para o Visualizador. CRUD e gestão de representantes fora do escopo.
 - [ ] Visualizador altera status da própria equipe e consulta o calendário.
 
-### Fase 5 - Ocorrências e Usuários
+### Fase 5 - Ocorrências
 
 **Status:** Planejada
 
 - [ ] Ocorrência com problema, material, quantidade e imagem (câmera/galeria, 5 MB, upload prévio).
-- [ ] Administrador: lista, cadastro (com senha), detalhes e edição (nome, e-mail, status) de usuários.
+- Administração de usuários fora do escopo do cliente.
 
 ### Fase 6 - Responsividade e fechamento
 
 **Status:** Planejada
 
-- [ ] Layout tablet/desktop (navegação lateral) e celular.
+- [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem. Moldura `AppLayout` (cabeçalho + conteúdo + menu inferior) entregue em 2026-10-16; falta conferir tablet/desktop e as telas.
 - [ ] Revisão de acessibilidade, estados e teclado virtual.
 - [ ] Checks finais e atualização dos logs.
+
+## Ajuste autorizado - 2026-10-16
+
+- [x] Removidos catálogo, código dos perfis excluídos, Sidebar/NavItem e aviso de estoque; docs atualizados; tipos, lint, diff e exportação web aprovados. MenuButton/AppMenu preservados.
 
 ## Regras de avanço
 
