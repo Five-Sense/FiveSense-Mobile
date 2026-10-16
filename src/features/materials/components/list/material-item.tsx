@@ -2,7 +2,7 @@ import { ChevronRight, TriangleAlert } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/components/data-display/icon';
+import { Icon } from '@/shared/components/data-display/icon';
 
 export type MaterialItemProps = {
   /** Nome do material (a API limita a 55 caracteres). */
