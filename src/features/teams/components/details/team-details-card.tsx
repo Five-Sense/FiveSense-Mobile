@@ -2,7 +2,7 @@ import { X } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/components/data-display/icon';
+import { Icon } from '@/shared/components/ui/icon';
 import { RepresentativeCard } from '@/features/teams/components/details/representative-card';
 import { TeamStatusBadge } from '@/features/teams/components/status/TeamStatusBadge';
 import type { TeamStatus } from '@/features/teams/types/TeamStatus';
@@ -10,17 +10,14 @@ import type { TeamStatus } from '@/features/teams/types/TeamStatus';
 export type TeamDetailsCardProps = {
   name: string;
   code?: string;
-  /** `schedule` da API (texto livre), ex.: "Segunda a sexta · 14:15". */
   schedule?: string;
   status: TeamStatus;
-  /** Nomes dos representantes. A API manda texto livre; quem monta o card separa os nomes. */
   representatives?: string[];
   onClose: () => void;
 };
 
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
-/** "Detalhes da equipe - Card" do Figma (node 208:6580). Conteudo de pop-up; o Modal vem de fora. */
 export function TeamDetailsCard({
   name,
   code,
@@ -64,14 +61,12 @@ export function TeamDetailsCard({
       </View>
 
       {details.length > 0 ? (
-        // Divisor em overlay: no Figma a borda inferior nao soma ao layout (secao com 80 de altura).
         <View className="gap-[16px] pb-[16px]">
           <View
             pointerEvents="none"
             className="absolute inset-x-0 bottom-0 h-px bg-border-subtle"
           />
           {details.map(({ label, value }) => (
-            // Leitura horizontal no desktop/tablet; empilhada abaixo de md (descricao do Account/DetailInline).
             <View key={label} className="gap-[8px] md:flex-row md:items-center md:gap-[24px]">
               <Text className="font-montserrat-semibold text-label text-text-secondary md:w-[200px]">
                 {label}

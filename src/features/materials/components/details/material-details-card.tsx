@@ -2,7 +2,7 @@ import { X } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/components/data-display/icon';
+import { Icon } from '@/shared/components/ui/icon';
 
 export type MaterialDetailsCardProps = {
   code: string;
@@ -13,7 +13,6 @@ export type MaterialDetailsCardProps = {
 
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
-/** "Material-Especifico - Card" do Figma (node 208:7927). Conteudo de pop-up; o Modal vem de fora. */
 export function MaterialDetailsCard({
   code,
   name,
@@ -59,7 +58,6 @@ export function MaterialDetailsCard({
           </View>
         ))}
 
-        {/* Borda em overlay: no Figma ela nao soma ao layout (indicador de 88 de altura). */}
         <View className="gap-[4px] overflow-hidden rounded-control bg-surface p-[16px]">
           <Text className="font-montserrat text-helper text-text-secondary">
             Quantidade em estoque

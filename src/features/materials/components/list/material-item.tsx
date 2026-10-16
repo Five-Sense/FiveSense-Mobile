@@ -2,22 +2,17 @@ import { ChevronRight, TriangleAlert } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/shared/components/data-display/icon';
+import { Icon } from '@/shared/components/ui/icon';
 
 export type MaterialItemProps = {
-  /** Nome do material (a API limita a 55 caracteres). */
   name: string;
-  /** Codigo exibido abaixo do nome, ex.: "MAT-024". A API v1 ainda nao tem este campo. */
   code?: string;
-  /** `lowStock` da API: mostra o aviso de estoque baixo (texto + icone). */
   lowStock?: boolean;
-  /** Toque no item, normalmente abre os detalhes. */
   onPress: () => void;
 };
 
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
-/** Item de lista de materiais. Pensado para ser repetido dentro de uma FlatList. */
 export function MaterialItem({ name, code, lowStock = false, onPress }: MaterialItemProps) {
   const [focused, setFocused] = useState(false);
 

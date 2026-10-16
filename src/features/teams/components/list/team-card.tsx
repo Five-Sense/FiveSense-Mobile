@@ -2,19 +2,15 @@ import { ChevronRight } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/components/data-display/icon';
 import { TeamStatusBadge } from '@/features/teams/components/status/TeamStatusBadge';
 import type { TeamStatus } from '@/features/teams/types/TeamStatus';
 import { splitTeamCode } from '@/features/teams/utils/split-team-code';
+import { Icon } from '@/shared/components/ui/icon';
 
 export type TeamCardProps = {
-  /** Nome da equipe. */
   name: string;
-  /** Codigo no formato "AA-11": "AA" vai no quadro azul e "11" ao lado. A API pode nao ter codigo. */
   code?: string;
-  /** `status` da API. DOING_5S pinta o card com brand-soft; NOT_DOING_5S usa a superficie branca. */
   status: TeamStatus;
-  /** Toque em "Ver dados da equipe", normalmente abre os detalhes. */
   onViewDetails: () => void;
 };
 
