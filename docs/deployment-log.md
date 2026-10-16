@@ -17,6 +17,14 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-006 (QuantityStepper)
+
+- **Fase:** Fase 5 - Ocorrências e Usuários (parcial: só o componente visual).
+- **O que foi feito:** `QuantityStepper` em `src/shared/components/forms/quantity-stepper.tsx` (+ `quantity-stepper-button.tsx`). Global desde o início porque `architecture.md` o lista para materiais e ocorrências. Props: `value`, `onChange`, `min` (0), `max` (999, limite de material da API), `step` (1), `unitLabel` ("unidades"), `label`, `disabled`. Fiel ao Figma: container largura total, padding 8, borda 1 px `border-control`, raio 8, fundo `surface`; botão [-] em `brand-soft` com ícone `brand-primary`; botão [+] em `brand-action` com ícone branco; botões 48x48; valor 18/26 600 e rótulo da unidade 14/20 em `text-secondary`. No limite o botão fica desabilitado em `disabled-bg`/`disabled-text` (sem vermelho). Acessibilidade: grupo `adjustable` com `min/max/now` e ações incrementar/decrementar; botões com rótulo, estado e anel de foco.
+- **Arquivos modificados:** `src/shared/components/forms/{quantity-stepper.tsx,quantity-stepper-button.tsx}` (`.gitkeep` removido).
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web e Android concluem e as classes do componente aparecem no CSS gerado (verificado com o componente numa tela temporária, removida). Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** hover/pressed do [-] (`surface-subtle`/`border-subtle`) e do [+] (`brand-action-hover`/`brand-dark`) não existem no Figma; são escolhas minhas. O Figma não define toque longo nem digitação direta, então não implementei. Container de 690 do protótipo é só amostra: o componente é fluido. Componente ainda não usado em nenhuma tela.
 ## [2026-10-16] - Entrega: ISSUE-002 (Integração da develop na navegação)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
