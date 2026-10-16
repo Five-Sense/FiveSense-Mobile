@@ -41,3 +41,10 @@ No chat, resumir arquivos alterados, checks executados, docs atualizados e risco
 ## Logs
 
 `decision-log` guarda o porquê de decisões duradouras; `deployment-log` guarda o que foi entregue; `issues` guarda o estado vivo do trabalho.
+
+## Git e conflitos
+
+- Antes de abrir PR, traga a `develop` para o branch (`git pull origin develop`) e resolva conflitos localmente. Nunca faça commit com marcadores `<<<<<<<`, `=======`, `>>>>>>>`; confira com `git grep -nE '^(<<<<<<<|=======|>>>>>>>)'`.
+- Uma tarefa por branch, PRs pequenos. Arquivos compartilhados (`package.json`, `src/global.css`, `app.json`, `src/app/_layout.tsx`) mudam em PR próprio ou com aviso ao time.
+- `package.json`: cada dependência fica em um único lugar (`dependencies` ou `devDependencies`), com versão exata. Depois de resolver conflito, rode `npm install` para o `package-lock.json` refletir o resultado; não edite o lock à mão.
+- Tokens de design só mudam em `src/global.css` a partir de `colors.tokens.json`.
