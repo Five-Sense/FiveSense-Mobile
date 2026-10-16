@@ -1,3 +1,4 @@
+@layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css';
@@ -20,6 +21,7 @@
   --color-surface-subtle: #f1f5f9;
   --color-surface-hover: #f8fafc;
 
+  /* border/* */
   --color-border-subtle: #e2e8f0;
   --color-border-control: #64748b;
   --color-disabled-bg: #e2e8f0;
@@ -41,4 +43,36 @@
   --color-neutral-text: #475569;
   --color-neutral-bg: #f1f5f9;
   --color-neutral-border: #64748b;
+}
+
+/* Base restaurada conforme docs/design-guidelines.md; componentes compartilhados. */
+@theme {
+  --color-on-brand: #ffffff;
+  --color-destructive: #b91c1c;
+  --color-destructive-pressed: #991b1b;
+  --spacing: 4px;
+  --spacing-control: 48px;
+  --spacing-icon-slot: 32px;
+  --spacing-menu-slot: 56px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-modal: 16px;
+  --font-montserrat: Montserrat_400Regular;
+  --font-montserrat-semibold: Montserrat_600SemiBold;
+  --text-button: 16px;
+  --text-button--line-height: 24px;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-label: 14px;
+  --text-label--line-height: 20px;
+  --text-helper: 14px;
+  --text-helper--line-height: 20px;
+  --text-card: 18px;
+  --text-card--line-height: 26px;
+  /* Alias já utilizado por MaterialItem. */
+  --text-card-title: 18px;
+  --text-card-title--line-height: 26px;
+  --text-section: 24px;
+  --text-section--line-height: 32px;
+  --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
 }

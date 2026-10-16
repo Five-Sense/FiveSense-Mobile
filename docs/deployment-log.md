@@ -1,4 +1,4 @@
-﻿# Deployment Log
+# Deployment Log
 
 Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada referencia issue/fase, arquivos, checks e riscos. Decisões duradouras vão em `decision-log.md`; estado vivo em `issues.md`.
 
@@ -16,6 +16,27 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 ```
 
 ## Entradas
+
+## [2026-10-16] - Entrega: ISSUE-002/004 (Retirada do catálogo e redução de escopo)
+
+- **Pedido:** remover a demonstração geral, código de Gestor/Admin, Sidebar/NavItem e feedback de estoque dos componentes de materiais; decisão 0009.
+- **O que foi feito:** excluídos /components, feature component-showcase e exemplos de materiais/equipes; excluídos Sidebar/NavItem e seus barrels. Menus e dados simulados de perfis removidos; esqueletos vazios users/problems retirados. MaterialItem não recebe lowStock nem apresenta texto, ícone ou anúncio acessível de estoque baixo. MaterialDetailsCard já não possuía esse aviso e conserva código, nome e quantidade informativa. MenuButton/AppMenu preservados. Tokens exclusivos de Sidebar/NavItem removidos; o mínimo 56 do slot do AppMenu foi renomeado para menu-slot, sem mudança visual. Correções reais de imports, fontes, cores, ciclo Input/PasswordInput e estados acessíveis da entrega anterior preservadas.
+- **Arquivos principais:** removidos src/app/components.tsx, src/features/component-showcase, src/features/{materials,teams}/components/showcase, src/shared/components/ui/{nav,sidebar} e .gitkeep de src/features/{users,problems}; alterados src/features/materials/components/list/material-item.tsx, src/shared/components/navigation/app-menu.tsx e src/shared/global.css.
+- **Checks:** tsc --noEmit, expo lint e git diff --check aprovados. Busca em src sem referências a Gestor/Admin, Sidebar/NavItem, lowStock, estoque baixo ou demonstrações. Exportação web aprovada, com somente /, /_sitemap e /+not-found; /components ausente. Nenhuma dependência nova.
+- **Docs atualizados:** AGENTS.md, README.md, architecture, project-overview, workflows, security, design-guidelines, testing, issues, implementation-plan, decision-log e deployment-log. Plano atual exclusivo do Visualizador; histórico e contrato da API externa mantidos como referência.
+- **Limitações:** não executado em Android/iOS; sem nova conferência visual dos componentes nesta remoção. A exportação continua avisando sobre o favicon configurado ausente (assets/images/favicon.png), preexistente.
+
+## [2026-10-16] - Entrega: ISSUE-002 (Catálogo geral de componentes e estados)
+
+- **Fase:** Scaffold e conferência dos componentes existentes. Branch `codex/components-showcase`, a partir da develop limpa; sem novas dependências.
+- **O que foi feito:** `/components` apresenta 22 componentes em 11 seções, busca sem distinção de acentos/caixa, filtros por categoria, exemplos interativos, checklist manual e restauração dos exemplos. Estados normais/erro/loading/disabled/foco, seletores com falha/vazio/retry, senha, quantidade, navegação, alertas e cards. Os exemplos de materiais e equipes ficam em suas features; a rota compõe seus nós por slots da tela, sem import entre features. Header/Footer ausentes nesta branch são informados na cobertura. Tela inicial e contrato da API preservados; fixtures locais e nenhuma chamada de negócio.
+- **Correções encontradas na execução:** restaurados tokens de raio/dimensões/fonte/tipografia que se perderam na migração para shared e alias card-title; corrigidos imports inexistentes de Icon em MenuButton/QuantityStepperButton. Button passa a reutilizar Icon/Spinner globais, corrigindo cores no web. Input mantém seus exports públicos por barrel e move sua base para input-base.tsx, eliminando ciclo com PasswordInput; o olho passa a usar Icon global e a marcação acessível fica no View, sem atributo inválido no SVG. Estados aria explícitos nos controles/checklist/filtros atendem o runtime web atual, que não converte os objetos legados accessibilityState/accessibilityValue. Button/loading e opções indisponíveis do Select ficam efetivamente disabled. Props públicas preservadas.
+- **Arquivos modificados:** nova rota `src/app/components.tsx`; feature `src/features/component-showcase/{screens,components}`; exemplos em `src/features/{materials,teams}/components/showcase`; `src/shared/global.css`, `components/forms/quantity-stepper{,-button}.tsx`, `navigation/menu-button.tsx`, `ui/button/button.tsx`, `ui/input{,-base}.tsx`, `ui/password-input.tsx`, `ui/select/select.tsx`.
+- **Checks:** `tsc --noEmit`, `expo lint`, `git diff --check` e exportação web aprovados (rotas `/`, `/components`, sitemap/not-found). Verificação interativa no Edge em 1400x960, 1280x800 e 390x844: cores normal/hover/pressed, foco, disabled/loading, digitação/readOnly/erro/senha, Select com opção indisponível/loading/vazio/falha/retry/validação, limites/passo da quantidade, menus por perfil/conta/saída/logo, navegação ativa, alertas, linhas, detalhes de materiais/equipes e fechar/reabrir, dados mínimos/completos, busca/filtros/checklist/reset. Nenhum aviso/erro de execução dos componentes, nenhuma chamada à API de negócio e nenhum transbordamento horizontal. Capturas visuais de desktop e celular conferidas. Verificação temporária fora do repositório, sem suíte adicionada.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `testing.md`, `design-guidelines.md`, `deployment-log.md`.
+- **Como abrir:** `npx expo start --web --port 8084`, depois `http://localhost:8084/components`.
+- **Riscos/Débito técnico:** Android/iOS não executados. O catálogo facilita conferência manual e não substitui auditoria integral do Figma ou testes das telas reais. As duas badges preservam implementações distintas; Header/Footer não foram recriados. Exportação informa favicon configurado ausente (`assets/images/favicon.png`), problema preexistente de identidade fora deste pedido. Fases/fluxos de produto continuam pendentes.
+
 
 ## [2026-10-16] - Entrega: ISSUE-005 - (2026-10-16 11:10:13) (Recriação do minicard RepresentativeCard e reconexão dos imports)
 
@@ -36,6 +57,98 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Docs atualizados:** os listados acima. Fase 3 e Fase 4 marcadas como Em andamento só para esses componentes; telas, hooks e serviços seguem planejados.
 - **Riscos/Débito técnico:** (1) A `develop` está com **marcadores de merge commitados** em `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/global.css`, `src/app/_layout.tsx`, `src/app/index.tsx` e `docs/implementation-plan.md` (origem: merge `02fc94c`); o app não compila nem o `tsc` passa até serem resolvidos. Não resolvi por envolver versões de dependências (decisão humana). Os conflitos de `docs/implementation-plan.md` (Fase 1) não foram tocados. (2) Não testado em dispositivo/emulador: sombra (`box-shadow`), `hitSlop` e a cor do ícone no nativo. Empilhamento abaixo de `md` não foi renderizado. (3) `rem` vale 14 no nativo (react-native-css), por isso os cards usam `px` arbitrário em vez de `p-6`/`gap-2`. (4) Fiel ao Figma e divergente do briefing: badge de 10 px, "Sem fazer 5s" em vermelho, número do código em preto puro (`text-black`, provável descuido do design). (5) Nenhum card tem tela, hook ou Modal; `code` e `representatives` dependem das lacunas 17 e 18. (6) Cada card repete a constante `FOCUS_RING` (como `Button` e `MaterialItem`): candidata a centralizar. (7) `MaterialItem` usa a classe `text-card-title`, que não existe nos tokens (o token é `text-card`); não corrigi por estar fora do escopo.
 
+## [2026-10-09] - Entrega: ISSUE-006 (QuantityStepper)
+
+- **Fase:** Fase 5 - Ocorrências e Usuários (parcial: só o componente visual).
+- **O que foi feito:** `QuantityStepper` em `src/shared/components/forms/quantity-stepper.tsx` (+ `quantity-stepper-button.tsx`). Global desde o início porque `architecture.md` o lista para materiais e ocorrências. Props: `value`, `onChange`, `min` (0), `max` (999, limite de material da API), `step` (1), `unitLabel` ("unidades"), `label`, `disabled`. Fiel ao Figma: container largura total, padding 8, borda 1 px `border-control`, raio 8, fundo `surface`; botão [-] em `brand-soft` com ícone `brand-primary`; botão [+] em `brand-action` com ícone branco; botões 48x48; valor 18/26 600 e rótulo da unidade 14/20 em `text-secondary`. No limite o botão fica desabilitado em `disabled-bg`/`disabled-text` (sem vermelho). Acessibilidade: grupo `adjustable` com `min/max/now` e ações incrementar/decrementar; botões com rótulo, estado e anel de foco.
+- **Arquivos modificados:** `src/shared/components/forms/{quantity-stepper.tsx,quantity-stepper-button.tsx}` (`.gitkeep` removido).
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web e Android concluem e as classes do componente aparecem no CSS gerado (verificado com o componente numa tela temporária, removida). Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** hover/pressed do [-] (`surface-subtle`/`border-subtle`) e do [+] (`brand-action-hover`/`brand-dark`) não existem no Figma; são escolhas minhas. O Figma não define toque longo nem digitação direta, então não implementei. Container de 690 do protótipo é só amostra: o componente é fluido. Componente ainda não usado em nenhuma tela.
+## [2026-10-16] - Entrega: ISSUE-002 (Integração da develop na navegação)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Resolvido o conflito de merge do histórico, mantendo as entradas da navegação e do TeamStatusBadge. Corrigido o import de Icon em MenuButton para o caminho `@/shared/components/data-display/icon`, conforme a reorganização da develop. O stash anterior foi preservado sem aplicação, pois contém arquivos de uma demonstração já removida.
+- **Arquivos modificados na resolução:** `docs/deployment-log.md`, `src/components/navigation/menu-button.tsx`, `docs/issues.md`, `docs/implementation-plan.md`.
+- **Checks:** `npx --no-install tsc --noEmit`, `npx --no-install expo lint` e `git diff --check` sem erros; busca sem marcadores de conflito.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem nova verificação visual ou execução em Android/iOS; correção de integração sem alteração de comportamento visual. ISSUE-002 e Fase 1 permanecem Em andamento.
+
+## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração de MenuButton/AppMenu)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** A pedido do humano, removida a demonstração. Excluídas a rota `/menu-demo`, a tela com exemplos/interações simuladas e somente as pastas exclusivas que ficaram vazias. Preservados `MenuButton`, `AppMenu`, suas propriedades/estilos e a tela inicial.
+- **Arquivos modificados:** remoção de `src/app/menu-demo.tsx` e `src/features/component-demo/screens/menu-demo-screen.tsx`.
+- **Checks:** `tsc --noEmit`, `expo lint` e `git diff --check` aprovados; busca em `src/` sem referências a MenuDemoScreen, component-demo ou menu-demo.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** a URL temporária deixou de existir. Permanecem os componentes para futura composição nas telas reais. Sem dependências ou mudanças de comportamento nos componentes.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Demonstração de MenuButton/AppMenu)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Após novo pedido explícito do humano, adicionada a rota `/menu-demo`. A tela demonstra os MenuButtons padrão/selecionado/desabilitado e compõe AppMenu no rodapé com Home, Ocorrências, Equipes e Materiais, inicialmente em Materiais. Seleção e feedback são locais. Conteúdo com rolagem e áreas seguras; componentes e tela inicial preservados. Nenhuma dependência ou fluxo de negócio adicionados.
+- **Arquivos modificados:** `src/app/menu-demo.tsx` e `src/features/component-demo/screens/menu-demo-screen.tsx` (novos).
+- **Checks:** `tsc --noEmit` e `expo lint` aprovados. Conferência visual/interativa web em 1100x800 e 390x844: clique/Enter atualizam seleção e feedback; disabled não dispara ação; barra permanece no rodapé e conteúdo não transborda horizontalmente. Capturas de ambos os tamanhos conferidas. Sem erros de execução no navegador.
+- **Como abrir:** `http://localhost:8082/menu-demo`, com o projeto iniciado por `npx expo start --web --port 8082`.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** demonstração sem API/sessão, sem navegação real para módulos. Android/iOS não executados. Fase 1 permanece Em andamento. Esta entrega atende ao pedido posterior de manter uma demonstração, substituindo essa restrição das entregas anteriores.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (MenuButton e AppMenu horizontais)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Dois componentes separados conforme pedido: `MenuButton`, unidade com ícone sobre o texto, e `AppMenu`, barra com slot children. Baseados na leitura direta do Figma (nodes 43:3650 e 33:2741) e nas imagens do humano. Seleção controlada com cor navy no ícone/rótulo; foco, disabled e nomes/estados acessíveis. Reutilizados Icon global, Lucide, Montserrat e tokens existentes; nenhum CSS global ou dependência alterados. Barra fluida e com altura natural para preservar os itens e a leitura ampliada. Cenário temporário de conferência removido; telas e rotas existentes preservadas.
+- **Arquivos modificados:** `src/components/navigation/menu-button.tsx` e `app-menu.tsx` (novos); `.gitkeep` da pasta removido por ela ter recebido componentes.
+- **Checks:** `tsc --noEmit` e `expo lint` aprovados. Conferência interativa web (Edge): MenuButton "Texto" 54x72, ícone 32, fonte 14/20, gap 4/padding 8, AppMenu vazio 65 e preenchido 101, cores de ícones/texto nos estados comum/selecionado/desabilitado, seleção por clique e Enter, foco e bloqueio de interação em disabled. Larguras 834/390/320 e texto ampliado a 200% sem transbordamento horizontal. Capturas visuais conferidas contra a referência enviada. Sem suíte de testes ou rota de demonstração mantida no repositório.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `design-guidelines.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** Android/iOS não executados. A composição final das telas e a integração com navegação/permissões seguem fora deste incremento. O navegador reportou apenas um favicon.ico ausente (404), recurso do app preexistente e fora do escopo; nenhum erro dos componentes. Break de linha/altura natural e estados complementares estão documentados em design-guidelines.md. ISSUE-002/Fase 1 permanecem abertas.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração do Nav)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** A pedido do humano, removidos `src/app/sidebar.tsx` e `src/components/sidebar-preview.tsx`, incluindo seleção simulada de perfil, mensagens e painel de teste. Preservados os componentes reutilizáveis `NavItem` e `Sidebar`, seus exports, estilos e callbacks configuráveis. Retirado o token de overlay usado exclusivamente na demonstração e as redefinições duplicadas de tipografia; mantidos os tokens específicos dos componentes e a tipografia já existente do projeto. A tela inicial foi preservada.
+- **Arquivos modificados:** remoção dos dois arquivos de demonstração; ajuste em `src/global.css`.
+- **Checks:** `tsc --noEmit`, `expo lint` e `git diff --check` sem erros. Busca em `src/` sem referências a SidebarPreview, sidebar-preview ou ações da prévia. Os componentes preservados já foram conferidos em web na entrega anterior.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `/sidebar` deixou de existir; as instruções de abertura da entrada histórica anterior foram substituídas por esta entrega. Integração com telas reais continua fora deste incremento. Sem dependências novas.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Nav/AppSidebar e prévia para teste)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** `NavItem` reutilizável, seleção controlada, foco visível e suporte a desabilitado; `Sidebar` com largura 222, padding 16, itens mínimos de 56, slots 32/Lucide 24 e conta/saída no rodapé. Prévia em `/sidebar` com menus por perfil e ações simuladas; painel abaixo de 768 px, com Escape/fechar e retorno de foco no web. Esse breakpoint e estados de hover/pressionado são complementos da demonstração, não medidas confirmadas das telas do Figma. Ícones recebem os tokens no nativo e herdam a cor via wrapper no web. Resolvidos três conflitos locais, mantendo o placeholder inicial e os registros recentes dos docs.
+- **Arquivos modificados:** `src/components/ui/nav/*`, `src/components/ui/sidebar/*`, `src/components/sidebar-preview.tsx`, `src/app/sidebar.tsx`, `src/global.css`; resolução de conflito em `src/app/index.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros após `npm install` sincronizar dependências já declaradas (package.json e lock preservados). Conferência interativa web em desktop (1366x900), celular (390x844), altura reduzida (1024x300) e texto ampliado: medidas, cores de ícones/texto, seleção, teclado, perfis, conta/saída simuladas, painel e rolagem; nenhum erro/aviso do navegador. Sem suíte de testes adicionada ao projeto.
+- **Como conferir:** na pasta do projeto, `npx expo start --web --port 8082`, depois abrir `http://localhost:8082/sidebar`. Em largura de celular, usar "Abrir menu".
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem integração de rotas de negócio, sessão ou API; não exercitado em Android/iOS. Marca textual provisória substituível por `logo`. As páginas completas do Figma e o painel mobile não foram auditados nesta entrega. A fase permanece aberta.
+
+## [2026-10-09] - Entrega: ISSUE-005 (TeamStatusBadge)
+
+- **Fase:** Fase 4 - Equipes (parcial: só o componente visual).
+- **O que foi feito:** `TeamStatusBadge` em `src/features/teams/components/status/team-status-badge.tsx`, com `status: 'DOING_5S' | 'NOT_DOING_5S'`. Local da feature `teams` (regra "local primeiro" de `architecture.md`; vira global só se outra feature usar). Tipo em `types/team-status.ts`, textos em `constants/team-status.ts`. Visual: pílula, borda 1 px, altura mínima 28, texto 14/20 600, padding horizontal 10 (medida do Figma). "Fazendo 5S" em sucesso; "Não fazendo 5S" em neutro.
+- **Arquivos modificados:** `src/features/teams/{components/status,types,constants}/*` (`.gitkeep` removidos).
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros. Não verificado em tela/dispositivo; o badge ainda não é usado em nenhuma tela.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** Divergência registrada em `design-guidelines.md`: o Figma (Badge 5S `208:4707`) usa texto 10 px, "Fazendo" em azul e "Sem fazer 5s" em vermelho. Segui a regra funcional dos docs (14 px, sucesso/neutro, "Não fazendo 5S") até decisão de design. Faltam os estados "Status indisponível" e "Atualizando..." do briefing.
+## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Resolvidos os marcadores de conflito commitados no merge `develop` x `main`: `package.json` (dependências de ambos os lados, sem duplicatas; Tailwind/PostCSS/lightningcss em `devDependencies` nas versões da `main`, 4.1.12; `expo-web-browser` fora; `overrides` de `lightningcss` mantido), `package-lock.json` (partindo do lock da `main` + `npm install`), `app.json` (orientação `default`, um único `expo-secure-store`), `metro.config.js`, `src/app/_layout.tsx` (fonte Montserrat + splash + `StatusBar`), `src/app/index.tsx` (placeholder da `main`) e `docs/implementation-plan.md`. `src/global.css` reescrito a partir de `colors.tokens.json`, mantendo fontes e tamanhos de texto. Adicionado `.gitattributes` (LF) e a seção "Git e conflitos" em `ai-workflow.md`.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/app/_layout.tsx`, `src/app/index.tsx`, `src/global.css`, `docs/implementation-plan.md`, `docs/ai-workflow.md`, `.gitattributes`.
+- **Checks:** `git grep` sem marcadores; `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export --platform web` conclui. Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `ai-workflow.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `global.css` ainda tem complementos fora do JSON (`on-brand`, `destructive*`, bordas semânticas). Mudanças não commitadas. `ui/button` ainda não foi movido para `components/actions`.
+## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Resolvidos os marcadores de conflito commitados no merge `develop` x `main`: `package.json` (dependências de ambos os lados, sem duplicatas; Tailwind/PostCSS/lightningcss em `devDependencies` nas versões da `main`, 4.1.12; `expo-web-browser` fora; `overrides` de `lightningcss` mantido), `package-lock.json` (partindo do lock da `main` + `npm install`), `app.json` (orientação `default`, um único `expo-secure-store`), `metro.config.js`, `src/app/_layout.tsx` (fonte Montserrat + splash + `StatusBar`), `src/app/index.tsx` (placeholder da `main`) e `docs/implementation-plan.md`. `src/global.css` reescrito a partir de `colors.tokens.json`, mantendo fontes e tamanhos de texto. Adicionado `.gitattributes` (LF) e a seção "Git e conflitos" em `ai-workflow.md`.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/app/_layout.tsx`, `src/app/index.tsx`, `src/global.css`, `docs/implementation-plan.md`, `docs/ai-workflow.md`, `.gitattributes`.
+- **Checks:** `git grep` sem marcadores; `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export --platform web` conclui. Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `ai-workflow.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `global.css` ainda tem complementos fora do JSON (`on-brand`, `destructive*`, bordas semânticas). Mudanças não commitadas. `ui/button` ainda não foi movido para `components/actions`.
 ## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente global Alert)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial; primeiro componente global de UI).

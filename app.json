@@ -3,10 +3,7 @@
     "name": "FiveSense-App",
     "slug": "FiveSense-App",
     "version": "1.0.0",
-<<<<<<< HEAD
-=======
     "orientation": "default",
->>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
     "icon": "./assets/images/icon.png",
     "scheme": "fivesenseapp",
     "userInterfaceStyle": "light",
@@ -43,8 +40,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ],
-      "expo-secure-store"
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

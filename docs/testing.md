@@ -44,3 +44,7 @@ Para revisões exclusivamente documentais, conferir links locais, rastreabilidad
 - Lint e typecheck sem erros.
 - Verificação manual acima feita, ou limitação registrada em `deployment-log.md`.
 - Docs ajustados quando contrato ou fluxo mudou.
+
+## Após a retirada do catálogo - 2026-10-16
+
+A rota /components e seus exemplos foram removidos por pedido do humano (decisão 0009). Conferências anteriores ficam no deployment-log; não há página permanente de demonstração. Para esta remoção: tipos, lint, diff, busca por referências órfãs e exportação web sem /components; materiais sem aviso de estoque baixo e MenuButton/AppMenu preservados.
