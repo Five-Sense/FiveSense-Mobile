@@ -1,6 +1,6 @@
 # Architecture
 
-Arquitetura direcionada a funcionalidade (Feature Driven Architecture). Cada funcionalidade é dona de tudo o que só ela usa; o que é compartilhado por mais de uma funcionalidade vive na raiz de `src/` como global. Objetivo: o mínimo para cumprir o escopo.
+Arquitetura direcionada a funcionalidade (Feature Driven Architecture). Cada funcionalidade é dona de tudo o que só ela usa; o que é compartilhado por mais de uma funcionalidade vive na pasta `shared/` em `src/`. Objetivo: o mínimo para cumprir o escopo.
 
 ## Visão geral
 
@@ -31,13 +31,21 @@ src/
       utils/               funções puras da feature
       contexts/            só se a feature precisar de estado compartilhado
       index.ts             API pública da feature
-  components/              globais, agrupados por função (ver abaixo)
-  hooks/                   hooks globais (ex.: use-paginated-list, use-breakpoint, use-confirm-discard)
-  services/                api/ (cliente, AppError, Page<T>, upload), storage/ (armazenamento seguro)
-  contexts/                globais (ex.: session com usuário/perfil, toast)
-  utils/                   funções puras globais (formatadores, validadores genéricos, permissions)
-  constants/               globais (tema, breakpoints, rotas, perfis)
-  types/                   tipos globais (Role, Page<T>, AppError)
+  shared/                  pastas globais (compartilhadas por múltiplas features)
+    components/            globais, agrupados por função (ver abaixo)
+    forms/                 Input, PasswordInput, Select, QuantityStepper, ImagePicker, FormField
+    feedback/              Alert, Toast, Skeleton, EmptyState, ErrorState, Spinner
+    overlays/              Modal, ConfirmDialog, DiscardDialog
+    data-display/          Card, Badge, Table, Pagination, PlaceholderImage
+    navigation/            Sidebar, Header, MobileMenu
+    layout/                Screen, Page, Section, ListScreen
+    actions/               Button, IconButton
+    hooks/                 hooks globais (ex.: use-paginated-list, use-breakpoint, use-confirm-discard)
+    services/              api/ (cliente, AppError, Page<T>, upload), storage/ (armazenamento seguro)
+    contexts/              globais (ex.: session com usuário/perfil, toast)
+    utils/                 funções puras globais (formatadores, validadores genéricos, permissions)
+    constants/             globais (tema, breakpoints, rotas, perfis)
+    types/                 tipos globais (Role, Page<T>, AppError)
   global.css               tokens do tema (Tailwind)
 ```
 
@@ -45,7 +53,7 @@ src/
 
 As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (apague o `.gitkeep` ao criar o primeiro arquivo da pasta):
 
-- Globais: `src/components/{actions,data-display,feedback,forms,layout,navigation,overlays}`, `src/hooks`, `src/services/{api,storage}`, `src/contexts`, `src/utils`, `src/constants`, `src/types`.
+- Globais (dentro de `src/shared/`): `components/{actions,data-display,feedback,forms,layout,navigation,overlays}`, `hooks`, `services/{api,storage}`, `contexts`, `utils`, `constants`, `types`.
 - Rotas: `src/app/(auth)` e `src/app/(app)`.
 - Features, cada uma com `screens`, `hooks`, `services`, `schemas`, `types` e `components/<função>`:
   - `auth` (`components/form`, `components/account`)
@@ -58,7 +66,7 @@ As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (
 ## Regra de ouro: local primeiro, global quando compartilhado
 
 - Todo componente, hook, service, util, constante, tipo ou contexto nasce dentro da feature que o usa.
-- Quando uma **segunda** feature precisar dele, mova para o global correspondente na raiz (`src/components`, `src/hooks`, `src/services`, `src/utils`, `src/constants`, `src/contexts`, `src/types`) e ajuste os imports das duas. Nunca importe de dentro de outra feature.
+- Quando uma **segunda** feature precisar dele, mova para o global correspondente dentro de `src/shared/` (`src/shared/components`, `src/shared/hooks`, `src/shared/services`, `src/shared/utils`, `src/shared/constants`, `src/shared/contexts`, `src/shared/types`) e ajuste os imports das duas. Nunca importe de dentro de outra feature.
 - Exemplos esperados como globais: Button, Input, Modal, Skeleton, EmptyState, ErrorState, Pagination, Badge; `use-paginated-list`; cliente de API; `session`; `permissions`.
 - Exemplos que ficam locais: `StockBadge` (materials), `TeamStatusBadge` (teams), `QuantityStepper` só se mais de uma feature usar (materials e occurrences: global).
 
@@ -84,9 +92,9 @@ As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (
 - Dentro da feature: `screens` -> `components`, `hooks` -> `services` -> `services` globais. `components` não chamam `services` diretamente; usam hooks.
 - Dependência circular proibida.
 
-## Cliente de API (`src/services/api`)
+## Cliente de API (`src/shared/services/api`)
 
-- Único ponto de saída HTTP. Host em `EXPO_PUBLIC_API_URL` (`https://fivesense-api.onrender.com`, ver `.env.example`); o prefixo `/api/v1` é constante em `src/services/api`. O host parece estar em hospedagem Render: a primeira chamada após inatividade pode demorar (não verificado), então o timeout inicial deve ser generoso e o estado de carregamento tolerar espera; sem segredos no app.
+- Único ponto de saída HTTP. Host em `EXPO_PUBLIC_API_URL` (`https://fivesense-api.onrender.com`, ver `.env.example`); o prefixo `/api/v1` é constante em `src/shared/services/api`. O host parece estar em hospedagem Render: a primeira chamada após inatividade pode demorar (não verificado), então o timeout inicial deve ser generoso e o estado de carregamento tolerar espera; sem segredos no app.
 - Contrato real da API em `data-model.md`. Se a API passar a emitir token, o cliente injeta `Authorization: Bearer` (NF001); hoje não há token.
 - Timeout em toda chamada. Respostas e erros convertidos para tipos do app (não vazar formato bruto da API para as telas).
 - Erros da API chegam como ProblemDetail (RFC 9457). Erro sempre vira `AppError` com `kind`: `network`, `unauthorized` (401), `forbidden` (403), `validation` (400/422, com erros por campo), `notFound` (404), `conflict` (409, ex.: excluir item referenciado), `server` (5xx), `unknown`.

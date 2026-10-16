@@ -74,3 +74,5 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 14 | Perfis (NF002) | Rotas públicas, sem checagem de perfil | Controle só na interface (ver `security.md`). |
 | 15 | Listas | Materiais também são paginados | Paginar materiais. |
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
+| 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |
+| 18 | Minicards de representantes no detalhe da equipe | `representatives` é um único texto livre | `TeamDetailsCard` recebe `string[]`; quem monta o card separa os nomes. Regra de separação (vírgula? quebra de linha?) a definir. |
