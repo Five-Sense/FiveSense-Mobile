@@ -32,6 +32,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Tokens do tema em `src/global.css` a partir de `colors.tokens.json` (cores, raios, dimensão, escala `space` e estilos de texto); falta conferir os demais estilos de texto, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
 - [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Button** (hoje em `src/components/ui/button`, a mover para `actions/`), **Select** e **MaterialItem** (feature `materials`) criados em 2026-10-09; **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
+- [x] Componentes reutilizáveis Nav/AppSidebar com estados e slots (conferidos em web em 2026-10-16, branch `feature/nav-component`). Demonstração e rota temporária removidas a pedido do humano; somente componentes e tokens permanecem.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
