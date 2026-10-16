@@ -81,15 +81,19 @@ Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/4
 
 ## ISSUE-004 - Materiais e Problemas
 
-**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 3
+**Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 3
 
 Objetivo: RF009 a RF013 e RF027 a RF033. Aceite: CRUD por perfil, lista com skeleton/refresh/vazio/erro, confirmações de alteração e exclusão.
 
+Estado atual: 2026-10-16 (IA) `MaterialDetailsCard` criado em `src/features/materials/components/details/` a partir do Figma `208:7927`, 100% fiel (decisão do humano, `decision-log.md` 0008). Só apresentação: sem tela, hook, serviço nem Modal. Status passa a Em andamento.
+
 ## ISSUE-005 - Equipes
 
-**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 4
+**Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 4
 
 Objetivo: RF017 a RF026. Aceite: status de 5S, representantes, calendário e permissão da própria equipe.
+
+Estado atual: 2026-10-16 (IA) criados em `src/features/teams/`: `TeamCard` (Figma `228:7974`, variantes sem fazer/fazendo 5S), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` (minicard atomizado) e `TeamStatusBadge` (reutilizada pelos dois cards; a Badge 5S não existia em nenhuma branch). 100% fiéis ao Figma (`decision-log.md` 0008). Só apresentação. Lacunas 17 e 18 registradas em `data-model.md`. Status passa a Em andamento.
 
 ## ISSUE-006 - Ocorrências e Usuários
 

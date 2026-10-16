@@ -48,15 +48,17 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 3 - Materiais e Problemas (Gestor)
 
-**Status:** Planejada
+**Status:** Em andamento (apenas o componente de detalhes do material, a pedido do humano; telas e API seguem planejadas)
 
+- [x] Componente `MaterialDetailsCard` (Figma `208:7927`), somente apresentação (2026-10-16).
 - [ ] Materiais: lista (Gestor e Visualizador), detalhes, criar, editar, excluir, alerta de estoque.
 - [ ] Problemas: lista paginada, detalhes, criar, editar, excluir.
 
 ### Fase 4 - Equipes
 
-**Status:** Planejada
+**Status:** Em andamento (apenas componentes de card, a pedido do humano; telas e API seguem planejadas)
 
+- [x] Componentes `TeamCard` (Figma `228:7974`), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` e `TeamStatusBadge`, somente apresentação (2026-10-16).
 - [ ] Lista paginada com status, detalhes; Gestor cria, edita, exclui e gerencia representantes.
 - [ ] Visualizador altera status da própria equipe e consulta o calendário.
 
