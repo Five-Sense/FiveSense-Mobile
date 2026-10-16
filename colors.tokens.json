@@ -1,0 +1,1008 @@
+{
+  "brand": {
+    "primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0.501960813999176
+        ],
+        "alpha": 1,
+        "hex": "#000080"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:5",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-primary)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:d8d96d6ff728a8971d36138abe6794f9988e3809/-1:-1",
+          "targetVariableName": "brand/primary",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "action": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.27843138575553894,
+          0.27843138575553894,
+          0.8313725590705872
+        ],
+        "alpha": 1,
+        "hex": "#4747D4"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:7",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-action)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:1c4371c914c83af4dd172a4e6e571a9672c75ca8/-1:-1",
+          "targetVariableName": "brand/action",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "action-hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.21568627655506134,
+          0.21568627655506134,
+          0.7215686440467834
+        ],
+        "alpha": 1,
+        "hex": "#3737B8"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:9",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-action-hover)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:64ad740bfeafa50388f5913e86087dffb798a7a4/-1:-1",
+          "targetVariableName": "brand/action-hover",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "dark": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.054901961237192154,
+          0.054901961237192154,
+          0.3333333432674408
+        ],
+        "alpha": 1,
+        "hex": "#0E0E55"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:11",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-dark)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:92649668a8c79464f97447440f68e3368d7fa35a/-1:-1",
+          "targetVariableName": "brand/dark",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "accent": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.501960813999176,
+          0.501960813999176,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#8080FF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:13",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-accent)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c9ddf93f3f560f8dca9f719fe9408a8d423a88a7/-1:-1",
+          "targetVariableName": "brand/accent",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "soft": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333373069763,
+          0.9333333373069763,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#EEEEFF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:15",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--brand-soft)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:fd86f366fe044b9dbaf8e18f07e8a0317db45c41/-1:-1",
+          "targetVariableName": "brand/soft",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "text": {
+    "primary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.06666667014360428,
+          0.06666667014360428,
+          0.06666667014360428
+        ],
+        "alpha": 1,
+        "hex": "#111111"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:17",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--text-primary)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:7c322b110d2bd6250e21a0f0d5593abe41592ddf/-1:-1",
+          "targetVariableName": "text/primary",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.27843138575553894,
+          0.3333333432674408,
+          0.4117647111415863
+        ],
+        "alpha": 1,
+        "hex": "#475569"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:27",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--text-secondary)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:4d9e6b7b50ebde6e277d88892cc5ed85e1504a97/-1:-1",
+          "targetVariableName": "text/secondary",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "muted": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3921568691730499,
+          0.45490196347236633,
+          0.545098066329956
+        ],
+        "alpha": 1,
+        "hex": "#64748B"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:29",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--text-muted)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:21ae3ef7ccd4cbec751569d7ae774bc452a1e9d2/-1:-1",
+          "targetVariableName": "text/muted",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "background": {
+    "page": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9882352948188782,
+          0.9882352948188782,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#FCFCFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:19",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--background-page)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:c2ea2503fac2aa75b667f5c2d15afd339d8839a3/-1:-1",
+          "targetVariableName": "background/page",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "surface": {
+    "default": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:21",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--surface-default)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:960beefd93e67e8663799d599882e44d4eb892f5/-1:-1",
+          "targetVariableName": "surface/default",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "subtle": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9450980424880981,
+          0.9607843160629272,
+          0.9764705896377563
+        ],
+        "alpha": 1,
+        "hex": "#F1F5F9"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:23",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--surface-subtle)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:70887f7142c0e0c624bc3ed3b530678cd922b30b/-1:-1",
+          "targetVariableName": "surface/subtle",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "hover": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9725490212440491,
+          0.9803921580314636,
+          0.9882352948188782
+        ],
+        "alpha": 1,
+        "hex": "#F8FAFC"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:25",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--surface-hover)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:eaab443ed1cc96a43b2bb3b95ab5beaeaf450edf/-1:-1",
+          "targetVariableName": "surface/hover",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "border": {
+    "subtle": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.886274516582489,
+          0.9098039269447327,
+          0.9411764740943909
+        ],
+        "alpha": 1,
+        "hex": "#E2E8F0"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:31",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--border-subtle)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:2b90b77df836b139da7b2074d438e7cbeb0a6ca2/-1:-1",
+          "targetVariableName": "border/subtle",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "control": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3921568691730499,
+          0.45490196347236633,
+          0.545098066329956
+        ],
+        "alpha": 1,
+        "hex": "#64748B"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:33",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--border-control)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:836ed08846c3ac15550ce86c58235fb7f876b5dd/-1:-1",
+          "targetVariableName": "border/control",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "disabled": {
+    "background": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.886274516582489,
+          0.9098039269447327,
+          0.9411764740943909
+        ],
+        "alpha": 1,
+        "hex": "#E2E8F0"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:35",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--disabled-background)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:40f4e8cfd6f5453edf3654f341edd3a04bf0d937/-1:-1",
+          "targetVariableName": "disabled/background",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "text": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3921568691730499,
+          0.45490196347236633,
+          0.545098066329956
+        ],
+        "alpha": 1,
+        "hex": "#64748B"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:37",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--disabled-text)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:cc6124970472f4d823075caf0c33bb98bbbc2fed/-1:-1",
+          "targetVariableName": "disabled/text",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "focus": {
+    "ring": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.27843138575553894,
+          0.27843138575553894,
+          0.8313725590705872
+        ],
+        "alpha": 1,
+        "hex": "#4747D4"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:39",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--focus-ring)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:fb3512b5d7930c0508b4d950e1a7419bd3cc398a/-1:-1",
+          "targetVariableName": "focus/ring",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "error": {
+    "text": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7254902124404907,
+          0.10980392247438431,
+          0.10980392247438431
+        ],
+        "alpha": 1,
+        "hex": "#B91C1C"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:41",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--error-text)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:51c1a3d2e9b80b8b8d400d821484c68080f4a08c/-1:-1",
+          "targetVariableName": "error/text",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9960784316062927,
+          0.9490196108818054,
+          0.9490196108818054
+        ],
+        "alpha": 1,
+        "hex": "#FEF2F2"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:43",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--error-bg)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:48be5253a4417e2b44eb719979fb3c004c3cd49a/-1:-1",
+          "targetVariableName": "error/bg",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "success": {
+    "text": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.08627451211214066,
+          0.3960784375667572,
+          0.20392157137393951
+        ],
+        "alpha": 1,
+        "hex": "#166534"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:45",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--success-text)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:16c5fdbe560b809a05b7cc76a5679045b4db1d42/-1:-1",
+          "targetVariableName": "success/text",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9411764740943909,
+          0.9921568632125854,
+          0.95686274766922
+        ],
+        "alpha": 1,
+        "hex": "#F0FDF4"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:47",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--success-bg)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:e89f7b485e256cc688b7abff237b838dff951c97/-1:-1",
+          "targetVariableName": "success/bg",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "warning": {
+    "text": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.572549045085907,
+          0.250980406999588,
+          0.054901961237192154
+        ],
+        "alpha": 1,
+        "hex": "#92400E"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:49",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--warning-text)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:77b20e1ab3c4b911efe4e2d9f2df0bfbef337e0b/-1:-1",
+          "targetVariableName": "warning/text",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          0.9843137264251709,
+          0.9215686321258545
+        ],
+        "alpha": 1,
+        "hex": "#FFFBEB"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:51",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--warning-bg)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:36624551f6bfb2532fa35a1e27f6e6e58d3939b4/-1:-1",
+          "targetVariableName": "warning/bg",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "info": {
+    "text": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.11764705926179886,
+          0.250980406999588,
+          0.686274528503418
+        ],
+        "alpha": 1,
+        "hex": "#1E40AF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:53",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--info-text)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:6f35a05263b0dfb39967d9985d71be73c407e189/-1:-1",
+          "targetVariableName": "info/text",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    },
+    "bg": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9372549057006836,
+          0.9647058844566345,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#EFF6FF"
+      },
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:55",
+        "com.figma.scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "TEXT_FILL",
+          "STROKE"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--info-bg)"
+        },
+        "com.figma.aliasData": {
+          "targetVariableId": "VariableID:4863f4292ba33c031f6f9a544bb44bdb5a2d195d/-1:-1",
+          "targetVariableName": "info/bg",
+          "targetVariableSetId": "VariableCollectionId:0ee1fea668c47a104126f0f3708222caa82ac530/-1:-1",
+          "targetVariableSetName": "Five Sense · Primitivos"
+        }
+      }
+    }
+  },
+  "space": {
+    "1": {
+      "$type": "number",
+      "$value": 4,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:56",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-1)"
+        }
+      }
+    },
+    "2": {
+      "$type": "number",
+      "$value": 8,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:57",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-2)"
+        }
+      }
+    },
+    "3": {
+      "$type": "number",
+      "$value": 12,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:58",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-3)"
+        }
+      }
+    },
+    "4": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:59",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-4)"
+        }
+      }
+    },
+    "6": {
+      "$type": "number",
+      "$value": 24,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:60",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-6)"
+        }
+      }
+    },
+    "8": {
+      "$type": "number",
+      "$value": 32,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:61",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-8)"
+        }
+      }
+    },
+    "10": {
+      "$type": "number",
+      "$value": 40,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:62",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-10)"
+        }
+      }
+    },
+    "12": {
+      "$type": "number",
+      "$value": 48,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:63",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-12)"
+        }
+      }
+    },
+    "16": {
+      "$type": "number",
+      "$value": 64,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:64",
+        "com.figma.scopes": [
+          "GAP"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--space-16)"
+        }
+      }
+    }
+  },
+  "radius": {
+    "control": {
+      "$type": "number",
+      "$value": 8,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:65",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--radius-control)"
+        }
+      }
+    },
+    "card": {
+      "$type": "number",
+      "$value": 12,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:66",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--radius-card)"
+        }
+      }
+    },
+    "modal": {
+      "$type": "number",
+      "$value": 16,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:67",
+        "com.figma.scopes": [
+          "CORNER_RADIUS"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--radius-modal)"
+        }
+      }
+    }
+  },
+  "dimension": {
+    "control": {
+      "$type": "number",
+      "$value": 48,
+      "$extensions": {
+        "com.figma.variableId": "VariableID:2:68",
+        "com.figma.scopes": [
+          "WIDTH_HEIGHT"
+        ],
+        "com.figma.codeSyntax": {
+          "WEB": "var(--dimension-control)"
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Mode 1"
+  }
+}

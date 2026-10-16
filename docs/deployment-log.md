@@ -1,4 +1,4 @@
-﻿# Deployment Log
+# Deployment Log
 
 Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada referencia issue/fase, arquivos, checks e riscos. Decisões duradouras vão em `decision-log.md`; estado vivo em `issues.md`.
 
@@ -17,6 +17,22 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Resolvidos os marcadores de conflito commitados no merge `develop` x `main`: `package.json` (dependências de ambos os lados, sem duplicatas; Tailwind/PostCSS/lightningcss em `devDependencies` nas versões da `main`, 4.1.12; `expo-web-browser` fora; `overrides` de `lightningcss` mantido), `package-lock.json` (partindo do lock da `main` + `npm install`), `app.json` (orientação `default`, um único `expo-secure-store`), `metro.config.js`, `src/app/_layout.tsx` (fonte Montserrat + splash + `StatusBar`), `src/app/index.tsx` (placeholder da `main`) e `docs/implementation-plan.md`. `src/global.css` reescrito a partir de `colors.tokens.json`, mantendo fontes e tamanhos de texto. Adicionado `.gitattributes` (LF) e a seção "Git e conflitos" em `ai-workflow.md`.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/app/_layout.tsx`, `src/app/index.tsx`, `src/global.css`, `docs/implementation-plan.md`, `docs/ai-workflow.md`, `.gitattributes`.
+- **Checks:** `git grep` sem marcadores; `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export --platform web` conclui. Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `ai-workflow.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `global.css` ainda tem complementos fora do JSON (`on-brand`, `destructive*`, bordas semânticas). Mudanças não commitadas. `ui/button` ainda não foi movido para `components/actions`.
+## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Resolvidos os marcadores de conflito commitados no merge `develop` x `main`: `package.json` (dependências de ambos os lados, sem duplicatas; Tailwind/PostCSS/lightningcss em `devDependencies` nas versões da `main`, 4.1.12; `expo-web-browser` fora; `overrides` de `lightningcss` mantido), `package-lock.json` (partindo do lock da `main` + `npm install`), `app.json` (orientação `default`, um único `expo-secure-store`), `metro.config.js`, `src/app/_layout.tsx` (fonte Montserrat + splash + `StatusBar`), `src/app/index.tsx` (placeholder da `main`) e `docs/implementation-plan.md`. `src/global.css` reescrito a partir de `colors.tokens.json`, mantendo fontes e tamanhos de texto. Adicionado `.gitattributes` (LF) e a seção "Git e conflitos" em `ai-workflow.md`.
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/app/_layout.tsx`, `src/app/index.tsx`, `src/global.css`, `docs/implementation-plan.md`, `docs/ai-workflow.md`, `.gitattributes`.
+- **Checks:** `git grep` sem marcadores; `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export --platform web` conclui. Não verificado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `ai-workflow.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `global.css` ainda tem complementos fora do JSON (`on-brand`, `destructive*`, bordas semânticas). Mudanças não commitadas. `ui/button` ainda não foi movido para `components/actions`.
 ## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente global Alert)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial; primeiro componente global de UI).
