@@ -127,3 +127,12 @@ Implementar como no Figma: badge 10/20 com "Fazendo 5S" (texto `brand-action`) e
 
 ### Consequências
 Badge de 10 px e vermelho para "Sem fazer 5s" divergem das regras de acessibilidade e de semântica do briefing, aceitas pelo humano; pode exigir revisão se o design reconciliar. Preto puro no código é provável descuido do design (não há token): confirmar com o design. A Badge `TeamStatusBadge` nasceu local em `features/teams` (não existia em nenhuma branch); sobe para o global se outra feature a usar.
+
+## 0010 - Login por username e confirmação provisória na mesma tela
+
+- **Data:** 2026-10-16
+- **Estado:** Aceita (respostas explícitas do humano)
+- **Contexto:** o print de login contém e-mail, mas a documentação e o OpenAPI atuais recebem username/password; a tela principal ainda será enviada.
+- **Decisão:** o humano confirmou que o protótipo está incorreto e o campo será Nome de usuário, sem validação de e-mail. Confirmar o acesso na mesma tela por enquanto. Usar o contrato atual sem buscar e-mail por endpoints de usuários; iniciar sessão somente de VIEWER, mantendo o escopo anterior. Sem novas dependências.
+- **Sessão:** dados mínimos no SecureStore nativo e apenas em memória no web, sem senha/token e sem expiração inventada. Header X-User-Role pertence ao contrato didático atual, não substitui autenticação real. Não inventar backend/proxy para corrigir CORS.
+- **Consequências:** layout e componentes seguem Figma, texto/validação do identificador seguem a correção humana. Web real depende da liberação de CORS no backend; sucesso real depende de conta VIEWER válida. Recuperação e telas após login aguardam novos prints.

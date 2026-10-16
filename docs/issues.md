@@ -75,9 +75,21 @@ Objetivo: NativeWind, fontes, ícones, tokens, componentes base de UI, cliente d
 
 ## ISSUE-003 - Autenticação e conta
 
-**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 2
+**Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 2
 
 Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/403. Aceite: login/logout com erro tratado e navegação por perfil.
+
+### Incremento autorizado: tela inicial do login - 2026-10-16
+
+- **Branch:** feature/login-flow, selecionada e limpa no início. Ler docs antes de código; reutilizar componentes existentes; cliente somente do Visualizador conforme pedido anterior, sem fluxos de gestão/administração.
+- **Fonte visual:** print individual do humano e contexto Figma 33:2564 (834x1194); feedbacks 238:8117 (obrigatórios), 238:8246 (e-mail inválido), 238:8294 (credenciais incorretas).
+- **Visual:** page; logo 246x149, gap 64 até Auth/Card 440 com padding 32, raio 12 e borda sutil; título Auth 32/40, descrição Body 16/24; campos 48, label 14/20, gap 24, botão Login com seta à direita. Altura cresce com feedback. Largura fluida no celular, padding 24, área segura, rolagem e teclado.
+- **Composição:** rota fina; screen, formulário, schema, hook e service na feature auth; único cliente HTTP/AppError em shared/services/api. Reutilizar Input, PasswordInput, Button, Alert, Icon e Spinner, logo-symbol/logo-text se corresponderem exatamente. Restaurar tokens documentados ausentes; corrigir imports de Icon que quebram a linha de base e o ciclo Input/PasswordInput. Button ganha posição opcional de ícone (padrão anterior preservado), bloqueio efetivo ao carregar e cores por Icon/Spinner globais; Alert recebe fontes/tokens Montserrat e descrição acessível.
+- **Comportamento:** validar obrigatórios antes de envio; nome de usuário sem regra de formato de e-mail; senha não recebe regras de cadastro nem é normalizada; mostrar Alert com bordas somente nos campos envolvidos. Editar limpa os erros pertinentes; mostrar/ocultar senha; Enter envia; loading impede duplicidade, com timeout e cancelamento; erros de rede, API e resposta inválida têm feedback recuperável. Não registrar credenciais nem armazenar senha.
+- **Contrato confirmado:** POST /api/v1/auth/login recebe username/password, responde authenticated/userId/name/username/email/role; inativo/incorreto retorna 400. X-User-Role é necessário nas outras rotas; sem JWT documentado. O humano confirmou que o protótipo está incorreto: campo Nome de usuário, obrigatório, até 255 caracteres, sem validação de e-mail. Senha obrigatória e até 255, preservada sem trim no envio. Recuperação agora aparece na API, mas continua fora deste incremento/print.
+- **Pós-login aprovado:** confirmação de sucesso na própria tela enquanto a próxima tela não chega. Sessão guarda somente dados validados de VIEWER (SecureStore no nativo; memória no web). Sem guardar senha/token nem inventar expiração. Nenhuma tela principal adicional.
+- **Estado do incremento:** cliente implementado; tipos, lint, diff e exportação web aprovados. Layout, assets e controles conferidos em web (1280x720, 834x1194, 390x844, 320x640), sem transbordamento horizontal. Obrigatórios completos/parciais, foco para senha, mostrar/ocultar, Enter, loading desabilitado, erro e sucesso confirmados; fixtures locais para estados remotos e sessão web reiniciada no reload. API real confirmou 400 para credenciais fictícias. Sem dependências novas nem suíte permanente. ISSUE-003/Fase 2 permanecem Em andamento pelas demais telas e pendências externas.
+- **Bloqueio externo:** web real sem CORS para localhost (OPTIONS 200 sem Access-Control-Allow-Origin); backend precisa liberar origem, POST/OPTIONS e Content-Type. O app informa falha de conexão e permite novo envio. Não houve bypass/proxy nem alteração na API. Sucesso com conta real VIEWER e execução Android/iOS ainda não verificados.
 
 ## ISSUE-004 - Materiais e Problemas
 

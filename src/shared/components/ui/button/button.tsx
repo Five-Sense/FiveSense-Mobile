@@ -1,16 +1,8 @@
 import type { LucideIcon } from 'lucide-react-native';
-import { LoaderCircle } from 'lucide-react-native';
-import { styled } from 'nativewind';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import Animated, {
-  cancelAnimation,
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
+import { Icon } from '../icon';
+import { Spinner } from '../spinner';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'destructive';
 
@@ -26,12 +18,14 @@ export type ButtonProps = {
   loading?: boolean;
   /** Rotulo no estado de carregamento (ex.: "Salvando..."). Sem ele, mantem `children`. */
   loadingLabel?: string;
-  /** Icone Lucide opcional, exibido antes do rotulo. */
+  /** Ícone Lucide opcional; posição inicial preserva os usos existentes. */
   icon?: LucideIcon;
+  iconPosition?: 'start' | 'end';
+  iconSize?: number;
 };
 
 const ICON_SIZE = 24;
-const SPINNER_SIZE = 20;
+
 
 type VariantClasses = {
   /** Fundo e borda por estado de interacao. */
@@ -75,36 +69,6 @@ const BASE_CONTAINER =
   'w-full min-h-control flex-row items-center justify-center gap-[8px] p-[8px] rounded-control';
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
-type IconGlyphProps = { icon: LucideIcon; size: number; color?: string };
-
-function IconGlyph({ icon: Icon, size, color }: IconGlyphProps) {
-  return <Icon size={size} color={color} strokeWidth={2} />;
-}
-
-// Converte `className="text-..."` na prop `color` do SVG, sem hex no codigo.
-const StyledIconGlyph = styled(IconGlyph, {
-  className: { target: false, nativeStyleMapping: { color: 'color' } },
-});
-
-function Spinner({ contentClassName }: { contentClassName: string }) {
-  const rotation = useSharedValue(0);
-
-  useEffect(() => {
-    rotation.value = withRepeat(withTiming(360, { duration: 1000, easing: Easing.linear }), -1);
-    return () => cancelAnimation(rotation);
-  }, [rotation]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: `${rotation.value}deg` }],
-  }));
-
-  return (
-    <Animated.View style={animatedStyle}>
-      <StyledIconGlyph icon={LoaderCircle} size={SPINNER_SIZE} className={contentClassName} />
-    </Animated.View>
-  );
-}
-
 export function Button({
   children,
   variant = 'primary',
@@ -113,6 +77,8 @@ export function Button({
   loading = false,
   loadingLabel,
   icon,
+  iconPosition = 'start',
+  iconSize = ICON_SIZE,
 }: ButtonProps) {
   const [focused, setFocused] = useState(false);
 
@@ -133,19 +99,22 @@ export function Button({
 
   return (
     <Pressable
+      disabled={blocked}
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ disabled, busy: loading }}
+      accessibilityState={{ disabled: blocked, busy: loading }}
+      aria-disabled={blocked}
+      aria-busy={loading}
       onPress={handlePress}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
       className={`${BASE_CONTAINER} ${colors.container} ${focused ? FOCUS_RING : ''}`}
     >
       {loading ? (
-        <Spinner contentClassName={colors.content} />
-      ) : icon ? (
+        <Spinner size={20} className={colors.content} />
+      ) : icon && iconPosition === 'start' ? (
         <View className="size-icon-slot items-center justify-center">
-          <StyledIconGlyph icon={icon} size={ICON_SIZE} className={colors.content} />
+          <Icon icon={icon} size={iconSize} className={colors.content} />
         </View>
       ) : null}
       <Text
@@ -153,6 +122,11 @@ export function Button({
       >
         {label}
       </Text>
+      {!loading && icon && iconPosition === 'end' ? (
+        <View className="size-icon-slot items-center justify-center">
+          <Icon icon={icon} size={iconSize} className={colors.content} />
+        </View>
+      ) : null}
     </Pressable>
   );
 }

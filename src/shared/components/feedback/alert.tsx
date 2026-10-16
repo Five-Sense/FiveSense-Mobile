@@ -29,18 +29,19 @@ export function Alert({ variant = 'error', title, description, className }: Aler
 		<View
 			accessible
 			accessibilityRole="alert"
-			accessibilityLabel={`${style.role}: ${title}`}
+			accessibilityLabel={[`${style.role}: ${title}`, typeof description === 'string' ? description : null].filter(Boolean).join('. ')}
+            accessibilityLiveRegion={variant === 'error' ? 'assertive' : 'polite'}
 			className={[
-				'gap-2 overflow-hidden rounded-lg bg-surface p-4',
-				'shadow-md shadow-black/25',
+				'gap-2 overflow-hidden rounded-control bg-surface p-4',
+				'shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]',
 				className ?? '',
 			].join(' ')}
 		>
-			<Text className={`text-base font-semibold leading-6 ${style.text}`}>{title}</Text>
+			<Text className={`font-montserrat-semibold text-button ${style.text}`}>{title}</Text>
 
 			{description != null ? (
 				typeof description === 'string' ? (
-					<Text className={`text-sm font-normal leading-5 ${style.text}`}>{description}</Text>
+					<Text className={`font-montserrat text-helper ${style.text}`}>{description}</Text>
 				) : (
 					description
 				)

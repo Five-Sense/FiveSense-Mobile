@@ -1,12 +1,10 @@
 import { Eye, EyeOff } from 'lucide-react-native';
-import { styled } from 'nativewind';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { Pressable, TextInput } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 
-import { Input, type InputProps } from './input';
+import { Icon } from './icon';
+import { Input, type InputProps } from './input-base';
 
-const EyeIcon = styled(Eye, { className: { target: 'style', nativeStyleMapping: { color: 'color' } } });
-const EyeOffIcon = styled(EyeOff, { className: { target: 'style', nativeStyleMapping: { color: 'color' } } });
 
 export type PasswordInputProps = Omit<
   InputProps,
@@ -20,7 +18,7 @@ export const PasswordInput = forwardRef<TextInput, PasswordInputProps>(function 
   const [visible, setVisible] = useState(false);
   const inputRef = useRef<TextInput>(null);
   useImperativeHandle(ref, () => inputRef.current!, []);
-  const Icon = visible ? EyeOffIcon : EyeIcon;
+
   const hasError = Boolean(error);
 
   return (
@@ -46,12 +44,12 @@ export const PasswordInput = forwardRef<TextInput, PasswordInputProps>(function 
             setVisible((current) => !current);
             inputRef.current?.focus();
           }}>
+          <View accessible={false} importantForAccessibility="no-hide-descendants">
           <Icon
-            size={24}
-            strokeWidth={2}
-            accessible={false}
+            icon={visible ? EyeOff : Eye}            size={24}
             className={disabled ? 'text-disabled-text' : hasError ? 'text-error-text' : 'text-text-secondary'}
           />
+          </View>
         </Pressable>
       }
     />
