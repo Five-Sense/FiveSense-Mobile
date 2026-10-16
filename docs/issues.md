@@ -50,6 +50,8 @@ Objetivo: NativeWind, fontes, ícones, tokens, componentes base de UI, cliente d
 
 ### Estado do incremento de navegação
 
+- **2026-10-16 (IA, integração da develop):** Resolvido o conflito em `deployment-log.md`, preservando as entradas das duas branches. Corrigido o import de Icon em MenuButton para `@/shared/components/data-display/icon`, acompanhando a reorganização recebida da develop. Typecheck, lint e diff sem erros; sem marcadores de conflito. Nenhuma demonstração restaurada; stash anterior preservado. ISSUE-002 permanece Em andamento.
+
 - **2026-10-16 (IA, remoção da prévia):** Em andamento por pedido do humano. Remover a rota /sidebar e SidebarPreview, preservando NavItem, Sidebar e seus tokens; manter o histórico das verificações já realizadas.
 
 - **2026-10-16 (IA):** Incremento visual concluído e disponível em `/sidebar`. Resolvidos conflitos locais de stash/atualização em `issues.md`, `implementation-plan.md` e `src/app/index.tsx`, preservando as mudanças recentes do projeto e o placeholder inicial. Dependências existentes sincronizadas com `npm install` (sem alteração em package.json/package-lock.json). `tsc --noEmit` e `expo lint` passam. Conferência web em 1366x900, 390x844 e 1024x300: dimensões, cor de ícone/texto, seleção, perfis, callbacks simulados, foco, Escape, retorno do foco, rolagem e texto ampliado; sem erros/avisos do navegador. Android/iOS não executados. A ISSUE-002 permanece Em andamento pelos demais itens do scaffold.

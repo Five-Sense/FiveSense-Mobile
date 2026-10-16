@@ -35,6 +35,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Componentes reutilizáveis Nav/AppSidebar com estados e slots (conferidos em web em 2026-10-16, branch `feature/nav-component`). Demonstração e rota temporária removidas a pedido do humano; somente componentes e tokens permanecem.
 - [x] MenuButton e AppMenu horizontais, em componentes separados, conforme Figma e imagens de 2026-10-16; sem tela de demonstração. Tipos, lint e conferência web aprovados.
 - [x] Demonstração de MenuButton/AppMenu criada e conferida em 2026-10-16; removida por novo pedido do humano na mesma data. Permanecem somente os componentes.
+- [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
 
 ### Fase 2 - Autenticação e conta

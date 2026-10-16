@@ -2,7 +2,7 @@ import { LogOut } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import { Platform, ScrollView, Text, View } from 'react-native';
 
-import { NavItem, type NavItemProps } from '@/components/ui/nav';
+import { NavItem, type NavItemProps } from '@/shared/components/ui/nav';
 
 export type SidebarItem = Omit<NavItemProps, 'selected'> & { id: string };
 

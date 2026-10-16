@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-16] - Entrega: ISSUE-002 (Integração da develop na navegação)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Resolvido o conflito de merge do histórico, mantendo as entradas da navegação e do TeamStatusBadge. Corrigido o import de Icon em MenuButton para o caminho `@/shared/components/data-display/icon`, conforme a reorganização da develop. O stash anterior foi preservado sem aplicação, pois contém arquivos de uma demonstração já removida.
+- **Arquivos modificados na resolução:** `docs/deployment-log.md`, `src/components/navigation/menu-button.tsx`, `docs/issues.md`, `docs/implementation-plan.md`.
+- **Checks:** `npx --no-install tsc --noEmit`, `npx --no-install expo lint` e `git diff --check` sem erros; busca sem marcadores de conflito.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem nova verificação visual ou execução em Android/iOS; correção de integração sem alteração de comportamento visual. ISSUE-002 e Fase 1 permanecem Em andamento.
+
 ## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração de MenuButton/AppMenu)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
@@ -68,7 +77,14 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
 - **Riscos/Débito técnico:** sem integração de rotas de negócio, sessão ou API; não exercitado em Android/iOS. Marca textual provisória substituível por `logo`. As páginas completas do Figma e o painel mobile não foram auditados nesta entrega. A fase permanece aberta.
 
+## [2026-10-09] - Entrega: ISSUE-005 (TeamStatusBadge)
 
+- **Fase:** Fase 4 - Equipes (parcial: só o componente visual).
+- **O que foi feito:** `TeamStatusBadge` em `src/features/teams/components/status/team-status-badge.tsx`, com `status: 'DOING_5S' | 'NOT_DOING_5S'`. Local da feature `teams` (regra "local primeiro" de `architecture.md`; vira global só se outra feature usar). Tipo em `types/team-status.ts`, textos em `constants/team-status.ts`. Visual: pílula, borda 1 px, altura mínima 28, texto 14/20 600, padding horizontal 10 (medida do Figma). "Fazendo 5S" em sucesso; "Não fazendo 5S" em neutro.
+- **Arquivos modificados:** `src/features/teams/{components/status,types,constants}/*` (`.gitkeep` removidos).
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros. Não verificado em tela/dispositivo; o badge ainda não é usado em nenhuma tela.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** Divergência registrada em `design-guidelines.md`: o Figma (Badge 5S `208:4707`) usa texto 10 px, "Fazendo" em azul e "Sem fazer 5s" em vermelho. Segui a regra funcional dos docs (14 px, sucesso/neutro, "Não fazendo 5S") até decisão de design. Faltam os estados "Status indisponível" e "Atualizando..." do briefing.
 ## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
