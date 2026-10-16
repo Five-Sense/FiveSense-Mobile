@@ -17,6 +17,66 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-16] - Entrega: ISSUE-002 (Integração da develop na navegação)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Resolvido o conflito de merge do histórico, mantendo as entradas da navegação e do TeamStatusBadge. Corrigido o import de Icon em MenuButton para o caminho `@/shared/components/data-display/icon`, conforme a reorganização da develop. O stash anterior foi preservado sem aplicação, pois contém arquivos de uma demonstração já removida.
+- **Arquivos modificados na resolução:** `docs/deployment-log.md`, `src/components/navigation/menu-button.tsx`, `docs/issues.md`, `docs/implementation-plan.md`.
+- **Checks:** `npx --no-install tsc --noEmit`, `npx --no-install expo lint` e `git diff --check` sem erros; busca sem marcadores de conflito.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem nova verificação visual ou execução em Android/iOS; correção de integração sem alteração de comportamento visual. ISSUE-002 e Fase 1 permanecem Em andamento.
+
+## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração de MenuButton/AppMenu)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** A pedido do humano, removida a demonstração. Excluídas a rota `/menu-demo`, a tela com exemplos/interações simuladas e somente as pastas exclusivas que ficaram vazias. Preservados `MenuButton`, `AppMenu`, suas propriedades/estilos e a tela inicial.
+- **Arquivos modificados:** remoção de `src/app/menu-demo.tsx` e `src/features/component-demo/screens/menu-demo-screen.tsx`.
+- **Checks:** `tsc --noEmit`, `expo lint` e `git diff --check` aprovados; busca em `src/` sem referências a MenuDemoScreen, component-demo ou menu-demo.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** a URL temporária deixou de existir. Permanecem os componentes para futura composição nas telas reais. Sem dependências ou mudanças de comportamento nos componentes.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Demonstração de MenuButton/AppMenu)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Após novo pedido explícito do humano, adicionada a rota `/menu-demo`. A tela demonstra os MenuButtons padrão/selecionado/desabilitado e compõe AppMenu no rodapé com Home, Ocorrências, Equipes e Materiais, inicialmente em Materiais. Seleção e feedback são locais. Conteúdo com rolagem e áreas seguras; componentes e tela inicial preservados. Nenhuma dependência ou fluxo de negócio adicionados.
+- **Arquivos modificados:** `src/app/menu-demo.tsx` e `src/features/component-demo/screens/menu-demo-screen.tsx` (novos).
+- **Checks:** `tsc --noEmit` e `expo lint` aprovados. Conferência visual/interativa web em 1100x800 e 390x844: clique/Enter atualizam seleção e feedback; disabled não dispara ação; barra permanece no rodapé e conteúdo não transborda horizontalmente. Capturas de ambos os tamanhos conferidas. Sem erros de execução no navegador.
+- **Como abrir:** `http://localhost:8082/menu-demo`, com o projeto iniciado por `npx expo start --web --port 8082`.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** demonstração sem API/sessão, sem navegação real para módulos. Android/iOS não executados. Fase 1 permanece Em andamento. Esta entrega atende ao pedido posterior de manter uma demonstração, substituindo essa restrição das entregas anteriores.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (MenuButton e AppMenu horizontais)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial), branch `feature/nav-component`.
+- **O que foi feito:** Dois componentes separados conforme pedido: `MenuButton`, unidade com ícone sobre o texto, e `AppMenu`, barra com slot children. Baseados na leitura direta do Figma (nodes 43:3650 e 33:2741) e nas imagens do humano. Seleção controlada com cor navy no ícone/rótulo; foco, disabled e nomes/estados acessíveis. Reutilizados Icon global, Lucide, Montserrat e tokens existentes; nenhum CSS global ou dependência alterados. Barra fluida e com altura natural para preservar os itens e a leitura ampliada. Cenário temporário de conferência removido; telas e rotas existentes preservadas.
+- **Arquivos modificados:** `src/components/navigation/menu-button.tsx` e `app-menu.tsx` (novos); `.gitkeep` da pasta removido por ela ter recebido componentes.
+- **Checks:** `tsc --noEmit` e `expo lint` aprovados. Conferência interativa web (Edge): MenuButton "Texto" 54x72, ícone 32, fonte 14/20, gap 4/padding 8, AppMenu vazio 65 e preenchido 101, cores de ícones/texto nos estados comum/selecionado/desabilitado, seleção por clique e Enter, foco e bloqueio de interação em disabled. Larguras 834/390/320 e texto ampliado a 200% sem transbordamento horizontal. Capturas visuais conferidas contra a referência enviada. Sem suíte de testes ou rota de demonstração mantida no repositório.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `design-guidelines.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** Android/iOS não executados. A composição final das telas e a integração com navegação/permissões seguem fora deste incremento. O navegador reportou apenas um favicon.ico ausente (404), recurso do app preexistente e fora do escopo; nenhum erro dos componentes. Break de linha/altura natural e estados complementares estão documentados em design-guidelines.md. ISSUE-002/Fase 1 permanecem abertas.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração do Nav)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** A pedido do humano, removidos `src/app/sidebar.tsx` e `src/components/sidebar-preview.tsx`, incluindo seleção simulada de perfil, mensagens e painel de teste. Preservados os componentes reutilizáveis `NavItem` e `Sidebar`, seus exports, estilos e callbacks configuráveis. Retirado o token de overlay usado exclusivamente na demonstração e as redefinições duplicadas de tipografia; mantidos os tokens específicos dos componentes e a tipografia já existente do projeto. A tela inicial foi preservada.
+- **Arquivos modificados:** remoção dos dois arquivos de demonstração; ajuste em `src/global.css`.
+- **Checks:** `tsc --noEmit`, `expo lint` e `git diff --check` sem erros. Busca em `src/` sem referências a SidebarPreview, sidebar-preview ou ações da prévia. Os componentes preservados já foram conferidos em web na entrega anterior.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `/sidebar` deixou de existir; as instruções de abertura da entrada histórica anterior foram substituídas por esta entrega. Integração com telas reais continua fora deste incremento. Sem dependências novas.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Nav/AppSidebar e prévia para teste)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** `NavItem` reutilizável, seleção controlada, foco visível e suporte a desabilitado; `Sidebar` com largura 222, padding 16, itens mínimos de 56, slots 32/Lucide 24 e conta/saída no rodapé. Prévia em `/sidebar` com menus por perfil e ações simuladas; painel abaixo de 768 px, com Escape/fechar e retorno de foco no web. Esse breakpoint e estados de hover/pressionado são complementos da demonstração, não medidas confirmadas das telas do Figma. Ícones recebem os tokens no nativo e herdam a cor via wrapper no web. Resolvidos três conflitos locais, mantendo o placeholder inicial e os registros recentes dos docs.
+- **Arquivos modificados:** `src/components/ui/nav/*`, `src/components/ui/sidebar/*`, `src/components/sidebar-preview.tsx`, `src/app/sidebar.tsx`, `src/global.css`; resolução de conflito em `src/app/index.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros após `npm install` sincronizar dependências já declaradas (package.json e lock preservados). Conferência interativa web em desktop (1366x900), celular (390x844), altura reduzida (1024x300) e texto ampliado: medidas, cores de ícones/texto, seleção, teclado, perfis, conta/saída simuladas, painel e rolagem; nenhum erro/aviso do navegador. Sem suíte de testes adicionada ao projeto.
+- **Como conferir:** na pasta do projeto, `npx expo start --web --port 8082`, depois abrir `http://localhost:8082/sidebar`. Em largura de celular, usar "Abrir menu".
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem integração de rotas de negócio, sessão ou API; não exercitado em Android/iOS. Marca textual provisória substituível por `logo`. As páginas completas do Figma e o painel mobile não foram auditados nesta entrega. A fase permanece aberta.
+
 ## [2026-10-09] - Entrega: ISSUE-005 (TeamStatusBadge)
 
 - **Fase:** Fase 4 - Equipes (parcial: só o componente visual).

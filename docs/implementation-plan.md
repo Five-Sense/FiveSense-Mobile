@@ -33,6 +33,9 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
 - [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Button** (hoje em `src/components/ui/button`, a mover para `actions/`), **Select** e **MaterialItem** (feature `materials`) criados em 2026-10-09; **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
 - [x] Componentes reutilizáveis Nav/AppSidebar com estados e slots (conferidos em web em 2026-10-16, branch `feature/nav-component`). Demonstração e rota temporária removidas a pedido do humano; somente componentes e tokens permanecem.
+- [x] MenuButton e AppMenu horizontais, em componentes separados, conforme Figma e imagens de 2026-10-16; sem tela de demonstração. Tipos, lint e conferência web aprovados.
+- [x] Demonstração de MenuButton/AppMenu criada e conferida em 2026-10-16; removida por novo pedido do humano na mesma data. Permanecem somente os componentes.
+- [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
 
 ### Fase 2 - Autenticação e conta
