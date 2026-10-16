@@ -27,12 +27,20 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento
 
 - [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
+<<<<<<< HEAD
+- [x] Instalar e configurar NativeWind, Montserrat e Lucide (2026-10-09). Pendentes: `expo-secure-store`, `expo-image-picker`, `zod`, `@tanstack/react-query`, quando forem necessários.
+- [x] Ajustar `app.json` (orientação livre, tema claro) (2026-10-09). Ícone do app e splash ainda são do template (identidade pendente).
+- [x] Tokens do tema em `src/global.css` (cores, raios, botão); ainda falta conferir espaçamentos e demais estilos de texto.
+- [ ] Componentes base de `ui/` (Button feito em 2026-10-09; faltam Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
+- [ ] Cliente de API com `AppError`, sessão e permissões.
+=======
 - [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query (falta carregar a fonte Montserrat).
 - [x] Ajustar `app.json` (orientação livre, tema claro).
 - [ ] Tokens do tema em `src/global.css` (cores prontas; faltam tipografia e espaçamento), com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
-- [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
+- [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
+>>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
 
 ### Fase 2 - Autenticação e conta
 
@@ -44,15 +52,17 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 3 - Materiais e Problemas (Gestor)
 
-**Status:** Planejada
+**Status:** Em andamento (apenas o componente de detalhes do material, a pedido do humano; telas e API seguem planejadas)
 
+- [x] Componente `MaterialDetailsCard` (Figma `208:7927`), somente apresentação (2026-10-16).
 - [ ] Materiais: lista (Gestor e Visualizador), detalhes, criar, editar, excluir, alerta de estoque.
 - [ ] Problemas: lista paginada, detalhes, criar, editar, excluir.
 
 ### Fase 4 - Equipes
 
-**Status:** Planejada
+**Status:** Em andamento (apenas componentes de card, a pedido do humano; telas e API seguem planejadas)
 
+- [x] Componentes `TeamCard` (Figma `228:7974`), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` e `TeamStatusBadge`, somente apresentação (2026-10-16).
 - [ ] Lista paginada com status, detalhes; Gestor cria, edita, exclui e gerencia representantes.
 - [ ] Visualizador altera status da própria equipe e consulta o calendário.
 

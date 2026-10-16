@@ -3,7 +3,6 @@
 @import 'tailwindcss/utilities.css';
 @import 'nativewind/theme';
 
-/* Tokens do design (docs/design-guidelines.md). Valores do Figma/briefing. */
 @theme {
   --color-brand-primary: #000080;
   --color-brand-action: #4747d4;

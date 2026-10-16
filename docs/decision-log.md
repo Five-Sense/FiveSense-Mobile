@@ -99,3 +99,31 @@ Registrar em `design-guidelines.md` fonte, data, IDs, nomes de tokens e variante
 
 ### Consequências
 Button-SM e Badge 5S requerem resolução antes de implementação fiel; estados de calendário não viram enum da API; duração da sessão continua pendente. O limite do plano Figma impediu concluir a leitura detalhada de todos os componentes. Nenhum novo fluxo, dependência, arquitetura ou remoção de documento foi aprovado por esta revisão.
+
+## 0007 - Alert: fidelidade total ao Figma (sem ícone nem ação)
+
+- **Data:** 2026-10-09
+- **Estado:** Aceita (decisão do humano: componente 100% fiel ao Figma)
+
+### Contexto
+O componente Alert do Figma (`33:2952`) distingue as variantes Error, Info, Success e Warning apenas pela cor do texto, sem ícone, borda ou ação. Numa primeira versão foram adicionados ícone semântico (padrão) e ação de recuperação opcional, visando a regra "estado nunca só por cor" (`coding-standards.md`). O humano pediu fidelidade total ao Figma, mantendo apenas a sombra (que consta no Figma).
+
+### Decisão
+Implementar o Alert exatamente como o Figma: superfície branca, sombra Elevation/Card, raio 8, padding 16, gap 8, título 16/24 600 e descrição 14/20 na cor de texto semântica. Sem ícone, sem borda e sem ação. Props: `variant`, `title`, `description`, `className`.
+
+### Consequências
+O estado passa a ser transmitido só pela cor do texto neste componente, divergindo da regra interna de acessibilidade; divergência aceita pelo humano em favor da fidelidade ao Figma e registrada em `design-guidelines.md`. Se um alerta precisar de ícone ou ação de recuperação (ex.: erro de carregamento), isso será tratado por outro componente de feedback (ex.: `ErrorState`) e não pelo `Alert`.
+
+## 0008 - Cards de Equipe e Material: fidelidade total ao Figma
+
+- **Data:** 2026-10-16
+- **Estado:** Aceita (decisão do humano: cards 100% fiéis ao Figma)
+
+### Contexto
+O frame `Cards` (`361:106`) traz Equipe Card (`228:7974`), Detalhes da equipe (`208:6580`) e Material-Específico (`208:7927`). Em três pontos o Figma diverge do briefing/`design-guidelines.md`: a Badge 5S tem texto de 10 px (mínimo funcional 14) e usa "Sem fazer 5s" em vermelho (briefing: "Não fazendo 5S" neutro); o "11" do código usa preto puro (`#000`) em vez de `text-primary` (`#111`); os alvos de toque do "X" e do link têm 24 px de desenho.
+
+### Decisão
+Implementar como no Figma: badge 10/20 com "Fazendo 5S" (texto `brand-action`) e "Sem fazer 5s" (texto `error-text`), e `text-black` no número do código. Os alvos de toque de 48 px são garantidos com `hitSlop`, sem alterar o visual. Sombra dos pop-ups = Elevation/Modal (`0 12 32`, `#11111129`). Bordas que no Figma não entram no layout (badge, minicard de representante, indicador de estoque, divisor de "Dados principais") são overlays absolutos, como no `Input`.
+
+### Consequências
+Badge de 10 px e vermelho para "Sem fazer 5s" divergem das regras de acessibilidade e de semântica do briefing, aceitas pelo humano; pode exigir revisão se o design reconciliar. Preto puro no código é provável descuido do design (não há token): confirmar com o design. A Badge `TeamStatusBadge` nasceu local em `features/teams` (não existia em nenhuma branch); sobe para o global se outra feature a usar.

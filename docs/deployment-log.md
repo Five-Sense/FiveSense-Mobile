@@ -5,7 +5,7 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 ## Template
 
 ```md
-## [AAAA-MM-DD] - Entrega: ISSUE-000 (título)
+## [AAAA-MM-DD] - Entrega: ISSUE - (Timestamp da Alteração) (título)
 
 - **Fase:**
 - **O que foi feito:**
@@ -17,7 +17,79 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
-## [2026-10-09] - Entrega: ISSUE-002 (Dependências e NativeWind)
+## [2026-10-16] - Entrega: ISSUE-005 - (2026-10-16 11:10:13) (Recriação do minicard RepresentativeCard e reconexão dos imports)
+
+- **Fase:** Fase 4 (apenas componente de apresentação, a pedido do humano).
+- **O que foi feito:** O `representative-card.tsx` nunca foi commitado e desapareceu do disco; o commit `0605243` já incluía o `TeamDetailsCard` importando-o, então o import estava quebrado em `origin/feature/cards`. Recriado `RepresentativeCard` em `src/features/teams/components/details/` (Figma `208:6527`): avatar redondo de 40 com fundo `brand-soft`, ícone `UserRound` do Lucide em 20 px com traço absoluto de 2 px na cor `brand-primary`, nome em `text-label` semibold, fundo `surface-hover` e borda `border-subtle` em overlay (altura exata de 56). Aceita `className` para o card pai definir a largura (`grow basis-[200px]`). O `Icon` global em `src/shared/components/ui/icon.tsx` tinha voltado à versão sem `absoluteStrokeWidth` e sem a correção de cor no web (perdidas na resolução de conflitos); foram reaplicadas de forma retrocompatível. Corrigido o import do `Icon` em `team-card.tsx`, que ainda apontava para o caminho antigo `@/components/data-display/icon`.
+- **Arquivos modificados:** `src/features/teams/components/details/representative-card.tsx` (novo), `src/shared/components/ui/icon.tsx`, `src/features/teams/components/list/team-card.tsx`, `docs/deployment-log.md`.
+- **Checks:** `tsc` com tsconfig temporário que exclui só `src/app/index.tsx` (marcadores de merge): 0 erros, e o arquivo temporário foi removido. Os 13 imports `@/` do projeto resolvem contra o disco (antes eram 2 quebrados). ESLint: apenas `import/no-unresolved` no alias `@/`, que o projeto já apresentava. Não renderizado nesta entrega: a aparência do minicard foi validada no Chrome na entrega anterior (302x56), com o mesmo código.
+- **Docs atualizados:** `deployment-log.md`. `issues.md` e `implementation-plan.md` já listavam o `RepresentativeCard`.
+- **Riscos/Débito técnico:** (1) O `src/shared/global.css` atual **não define** os tokens de raio e tipografia (`--radius-control`, `--radius-card`, `--radius-modal`, `--text-label`, `--text-section`, `--text-card`, `--text-body`, `--text-helper`, `--text-button`, `--font-montserrat`, `--font-montserrat-semibold`) nem `--color-on-brand`/`--color-destructive`. Eles existiam no lado `HEAD` do conflito da `develop` e se perderam na resolução. Sem eles, `rounded-control`, `text-label`, `font-montserrat-semibold` etc. não geram CSS, e isso afeta `Button`, `Input`, `MaterialItem` e todos os cards, não só o minicard. Não alterei o `global.css` por ser arquivo compartilhado e fora do pedido. (2) Permanecem marcadores de merge em `package.json`, `package-lock.json`, `app.json`, `metro.config.js` e `src/app/index.tsx`, que impedem o `tsc` e o build. (3) O git rastreia `TeamDetailsCard.tsx`, `TeamCard.tsx` e `MaterialDetailsCard.tsx` em PascalCase; no disco os arquivos estão em kebab-case e sem commit. O `representative-card.tsx` segue o kebab-case do `architecture.md` e do import já existente.
+
+## [2026-10-16] - Entrega: ISSUE-004, ISSUE-005 - (2026-10-16 09:59:19) (Cards de Equipe, Detalhes da equipe e Material)
+
+- **Fase:** Fase 3 e Fase 4 (apenas componentes de apresentação, a pedido do humano).
+- **O que foi feito:** Lido o frame `Cards` (`361:106`) da página 02 · Componentes do Figma e criados os 3 cards, 100% fiéis (ver `decision-log.md` 0008). `TeamCard` (`228:7974`, variantes sem fazer/fazendo 5S, link "Ver dados da equipe"). `TeamDetailsCard` (`208:6580`), que reutiliza `TeamStatusBadge` e o minicard atomizado `RepresentativeCard`; leitura horizontal a partir de `md`, empilhada abaixo (descrição do Account/DetailInline). `MaterialDetailsCard` (`208:7927`, sem atomização, como pedido). A **Badge "Fazendo 5S" não existia em nenhuma branch** (local, remota ou histórico), então foi criada como `TeamStatusBadge` (Figma `208:4707`, as duas variantes) e é reutilizada por `TeamCard` e `TeamDetailsCard`. Util `splitTeamCode` ("AA-11" em "AA" e "11"). Medidas conferidas contra a geometria do Figma: bordas que não entram no layout (badge, representante, indicador de estoque, divisor) são overlays. Alvos de 48 px via `hitSlop`, sem mudar o visual.
+- **Correção no componente global `Icon`:** no web o ícone saía preto porque `target: false` do NativeWind não aplica a cor (`nativeStyleMapping` é só nativo). Agora o web usa um wrapper de estilo e o SVG herda `currentColor`; o caminho nativo ficou como estava. Também ganhou `absoluteStrokeWidth` (o ícone de 20 px do avatar mantém traço de 2 px). Isso também corrige a cor dos ícones de `MaterialItem` e `Button` no web (não revalidados).
+- **Arquivos modificados:** `src/components/data-display/icon.tsx` (alterado); novos: `src/features/teams/components/{list/team-card,details/team-details-card,details/representative-card,status/team-status-badge}.tsx`, `src/features/teams/types/team-status.ts`, `src/features/teams/utils/split-team-code.ts`, `src/features/materials/components/details/material-details-card.tsx`; removidos 5 `.gitkeep`; docs: `decision-log.md` (0008), `design-guidelines.md`, `data-model.md` (lacunas 17 e 18), `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Checks:** `npx tsc --noEmit` no repositório falha somente por marcadores de merge preexistentes em `src/app/_layout.tsx` e `src/app/index.tsx`; **nenhum erro nos arquivos desta entrega**. Em cópia descartável com os conflitos resolvidos, `tsc` passou no projeto inteiro e `expo export --platform web` gerou o CSS (18 KB) com todas as classes. ESLint nos arquivos novos: só `import/no-unresolved` no alias `@/`, que o `material-item.tsx` da `develop` também apresenta (preexistente); `icon.tsx` passa com `--max-warnings 0`. `npx expo lint` e `expo-doctor` não foram executados no repositório. Verificação visual no Chrome headless (web, 900 px): medidas idênticas ao Figma (372x188, 60x60, 85x20, 78,8x20 vs 79x20, 680x344, 302x56, 616x80, 700x368, 636x88) e cores dos ícones corretas (`#4747D4`, `#475569`, `#000080`); diferenças de ~1 px em larguras de texto são da renderização da fonte. A cópia e os temporários foram removidos.
+- **Docs atualizados:** os listados acima. Fase 3 e Fase 4 marcadas como Em andamento só para esses componentes; telas, hooks e serviços seguem planejados.
+- **Riscos/Débito técnico:** (1) A `develop` está com **marcadores de merge commitados** em `package.json`, `package-lock.json`, `app.json`, `metro.config.js`, `src/global.css`, `src/app/_layout.tsx`, `src/app/index.tsx` e `docs/implementation-plan.md` (origem: merge `02fc94c`); o app não compila nem o `tsc` passa até serem resolvidos. Não resolvi por envolver versões de dependências (decisão humana). Os conflitos de `docs/implementation-plan.md` (Fase 1) não foram tocados. (2) Não testado em dispositivo/emulador: sombra (`box-shadow`), `hitSlop` e a cor do ícone no nativo. Empilhamento abaixo de `md` não foi renderizado. (3) `rem` vale 14 no nativo (react-native-css), por isso os cards usam `px` arbitrário em vez de `p-6`/`gap-2`. (4) Fiel ao Figma e divergente do briefing: badge de 10 px, "Sem fazer 5s" em vermelho, número do código em preto puro (`text-black`, provável descuido do design). (5) Nenhum card tem tela, hook ou Modal; `code` e `representatives` dependem das lacunas 17 e 18. (6) Cada card repete a constante `FOCUS_RING` (como `Button` e `MaterialItem`): candidata a centralizar. (7) `MaterialItem` usa a classe `text-card-title`, que não existe nos tokens (o token é `text-card`); não corrigi por estar fora do escopo.
+
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente global Alert)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial; primeiro componente global de UI).
+- **O que foi feito:** Criado o componente `Alert` em `src/components/feedback/`, 100% fiel ao componente Alert do Figma (node `33:2952`, variantes Error, Info, Success e Warning): superfície branca, sombra Elevation/Card, raio 8 (`rounded-lg`), padding 16 (`p-4`), gap 8 entre título e descrição, título Montserrat SemiBold 16/24 e descrição Regular 14/20 na cor de texto semântica (error `#b91c1c`, info `#1e40af`, success `#166534`, warning `#92400e`, já presentes nos tokens de `global.css`). Sem ícone, sem borda e sem ação, como no Figma. Props: `variant`, `title`, `description` (texto ou nó) e `className`. Import direto de `feedback/alert` (sem barrel). Removido o `.gitkeep` da pasta.
+- **Divergência registrada (acessibilidade):** o componente do Figma transmite o estado apenas pela cor do texto, o que diverge de "estado nunca só por cor" (coding-standards.md). O humano optou pela fidelidade total ao Figma; ícone e ação ficam a cargo de outro componente de feedback quando necessário. Registrado em `decision-log.md` 0007.
+- **Arquivos modificados:** `src/components/feedback/alert.tsx` (novo), `src/components/feedback/.gitkeep` (removido), `docs/implementation-plan.md`, `docs/issues.md`, `docs/decision-log.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit` OK; `npx expo lint` OK; `npx eslint src/components/feedback/*.ts* --max-warnings 0` OK. Não verificado em simulador/dispositivo/web em execução; a conferência visual foi feita contra o screenshot do Figma (node `33:2952`).
+- **Docs atualizados:** os quatro listados acima.
+- **Riscos/Débito técnico:** a sombra usa o preset `shadow-md shadow-black/25`, aproximação do efeito Elevation/Card do Figma (`0 4 4 rgba(0,0,0,0.25)`), não um valor exato por plataforma. Sombras em RN variam entre iOS/Android/web; conferir no dispositivo. Componente ainda não exercitado em tela real.
+
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componentes Input e PasswordInput)
+
+- **Fase:** Fase 1 - Scaffold técnico (incremento de inputs).
+- **O que foi feito:** Implementados os componentes reutilizáveis `Input` (`src/components/ui/input.tsx`) e `PasswordInput` (`src/components/ui/password-input.tsx`) com fidelidade às variantes do Figma: Default com borda #64748B, Error com borda vermelha #B91C1C (e olho vermelho no PasswordInput, sem texto de erro no input, cuja função é delegada ao Alert), e Focus com borda de 2px em #4747D4. Alternância de visibilidade da senha com `Eye`/`EyeOff` da Lucide com alvo de toque de 48x48 px. Adicionados tokens de tipografia em `src/global.css`. Arquivos temporários de teste/showcase removidos, mantendo apenas os componentes de entrada na UI e `src/app/index.tsx` restaurado limpo.
+- **Arquivos modificados:** `src/global.css`, `src/components/ui/input.tsx`, `src/components/ui/password-input.tsx`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit` aprovado com 0 erros; `npx expo lint` aprovado com 0 erros.
+- **Docs atualizados:** `docs/issues.md`, `docs/deployment-log.md`.
+- **Riscos/Débito técnico:** Demais componentes de UI da Fase 1 (modais, alerts, skeletons, cards de equipes/materiais) e integração com a API v1 seguem conforme o planejamento da Fase 1.
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente Footer)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Criado `Footer` institucional exclusivo do tablet, com superfície branca, borda `border-subtle`, padding 8, altura mínima 32 e largura fluida. O texto padrão é “© 2026 Five Sense Group. Todos os direitos reservados.” em Montserrat 400, 12/15; pode ser substituído pela prop `text` e o componente cresce se houver ampliação de fonte ou quebra de linha. O Header foi ajustado para documentar o escopo somente Tablet.
+- **Arquivos modificados:** `src/static/components/Footer.tsx`, `src/static/components/Header.tsx`, `docs/design-guidelines.md`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit`, `npx expo lint` e `git diff --check` sem erros.
+- **Docs atualizados:** `design-guidelines.md`, `issues.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** o Footer ainda não está composto em uma tela, pois a estrutura de telas permanece pendente.
+
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente Header)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Criado `Header` para Tablet com 72 de altura, fundo `surface`, padding horizontal de 24, logo oficial existente à esquerda e ação de saída à direita com `LogOut` do Lucide. A largura é fluida (`w-full`) e acompanha o contêiner pai. A ação é exposta por `onLogout`; quando ela não é fornecida, o controle permanece visível, mas desabilitado e corretamente anunciado por acessibilidade.
+- **Arquivos modificados:** `src/static/components/Header.tsx`, `docs/issues.md`, `docs/deployment-log.md`.
+- **Checks:** `npx tsc --noEmit`, `npx expo lint` e `git diff --check` sem erros.
+- **Docs atualizados:** `issues.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** a variante de Header para celular não existe no catálogo Figma lido; a adaptação final será feita na fase de responsividade.
+
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Limpeza do template Expo)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** Removidos rotas e componentes de exemplo (`explore`, tabs, `themed-*`, `animated-icon`, `hint-row`, `web-badge`, `external-link`, `collapsible`), `src/constants/theme.ts`, `src/hooks/*`, `scripts/reset-project.js` e o script `reset-project`, e imagens não usadas em `assets/images`. `src/app/_layout.tsx` agora é um `Stack` sem cabeçalho que carrega Montserrat e esconde o splash; `src/app/index.tsx` é uma tela vazia. `app.json`: orientação destravada, `userInterfaceStyle: light`, fundo do splash `#FCFCFC`. Dependências do template removidas: `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-image` (reinstalar `expo-image` quando houver imagens).
+- **Arquivos modificados:** `src/app/*`, `app.json`, `package.json`, `package-lock.json`, remoções listadas.
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web conclui (rotas `/`, `/_sitemap`, `/+not-found`). `expo-doctor` não concluiu (travou por 15 min). Não testado em dispositivo/emulador.
+- **Docs atualizados:** `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** ícone do app, splash e `expo.icon` ainda são do template (identidade pendente).
+
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Componente Button e base de estilo)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** `Button` em `src/components/ui/button` com `variant` (`primary` | `secondary` | `destructive`), `disabled`, `loading`/`loadingLabel`, `icon` (Lucide), foco visível e acessibilidade. Mapeamento do Figma: Default, Hover, Pressed e Disabled são estados de `primary` (`hover:`/`active:` e `disabled`); Secondary é variante. Altura 48 em todas as variantes (Figma mede 50 no Secondary; borda dentro dos 48). `destructive-pressed` (#991B1B) é complemento sem origem no Figma. Ícone: slot 32 com desenho 24 (regra do design-guidelines). NativeWind v5, Tailwind 4, Montserrat e Lucide instalados com versões fixas; `lightningcss` fixado em 1.30.1 via `overrides` (versões maiores quebram o `global.css`).
+- **Arquivos modificados:** `package.json`, `package-lock.json`, `tsconfig.json`, `metro.config.js`, `postcss.config.mjs`, `nativewind-env.d.ts`, `eslint.config.js` (gerado pelo `expo lint`), `src/global.css`, `src/app/_layout.tsx`, `src/components/ui/button/{button.tsx,index.ts}`.
+- **Checks:** `npx tsc --noEmit` sem erros; ESLint sem erros nos arquivos novos; `expo export` para web e Android concluem com o Button no bundle e as classes geradas. `npx expo lint` global falha por erro preexistente do template (`src/hooks/use-color-scheme.web.ts`, setState em effect). Não verificado em dispositivo/emulador: aparência de cada estado, anel de foco (`outline`) e cor do ícone/spinner via `styled`.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** NativeWind v5 é RC. Button ainda não é usado em nenhuma tela. `expo-doctor` não executado. Hover/pressed do secondary (`surface-hover`/`brand-soft`) e do destructive são escolhas minhas, a confirmar com o design.
+## [2026-10-09] - Entrega: ISSUE-002 - (2026-10-09 14:00:48) (Dependências e NativeWind)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial)
 - **O que foi feito:** Removidos `@expo/ui`, `expo-glass-effect`, `expo-symbols`, `expo-device`, `expo-web-browser`, o script/arquivo `reset-project` e os arquivos de exemplo do template. Instalados `nativewind@5.0.0-rc.0`, `react-native-css@3.1.0-rc.0`, `tailwindcss` e `@tailwindcss/postcss` 4.1.12, `lightningcss@1.30.1` (com `overrides`), `postcss`, `react-native-svg`, `lucide-react-native`, `@expo-google-fonts/montserrat`, `expo-secure-store`, `expo-image-picker`, `zod` 4, `@tanstack/react-query` e, exigidos pelo `expo lint`, `eslint` e `eslint-config-expo`. Criados `metro.config.js`, `postcss.config.mjs`, `nativewind-env.d.ts`, `src/types/assets.d.ts`, tokens de cor em `src/global.css`, `_layout.tsx` e `index.tsx` mínimos (placeholder). `app.json`: orientação livre, tema claro e plugins de image-picker e secure-store. `expo-image` mantido.
@@ -26,7 +98,7 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Docs atualizados:** `docs/implementation-plan.md`, `docs/deployment-log.md`.
 - **Riscos/Débito técnico:** NativeWind v5 é RC. `npm audit` aponta 31 vulnerabilidades (11 moderadas, 20 altas), não analisadas nem corrigidas. Fonte Montserrat instalada, mas ainda não carregada. `zod` 4 (a doc não fixava a versão).
 
-## [2026-10-09] - Entrega: ISSUE-002 (Esqueleto de pastas)
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Esqueleto de pastas)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial)
 - **O que foi feito:** Criadas 69 pastas (globais, rotas `(auth)`/`(app)` e 6 features) conforme `architecture.md`, cada uma com `.gitkeep`. Criado `.env.example` com `EXPO_PUBLIC_API_URL`.
@@ -35,7 +107,7 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Docs atualizados:** os listados acima.
 - **Riscos/Débito técnico:** arquivos do template Expo ainda fora da estrutura; remover na Fase 1.
 
-## [2026-10-09] - Entrega: ISSUE-001 (Revisão documental de Fundamentos e Componentes)
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Revisão documental de Fundamentos e Componentes)
 
 - **Fase:** Fase 0 - Documentação do projeto; permanecem decisões abertas.
 - **O que foi feito:** Revisão via Figma das páginas 01 · Fundamentos (`3:12`) e 02 · Componentes (`3:13`), tokens/estilos locais, catálogo e propriedades de componentes selecionados. Corrigidos botões, sidebar/Nav, sombras, exceção tipográfica do rodapé e seleção de representantes. Acrescentados mapa de tokens, catálogo rastreável, divergências e critérios de conferência visual. Removida a afirmação vigente de impossibilidade de ler o Figma; a entrada histórica anterior foi preservada.
@@ -44,7 +116,7 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Docs atualizados:** os sete documentos acima. Nenhum arquivo de documentação criado/removido no repositório; código e Figma preservados.
 - **Riscos/Débito técnico:** limite de chamadas do plano Figma interrompeu a inspeção detalhada dos componentes restantes; páginas de telas/estados não auditadas. Pendentes os conflitos de Badge 5S, alvo de Button-SM, variantes genéricas e identidade. Contrato de sessão, senha e calendário permanece limitado pela API e pelas decisões já registradas.
 
-## [2026-10-09] - Entrega: ISSUE-001 (Adaptação dos docs ao projeto)
+## [2026-10-09] - Entrega: (2026-10-09 14:00:48) (Adaptação dos docs ao projeto)
 
 - **Fase:** Fase 0 - Documentação do projeto
 - **O que foi feito:** Framework SpecFirst adaptado ao Five Sense App. Reescritos `AGENTS.md`, `README.md` e os docs de produto, design, arquitetura, dados, segurança, padrões, testes, workflow e plano. Histórico do template foi substituído. Após aprovação do humano, removidos 12 docs (`backlog`, `client-launch-checklist`, `context-strategy`, `deploy`, `domains`, `editor`, `implementation-governance`, `new-client-workflow`, `operations`, `pdf-export`, `templates`, `tooling-adapters`); `CLAUDE.md` mantido e reduzido. Documentação da API v1 incorporada (`data-model.md`, `security.md`, `architecture.md`, `workflows.md`, `design-guidelines.md`).
