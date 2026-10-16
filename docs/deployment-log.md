@@ -17,6 +17,14 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-09] - Entrega: ISSUE-005 (TeamStatusBadge)
+
+- **Fase:** Fase 4 - Equipes (parcial: só o componente visual).
+- **O que foi feito:** `TeamStatusBadge` em `src/features/teams/components/status/team-status-badge.tsx`, com `status: 'DOING_5S' | 'NOT_DOING_5S'`. Local da feature `teams` (regra "local primeiro" de `architecture.md`; vira global só se outra feature usar). Tipo em `types/team-status.ts`, textos em `constants/team-status.ts`. Visual: pílula, borda 1 px, altura mínima 28, texto 14/20 600, padding horizontal 10 (medida do Figma). "Fazendo 5S" em sucesso; "Não fazendo 5S" em neutro.
+- **Arquivos modificados:** `src/features/teams/{components/status,types,constants}/*` (`.gitkeep` removidos).
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros. Não verificado em tela/dispositivo; o badge ainda não é usado em nenhuma tela.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** Divergência registrada em `design-guidelines.md`: o Figma (Badge 5S `208:4707`) usa texto 10 px, "Fazendo" em azul e "Sem fazer 5s" em vermelho. Segui a regra funcional dos docs (14 px, sucesso/neutro, "Não fazendo 5S") até decisão de design. Faltam os estados "Status indisponível" e "Atualizando..." do briefing.
 ## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
