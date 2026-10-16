@@ -76,7 +76,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 **Status:** Planejada
 
-- [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem.
+- [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem. Moldura `AppLayout` (cabeçalho + conteúdo + menu inferior) entregue em 2026-10-16; falta conferir tablet/desktop e as telas.
 - [ ] Revisão de acessibilidade, estados e teclado virtual.
 - [ ] Checks finais e atualização dos logs.
 

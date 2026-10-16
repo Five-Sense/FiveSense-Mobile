@@ -17,6 +17,14 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-16] - Entrega: ISSUE-002 (Layout do sistema do Visualizador)
+
+- **Fase:** Fase 1 / início da Fase 6 (moldura de navegação); sessão e telas seguem planejadas.
+- **O que foi feito:** `AppLayout` (`shared/components/layout/app-layout.tsx`) compõe `AppHeader` + conteúdo + `AppMenu` com `MenuButton`s, conforme o protótipo "04 · Principal — Visualizador". `AppHeader` (`layout/app-header.tsx`): logo `assets/images/logo-text.png` à esquerda, "Sair" (ícone `log-out`, alvo 48) à direita, altura 64 no celular e 72 a partir de `md`, margens 16/24/32, área segura no topo. Menu inferior com Home, Ocorrências, Equipes e Materiais, seleção pela rota ativa, área segura embaixo. Itens em `shared/constants/navigation.ts`. Rotas: grupo `(app)` com `_layout.tsx` (usa `AppLayout` + `Slot`) e `index.tsx` (Home vazia, como no protótipo); removido o placeholder `src/app/index.tsx`. Integrada a `origin/main` (decisão 0009: só Visualizador, sem Sidebar/NavItem) antes de começar.
+- **Arquivos modificados:** `src/shared/components/layout/{app-layout,app-header}.tsx`, `src/shared/constants/navigation.ts`, `src/app/(app)/{_layout,index}.tsx`; removidos `src/app/index.tsx` e os `.gitkeep` das pastas usadas.
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web (rotas `/` e `/(app)`) e Android concluem. Não verificado em dispositivo/emulador nem lado a lado com o Figma.
+- **Docs atualizados:** `deployment-log.md`.
+- **Riscos/Débito técnico:** "Sair" ainda não limpa sessão (depende da Fase 2). As rotas `/ocorrencias`, `/equipes` e `/materiais` não existem: tocar nesses itens cai em "não encontrado" até as telas entrarem. Não há guarda de rota nem login. Home não está nos docs de navegação (`workflows.md` lista só Ocorrências, Equipes, Materiais); incluída por estar no protótipo. O protótipo mostra ícones e rótulos menores que o `MenuButton` documentado (ícone 32, rótulo 14): usei o componente existente. Logo ainda sem condição oficial confirmada.
 ## [2026-10-16] - Entrega: ISSUE-002/004 (Retirada do catálogo e redução de escopo)
 
 - **Pedido:** remover a demonstração geral, código de Gestor/Admin, Sidebar/NavItem e feedback de estoque dos componentes de materiais; decisão 0009.
