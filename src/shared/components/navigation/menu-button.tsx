@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react-native';
 import { useState } from 'react';
 import { Platform, Pressable, Text, View } from 'react-native';
 
-import { Icon } from '@/shared/components/data-display/icon';
+import { Icon } from '@/shared/components/ui/icon';
 
 export type MenuButtonProps = {
   label: string;

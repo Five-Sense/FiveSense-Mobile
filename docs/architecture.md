@@ -13,8 +13,6 @@ src/
   app/                     rotas do Expo Router (finas: só importam a screen da feature)
   features/                funcionalidades
     auth/                  login, logout, informações da conta
-    users/                 (Administrador)
-    problems/
     materials/
     teams/                 inclui status de 5S e calendário
     occurrences/           inclui seleção/upload de imagem
@@ -37,7 +35,7 @@ src/
     feedback/              Alert, Toast, Skeleton, EmptyState, ErrorState, Spinner
     overlays/              Modal, ConfirmDialog, DiscardDialog
     data-display/          Card, Badge, Table, Pagination, PlaceholderImage
-    navigation/            Sidebar, Header, MobileMenu
+    navigation/            MenuButton, AppMenu
     layout/                Screen, Page, Section, ListScreen
     actions/               Button, IconButton
     hooks/                 hooks globais (ex.: use-paginated-list, use-breakpoint, use-confirm-discard)
@@ -49,15 +47,15 @@ src/
   global.css               tokens do tema (Tailwind)
 ```
 
-### Estado do esqueleto (2026-10-09)
+### Estado do esqueleto (referência inicial de 2026-10-09)
 
-As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (apague o `.gitkeep` ao criar o primeiro arquivo da pasta):
+Estrutura inicial; componentes já implementados substituem os respectivos `.gitkeep`. Os esqueletos exclusivos de users/problems foram removidos em 2026-10-16 (decisão 0009). Não recriar módulos de gestão/administração nem a demonstração.
 
 - Globais (dentro de `src/shared/`): `components/{actions,data-display,feedback,forms,layout,navigation,overlays}`, `hooks`, `services/{api,storage}`, `contexts`, `utils`, `constants`, `types`.
 - Rotas: `src/app/(auth)` e `src/app/(app)`.
 - Features, cada uma com `screens`, `hooks`, `services`, `schemas`, `types` e `components/<função>`:
   - `auth` (`components/form`, `components/account`)
-  - `users`, `problems`, `materials` (`components/{list,form,details}`, `constants`)
+  - `materials` (`components/{list,form,details}`, `constants`)
   - `teams` (`components/{list,form,details,status,calendar}`, `constants`)
   - `occurrences` (`components/{form,image}`, `constants`)
 - Não foram criadas `utils/` e `contexts/` dentro das features: criar só quando houver necessidade real.
@@ -78,7 +76,7 @@ As pastas abaixo já existem no repositório, vazias e marcadas com `.gitkeep` (
   - `components/feedback/` Alert, Toast, Skeleton, EmptyState, ErrorState, Spinner
   - `components/overlays/` Modal, ConfirmDialog, DiscardDialog
   - `components/data-display/` Card, Badge, Table, Pagination, PlaceholderImage
-  - `components/navigation/` Sidebar, Header, MobileMenu
+  - `components/navigation/` MenuButton, AppMenu
   - `components/layout/` Screen, Page, Section, ListScreen (lista com skeleton, refresh, vazio e erro)
   - `components/actions/` Button, IconButton
 - Um componente por arquivo (kebab-case). Se um componente passa de ~150 linhas ou mistura apresentação com regras, divida: subcomponentes ao lado dele, lógica em hook da feature.

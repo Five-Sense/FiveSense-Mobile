@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable } from 'react-native';
 
-import { Icon } from '@/shared/components/data-display/icon';
+import { Icon } from '@/shared/components/ui/icon';
 
 type QuantityStepperButtonProps = {
   /** `decrease` usa o estilo suave (brand-soft); `increase` usa o estilo de acao (brand-action). */

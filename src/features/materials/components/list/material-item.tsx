@@ -1,4 +1,4 @@
-import { ChevronRight, TriangleAlert } from 'lucide-react-native';
+import { ChevronRight } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
@@ -7,18 +7,15 @@ import { Icon } from '@/shared/components/ui/icon';
 export type MaterialItemProps = {
   name: string;
   code?: string;
-  lowStock?: boolean;
   onPress: () => void;
 };
 
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
-export function MaterialItem({ name, code, lowStock = false, onPress }: MaterialItemProps) {
+export function MaterialItem({ name, code, onPress }: MaterialItemProps) {
   const [focused, setFocused] = useState(false);
 
-  const accessibilityLabel = [name, code, lowStock ? 'Estoque baixo' : null]
-    .filter(Boolean)
-    .join(', ');
+  const accessibilityLabel = [name, code].filter(Boolean).join(', ');
 
   return (
     <Pressable
@@ -33,14 +30,6 @@ export function MaterialItem({ name, code, lowStock = false, onPress }: Material
         <Text className="font-montserrat-semibold text-card-title text-text-primary">{name}</Text>
         {code ? (
           <Text className="font-montserrat-semibold text-label text-brand-primary">{code}</Text>
-        ) : null}
-        {lowStock ? (
-          <View className="flex-row items-center gap-[8px]">
-            <Icon icon={TriangleAlert} size={20} className="text-warning-text" />
-            <Text className="font-montserrat-semibold text-label text-warning-text">
-              Estoque baixo
-            </Text>
-          </View>
         ) : null}
       </View>
       <Icon icon={ChevronRight} size={24} className="text-brand-action" />
