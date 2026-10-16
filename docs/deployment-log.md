@@ -17,6 +17,14 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-16] - Entrega: ISSUE-003 (Home do Visualizador)
+
+- **Fase:** Fase 2 - Autenticação e conta (parcial: apenas a página principal; sessão e login seguem planejados). Branch `feat/home`, a partir da `develop` com o layout (PR #55).
+- **O que foi feito:** `HomeScreen` (`src/features/auth/screens/home-screen.tsx`), rota fina `src/app/(app)/index.tsx` exportando-a via `src/features/auth/index.ts`. Conteúdo do protótipo: rótulo "Visualizador" (Label, brand-primary), "Olá!" (título de página, 24/32 no celular e 28/36 a partir de `md`), "O que você deseja fazer hoje?" (Helper, text-secondary) e três `AccessCard`s (Ocorrências, Equipes, Materiais) em uma coluna no celular e duas a partir de `md`, com margens 16/24/32, gutter 16/24 e largura máxima 1440. `AccessCard` (Figma Access `31:2461`) em `features/auth/components/home/access-card.tsx`: card branco, raio 12, borda sutil, padding 16/24, ícone Lucide, título 18/26 600, descrição 14/20, ação em brand-action com chevron; o card inteiro é o alvo de toque, com hover/pressed/foco. Textos e ações em `features/auth/constants/home-access-items.ts`; destinos reutilizam `shared/constants/navigation.ts`. Token novo `--text-page` (28/36) em `global.css`, conforme a tabela de tipografia.
+- **Arquivos modificados:** `src/features/auth/{index.ts,screens/home-screen.tsx,constants/home-access-items.ts,components/home/access-card.tsx}`, `src/app/(app)/index.tsx`, `src/shared/global.css`.
+- **Checks:** `npx tsc --noEmit` e `npx expo lint` sem erros; `expo export` web e Android concluem e as classes novas aparecem no CSS gerado. Não verificado visualmente lado a lado com o Figma nem em dispositivo/emulador.
+- **Docs atualizados:** `deployment-log.md`, `implementation-plan.md`.
+- **Riscos/Débito técnico:** "Olá!" é genérico e "Visualizador" é fixo até a sessão (Fase 2) fornecer nome e perfil. Os cards levam a `/ocorrencias`, `/equipes` e `/materiais`, que ainda não existem. `AccessCard` ficou na feature `auth` porque só a Home o usa; a arquitetura não tem feature "home" e não criei uma (decisão de estrutura a confirmar). O Figma Access é medido só em Tablet (369x260); celular segue a regra de uma coluna do briefing. O protótipo usa textos menores que o mínimo 14 dos docs em alguns pontos; mantive 14 (Helper/Label).
 ## [2026-10-16] - Entrega: ISSUE-002 (Layout do sistema do Visualizador)
 
 - **Fase:** Fase 1 / início da Fase 6 (moldura de navegação); sessão e telas seguem planejadas.

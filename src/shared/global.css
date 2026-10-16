@@ -72,6 +72,8 @@
   /* Alias já utilizado por MaterialItem. */
   --text-card-title: 18px;
   --text-card-title--line-height: 26px;
+  --text-page: 28px;
+  --text-page--line-height: 36px;
   --text-section: 24px;
   --text-section--line-height: 32px;
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);

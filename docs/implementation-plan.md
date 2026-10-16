@@ -45,7 +45,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 **Status:** Planejada
 
-- [ ] Login, logout, informações da conta e página principal do Visualizador.
+- [ ] Login, logout, informações da conta e página principal do Visualizador. Visual da página principal (`HomeScreen` + `AccessCard`) entregue em 2026-10-16; faltam sessão (nome/perfil reais), login, logout e conta.
 - [ ] Sessão expirada (401) e acesso negado (403), tratados no cliente de API.
 - [ ] Recuperação, redefinição e alteração de senha: bloqueadas até a API ter os endpoints.
 
