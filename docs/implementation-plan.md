@@ -1,4 +1,4 @@
-﻿# Implementation Plan
+# Implementation Plan
 
 ## Objetivo
 
@@ -27,20 +27,16 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento
 
 - [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
-<<<<<<< HEAD
-- [x] Instalar e configurar NativeWind, Montserrat e Lucide (2026-10-09). Pendentes: `expo-secure-store`, `expo-image-picker`, `zod`, `@tanstack/react-query`, quando forem necessários.
-- [x] Ajustar `app.json` (orientação livre, tema claro) (2026-10-09). Ícone do app e splash ainda são do template (identidade pendente).
-- [x] Tokens do tema em `src/global.css` (cores, raios, botão); ainda falta conferir espaçamentos e demais estilos de texto.
-- [ ] Componentes base de `ui/` (Button feito em 2026-10-09; faltam Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma.
-- [ ] Cliente de API com `AppError`, sessão e permissões.
-=======
 - [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query (falta carregar a fonte Montserrat).
 - [x] Ajustar `app.json` (orientação livre, tema claro).
-- [ ] Tokens do tema em `src/global.css` (cores prontas; faltam tipografia e espaçamento), com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
+- [x] Tokens do tema em `src/global.css` a partir de `colors.tokens.json` (cores, raios, dimensão, escala `space` e estilos de texto); falta conferir os demais estilos de texto, com correspondência aos nomes/aliases Figma de `design-guidelines.md`.
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
-- [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
+- [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Button** (hoje em `src/components/ui/button`, a mover para `actions/`), **Select** e **MaterialItem** (feature `materials`) criados em 2026-10-09; **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
+- [x] Componentes reutilizáveis Nav/AppSidebar com estados e slots (conferidos em web em 2026-10-16, branch `feature/nav-component`). Demonstração e rota temporária removidas a pedido do humano; somente componentes e tokens permanecem.
+- [x] MenuButton e AppMenu horizontais, em componentes separados, conforme Figma e imagens de 2026-10-16; sem tela de demonstração. Tipos, lint e conferência web aprovados.
+- [x] Demonstração de MenuButton/AppMenu criada e conferida em 2026-10-16; removida por novo pedido do humano na mesma data. Permanecem somente os componentes.
+- [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
 - [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
->>>>>>> 52016a1fb1b704c345a9e3643ae404a127dd013e
 
 ### Fase 2 - Autenticação e conta
 
