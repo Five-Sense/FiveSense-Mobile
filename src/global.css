@@ -109,3 +109,13 @@
   --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
 }
+
+/* Nav/AppSidebar: dimensões verificadas no Figma e tipografia do projeto. */
+@theme {
+  --spacing-sidebar: 222px;
+  --spacing-nav-item: 56px;
+  --text-nav: 16px;
+  --text-nav--line-height: 24px;
+  --text-wordmark: 24px;
+  --text-wordmark--line-height: 32px;
+}

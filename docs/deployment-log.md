@@ -17,6 +17,27 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-16] - Entrega: ISSUE-002 (Remoção da demonstração do Nav)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** A pedido do humano, removidos `src/app/sidebar.tsx` e `src/components/sidebar-preview.tsx`, incluindo seleção simulada de perfil, mensagens e painel de teste. Preservados os componentes reutilizáveis `NavItem` e `Sidebar`, seus exports, estilos e callbacks configuráveis. Retirado o token de overlay usado exclusivamente na demonstração e as redefinições duplicadas de tipografia; mantidos os tokens específicos dos componentes e a tipografia já existente do projeto. A tela inicial foi preservada.
+- **Arquivos modificados:** remoção dos dois arquivos de demonstração; ajuste em `src/global.css`.
+- **Checks:** `tsc --noEmit`, `expo lint` e `git diff --check` sem erros. Busca em `src/` sem referências a SidebarPreview, sidebar-preview ou ações da prévia. Os componentes preservados já foram conferidos em web na entrega anterior.
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** `/sidebar` deixou de existir; as instruções de abertura da entrada histórica anterior foram substituídas por esta entrega. Integração com telas reais continua fora deste incremento. Sem dependências novas.
+
+
+## [2026-10-16] - Entrega: ISSUE-002 (Nav/AppSidebar e prévia para teste)
+
+- **Fase:** Fase 1 - Scaffold técnico (parcial).
+- **O que foi feito:** `NavItem` reutilizável, seleção controlada, foco visível e suporte a desabilitado; `Sidebar` com largura 222, padding 16, itens mínimos de 56, slots 32/Lucide 24 e conta/saída no rodapé. Prévia em `/sidebar` com menus por perfil e ações simuladas; painel abaixo de 768 px, com Escape/fechar e retorno de foco no web. Esse breakpoint e estados de hover/pressionado são complementos da demonstração, não medidas confirmadas das telas do Figma. Ícones recebem os tokens no nativo e herdam a cor via wrapper no web. Resolvidos três conflitos locais, mantendo o placeholder inicial e os registros recentes dos docs.
+- **Arquivos modificados:** `src/components/ui/nav/*`, `src/components/ui/sidebar/*`, `src/components/sidebar-preview.tsx`, `src/app/sidebar.tsx`, `src/global.css`; resolução de conflito em `src/app/index.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros após `npm install` sincronizar dependências já declaradas (package.json e lock preservados). Conferência interativa web em desktop (1366x900), celular (390x844), altura reduzida (1024x300) e texto ampliado: medidas, cores de ícones/texto, seleção, teclado, perfis, conta/saída simuladas, painel e rolagem; nenhum erro/aviso do navegador. Sem suíte de testes adicionada ao projeto.
+- **Como conferir:** na pasta do projeto, `npx expo start --web --port 8082`, depois abrir `http://localhost:8082/sidebar`. Em largura de celular, usar "Abrir menu".
+- **Docs atualizados:** `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** sem integração de rotas de negócio, sessão ou API; não exercitado em Android/iOS. Marca textual provisória substituível por `logo`. As páginas completas do Figma e o painel mobile não foram auditados nesta entrega. A fase permanece aberta.
+
+
 ## [2026-10-09] - Entrega: ISSUE-002 (Resolução de conflitos de merge e tokens)
 
 - **Fase:** Fase 1 - Scaffold técnico (parcial).
