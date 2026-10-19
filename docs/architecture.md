@@ -98,7 +98,7 @@ Estrutura inicial; componentes já implementados substituem os respectivos `.git
 - Erros da API chegam como ProblemDetail (RFC 9457). Erro sempre vira `AppError` com `kind`: `network`, `unauthorized` (401), `forbidden` (403), `validation` (400/422, com erros por campo), `notFound` (404), `conflict` (409, ex.: excluir item referenciado), `server` (5xx), `unknown`.
 - 401: limpa sessão e redireciona ao login com aviso "Sua sessão expirou". 403: estado de acesso negado. (Ambos dependem de a API passar a emiti-los.)
 - Paginação: tipo global `Page<T>` (`content`, `totalElements`, `totalPages`, `size`, `number`; `page` base 0).
-- Upload de imagem: `multipart/form-data` com campo `image`; o `imageId` devolvido entra no `POST /occurrences`.
+- Upload de fotos: uma chamada `multipart/form-data` com campo `images` repetido (até 5 arquivos). Validar todos os UUIDs de `imageIds` e a quantidade antes de um único `POST /occurrences` com essa lista. Sem fotos, pular upload e omitir a lista. Usar o cliente compartilhado, sem Content-Type multipart manual; limites em `data-model.md`.
 - Nenhum `catch` vazio. A tela decide a apresentação (erro de campo, alerta no formulário, ou `ErrorState` com retry).
 - Cada feature tem seus próprios `services/` que chamam o cliente (ex.: `materials/services/materials-service.ts`).
 

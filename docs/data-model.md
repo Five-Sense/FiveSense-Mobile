@@ -1,6 +1,6 @@
 # Data Model
 
-Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte: documentação da API enviada pelo humano em 2026-10-09. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
+Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte inicial: documentação da API enviada pelo humano em 2026-10-09. Ocorrências e anexos foram reconferidos em 2026-10-19; a revisão múltipla ao final deste documento prevalece sobre os registros históricos. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
 
 ## Revisão de autenticação - 2026-10-16
 
@@ -40,8 +40,8 @@ Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. 
 - `DELETE /materials/{id}` -> 204 (409 se houver ocorrência)
 
 **Occurrence** `{id, problemId, materialId, reportedByUserId, affectedQuantity, createdAt}`
-- `POST /occurrences/images` multipart, campo `image` (máx. 5 MB) -> `{imageId}`
-- `POST /occurrences` `{problemId, materialId, affectedQuantity, reportedByUserId, imageId?}` -> 201. Não altera estoque; o e-mail ao Gestor é "best effort".
+- `POST /occurrences/images` multipart, campo `images` repetido, de 1 a 5 arquivos (máx. 5 MB cada) -> `{imageId, imageIds: UUID[]}`. O cliente usa apenas `imageIds`.
+- `POST /occurrences` `{problemId, materialId, affectedQuantity, reportedByUserId, imageIds?: UUID[]}` -> 201 (até 5 IDs). Não altera estoque; o e-mail ao Gestor é "best effort".
 - `GET /occurrences` (paginado). O app não tem tela de listagem de ocorrências.
 
 ## Validação no app
@@ -55,7 +55,7 @@ Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. 
 | E-mail do problema | até 255 caracteres |
 | Nome do material | até 55 caracteres |
 | Estoque e mínimo | inteiro 0 a 999 |
-| Imagem de ocorrência | limite da API: 5 MB |
+| Fotos de ocorrência (cliente vigente) | JPG/PNG, até 5 fotos opcionais, 5 MB cada e soma até 20 MB; tamanho real conhecido e positivo |
 
 O app valida para dar feedback rápido; a API é a autoridade.
 
@@ -72,7 +72,7 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 7 | RF025 "própria equipe" do Visualizador | Sem vínculo usuário-equipe; `PATCH` sem checagem | Precisa de campo na API; sem ele o Visualizador não tem como identificar sua equipe. |
 | 8 | RF026 calendário (por turno e equipe) | Sem endpoint; só `schedule` em texto | Montar a visão a partir de `schedule` das equipes, sem inferir datas. |
 | 9 | RN017 imagem de material | Material não tem imagem | Placeholder com ícone; sem upload. |
-| 10 | RN013 imagem até 20 MB | API limita a 5 MB | Usar 5 MB. |
+| 10 | RN013 anexos até 20 MB no total (correção humana) | API atual aceita até 5 fotos, 5 MB cada | Aplicar os três limites: 5 fotos, 5 MB por foto e 20 MB agregados. |
 | 11 | RN019 alerta de estoque | API calcula `lowStock` | Mostrar alerta quando `lowStock` for verdadeiro, para Gestor e Visualizador. |
 | 12 | RN012 resposta padrão | Campo `defaultResponse` | Campo no formulário do problema. |
 | 13 | RF014 problemas para o Visualizador | `/problems/options` | Usar as opções. Idem materiais. |
@@ -87,7 +87,7 @@ O app valida para dar feedback rápido; a API é a autoridade.
 
 GET /materials?page&size com X-User-Role: VIEWER (200 real, 5 materiais). Resposta Spring Page; o cliente valida `content[].{id (UUID), name, stockQuantity (inteiro >= 0), active}` e `totalPages`, ignora o restante e lista só `active: true`. Serviço percorre as páginas (size 100, no máximo 10) para a busca local cobrir o catálogo. Detalhe usa os dados da lista (sem GET /materials/{id}). Contagem "N materiais disponíveis" = materiais ativos carregados. Sem aviso de estoque baixo (decisão 0009). OpenAPI repete nomes de schema (`Response`) entre controllers, então o formato acima vem da resposta real. Web real depende de CORS no backend.
 
-## Revisão de ocorrência - 2026-10-19
+## Revisão inicial de ocorrência - 2026-10-19 (histórico; anexos substituídos pela revisão múltipla abaixo)
 
 Fontes: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs, consultadas nesta entrega. GET /problems/options e /materials/options exigem X-User-Role: VIEWER e devolvem arrays {id,name} ativos (200 real: 10 e 5 opções respectivamente). IDs são UUID; o cliente aceita apenas escolhas presentes nas opções carregadas. Quantidade inteira positiva, de 1 a 999 no Stepper existente. reportedByUserId vem exclusivamente da sessão validada.
 
@@ -101,3 +101,15 @@ Web real depende de CORS (origem, GET/POST/OPTIONS, Content-Type e X-User-Role).
 ### Formatos do anexo - 2026-10-19
 
 O painel de origem enviado pelo humano especifica JPG/PNG. O cliente valida image/jpeg e image/png tanto no picker quanto antes do multipart, com erro junto ao campo para outros tipos. Esta restrição do cliente não modifica a API; o limite de5MB permanece. Sem conversão automática ou dependência nova. API indisponível nesta correção: sem nova verificação remota do contrato.
+
+## Múltiplas fotos - contrato vigente (2026-10-19)
+
+Fontes reconferidas após o humano informar a atualização: https://fivesense-api.onrender.com/docs/index.html e https://fivesense-api.onrender.com/v3/api-docs. Esta revisão substitui a restrição provisória da decisão 0012 e os trechos históricos acima sobre campo singular/integração pendente.
+
+Upload opcional: POST /occurrences/images, FormData com o campo images repetido, de 1 a 5 arquivos. Cada foto deve ter no máximo 5*1024*1024 bytes; o cliente mantém o limite humano de 20*1024*1024 bytes na SOMA. Aceitar JPG/PNG, tamanho real conhecido e positivo; revalidar a coleção antes do upload. Não definir Content-Type manualmente nem converter para base64. Seleção inválida/cancelada mantém as fotos anteriores. O seletor nativo limita cada escolha a 5; a validação da coleção também limita adições sucessivas e a seleção web, sem truncamento silencioso.
+
+Resposta 201: {imageId, imageIds: UUID[]}; imageId é legado e repete a primeira foto. O cliente exige imageIds únicos, entre 1 e 5 e quantidade igual à de arquivos enviados. Resposta parcial, duplicada ou inválida impede criar a ocorrência e mantém o formulário. Só após um upload completo, POST /occurrences recebe problemId, materialId, affectedQuantity, reportedByUserId da sessão e imageIds. Uma única ocorrência vincula todas as fotos; sem fotos, pular upload e omitir imageIds. Não enviar imageId singular. Header X-User-Role: VIEWER e cliente HTTP compartilhado permanecem.
+
+As imagens ficam em arquivos temporários, fora do banco, são anexadas ao e-mail e excluídas após o envio pelo backend. E-mail continua best effort; a resposta não confirma entrega. Não há chave de idempotência nem endpoint de limpeza documentados. Falha de upload não cria ocorrência. Rede/timeout/5xx após iniciar criação conserva o tratamento de resultado incerto e exige conferência antes do reenvio explícito; nenhum POST tem retry automático. Uma nova tentativa faz novo upload dos arquivos mantidos, sem reutilizar IDs temporários que podem ter sido consumidos. Timeout não foi alterado.
+
+O OpenAPI ainda reutiliza CreateRequest entre controllers e descreve o multipart de forma incompleta; os exemplos da documentação legível oficial especificam images repetido e imageIds. Não inferir o payload do exemplo de outro controller. Contrato público lido por GET; POSTs verificados com fixtures locais, sem registros/e-mails reais. Conta VIEWER real, CORS atual e câmera física não foram validados neste incremento.

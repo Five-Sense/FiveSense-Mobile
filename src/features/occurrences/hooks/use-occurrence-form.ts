@@ -1,29 +1,29 @@
 import { useMutation } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Platform } from 'react-native';
 
 import { useSession } from '@/shared/contexts/session-context';
 import { toAppError } from '@/shared/services/api/app-error';
 
 import { occurrenceSchema } from '../schemas/occurrence-schema';
-import { pickOccurrenceImage } from '../services/occurrence-image-service';
-import { createOccurrence, uploadOccurrenceImage } from '../services/occurrences-service';
+import { createOccurrence, uploadOccurrenceImages } from '../services/occurrences-service';
 import { EMPTY_OCCURRENCE, type OccurrenceFeedback, type OccurrenceField, type OccurrenceImage, type OccurrenceValues } from '../types/occurrence';
 import { OccurrenceSubmissionError } from '../types/submission-error';
 import { useOccurrenceOptions } from './use-occurrence-options';
+import { useOccurrenceImages } from './use-occurrence-images';
+import { validateOccurrenceImages } from '../utils/occurrence-images';
+import { occurrenceErrorFields } from '../utils/occurrence-error-fields';
 
 export function useOccurrenceForm() {
   const { session, endSession } = useSession();
   const options = useOccurrenceOptions(session?.userId);
   const [values, setValues] = useState<OccurrenceValues>(EMPTY_OCCURRENCE);
-  const [image, setImage] = useState<OccurrenceImage | null>(null);
   const [errors, setErrors] = useState<Partial<Record<OccurrenceField, string>>>({});
   const [feedback, setFeedback] = useState<OccurrenceFeedback | null>(null);
-  const [imageChooserOpen, setImageChooserOpen] = useState(false);
-  const [picking, setPicking] = useState(false);
   const [phase, setPhase] = useState<'uploading' | 'submitting'>('submitting');
   const [uncertain, setUncertain] = useState(false);
+  const [completed, setCompleted] = useState(false);
   const busy = useRef(false);
+  const attachments = useOccurrenceImages(() => busy.current);
   const active = useRef(true);
   const expired = useRef(false);
   const request = useRef<AbortController | null>(null);
@@ -46,15 +46,15 @@ export function useOccurrenceForm() {
 
   const mutation = useMutation({
     mutationKey: ['occurrence-create'], retry: false,
-    mutationFn: async (input: { problemId: string; materialId: string; affectedQuantity: number; userId: string; image: OccurrenceImage | null; signal: AbortSignal }) => {
-      let stage: 'uploading' | 'submitting' = input.image ? 'uploading' : 'submitting';
+    mutationFn: async (input: { problemId: string; materialId: string; affectedQuantity: number; userId: string; images: OccurrenceImage[]; signal: AbortSignal }) => {
+      let stage: 'uploading' | 'submitting' = input.images.length ? 'uploading' : 'submitting';
       try {
         setPhase(stage);
-        const imageId = input.image ? await uploadOccurrenceImage(input.image, input.signal) : undefined;
+        const imageIds = await uploadOccurrenceImages(input.images, input.signal);
         if (input.signal.aborted) return;
         stage = 'submitting';
         setPhase(stage);
-        await createOccurrence({ problemId: input.problemId, materialId: input.materialId, affectedQuantity: input.affectedQuantity, reportedByUserId: input.userId, ...(imageId ? { imageId } : {}) }, input.signal);
+        await createOccurrence({ problemId: input.problemId, materialId: input.materialId, affectedQuantity: input.affectedQuantity, reportedByUserId: input.userId, ...(imageIds.length ? { imageIds } : {}) }, input.signal);
       } catch (error) { throw new OccurrenceSubmissionError(toAppError(error), stage); }
     },
   });
@@ -71,21 +71,8 @@ export function useOccurrenceForm() {
     if (!uncertain) setFeedback(null);
   }
 
-  async function pickImage(source: 'camera' | 'library') {
-    if (busy.current) return;
-    setImageChooserOpen(false);
-    if (!uncertain) setFeedback(null);
-    // No web o seletor precisa partir do clique; cancelar pode não resolver sua Promise.
-    setPicking(Platform.OS !== 'web');
-    try {
-      const next = await pickOccurrenceImage(source);
-      if (active.current && next) { setImage(next); setErrors((current) => ({ ...current, image: undefined })); if (!uncertain) setFeedback(null); }
-    } catch (error) { if (active.current) setErrors((current) => ({ ...current, image: toAppError(error).message })); }
-    finally { if (active.current) setPicking(false); }
-  }
-
   async function submit() {
-    if (busy.current || uncertain || !session) return;
+    if (busy.current || uncertain || completed || !session) return;
     const result = occurrenceSchema.safeParse(values);
     if (!result.success || !ready) {
       const fields: Partial<Record<OccurrenceField, string>> = {};
@@ -96,16 +83,18 @@ export function useOccurrenceForm() {
       setFeedback({ variant: 'error', title: 'Confira os dados da ocorrência.', description: 'Preencha os campos obrigatórios antes de enviar.' });
       return;
     }
+    try { validateOccurrenceImages(attachments.images); }
+    catch (failure) { setErrors({ image: toAppError(failure).message }); return; }
     busy.current = true;
     setFeedback(null);
     setErrors({});
     const controller = new AbortController();
     request.current = controller;
     try {
-      await mutation.mutateAsync({ ...result.data, userId: session.userId, image, signal: controller.signal });
+      await mutation.mutateAsync({ ...result.data, userId: session.userId, images: [...attachments.images], signal: controller.signal });
       if (!active.current || controller.signal.aborted) return;
-      setValues(EMPTY_OCCURRENCE); setImage(null); setErrors({});
-      setFeedback({ variant: 'success', title: 'Ocorrência registrada.', description: 'Seu relato foi registrado com sucesso.' });
+      setValues(EMPTY_OCCURRENCE); attachments.reset(); setErrors({});
+      setFeedback(null); setCompleted(true);
     } catch (failure) {
       if (!active.current) return;
       const failed = failure instanceof OccurrenceSubmissionError ? failure : new OccurrenceSubmissionError(toAppError(failure), 'submitting');
@@ -117,21 +106,23 @@ export function useOccurrenceForm() {
         setFeedback({ variant: 'warning', title: 'Não foi possível confirmar o envio.', description: 'A ocorrência pode ter sido registrada. Confira com os responsáveis antes de tentar novamente para evitar duplicidade.' });
       } else {
         const description = error.kind === 'forbidden' ? 'Seu acesso não permite realizar esta ação.'
-          : error.status === 413 ? 'A imagem deve ter no máximo 5 MB.'
-          : error.kind === 'validation' ? 'Confira os dados e se o problema e o material continuam disponíveis.'
-          : failed.stage === 'uploading' ? 'Não foi possível enviar a imagem. Seus dados foram mantidos; tente novamente.'
+          : error.status === 413 ? 'Cada foto deve ter no máximo 5 MB e a soma dos anexos não pode ultrapassar 20 MB.'
+          : error.kind === 'validation' ? (failed.stage === 'uploading' ? 'Confira as fotos: até 5 arquivos JPG ou PNG, 5 MB cada e 20 MB no total.' : 'Confira os dados e se o problema e o material continuam disponíveis.')
+          : error.kind === 'unknown' ? error.message
+          : failed.stage === 'uploading' ? 'Não foi possível enviar as fotos. Seus dados foram mantidos; tente novamente.'
           : error.message;
-        setFeedback({ variant: 'error', title: failed.stage === 'uploading' ? 'A imagem não foi enviada.' : 'Não foi possível registrar.', description });
-        if (error.fields.length) setErrors(Object.fromEntries(error.fields.filter((field) => ['problemId', 'materialId', 'affectedQuantity', 'image'].includes(field)).map((field) => [field, 'Confira este campo.'])));
+        setFeedback({ variant: 'error', title: failed.stage === 'uploading' ? 'As imagens não foram enviadas.' : 'Não foi possível registrar.', description });
+        if (error.fields.length) setErrors(occurrenceErrorFields(error.fields));
       }
     } finally { busy.current = false; if (request.current === controller) request.current = null; }
   }
 
   return {
-    values, image, errors, feedback, options, progress, picking, uncertain,
-    sending: mutation.isPending, phase, canSubmit: ready && !mutation.isPending && !picking && !uncertain,
-    imageChooserOpen, setImageChooserOpen, change, pickImage, submit,
-    removeImage: () => { if (!busy.current) { setImage(null); setErrors((current) => ({ ...current, image: undefined })); if (!uncertain) setFeedback(null); } },
+    values, images: attachments.images, imageError: attachments.error, errors, feedback, options, progress, picking: attachments.picking, uncertain, completed,
+    sending: mutation.isPending, phase, canSubmit: !completed && ready && !mutation.isPending && !attachments.picking && !uncertain,
+    imageChooserOpen: attachments.chooserOpen, setImageChooserOpen: attachments.setChooserOpen, change, pickImage: (source: 'camera' | 'library') => { if (busy.current) return; if (!uncertain) setFeedback(null); setErrors((current) => ({ ...current, image: undefined })); return attachments.pick(source); }, submit,
+    removeImage: (index: number) => { attachments.remove(index); setErrors((current) => ({ ...current, image: undefined })); if (!uncertain) setFeedback(null); },
+    createAnother: () => { if (busy.current) return; setCompleted(false); setUncertain(false); setValues(EMPTY_OCCURRENCE); attachments.reset(); setErrors({}); setFeedback(null); mutation.reset(); },
     acknowledgeRetry: () => { setUncertain(false); setFeedback(null); },
     refresh: () => Promise.all([options.problems.refetch(), options.materials.refetch()]),
     showPendingNotice: () => setFeedback({ variant: 'warning', title: 'Envio em andamento.', description: 'Aguarde a conclusão antes de sair desta tela.' }),

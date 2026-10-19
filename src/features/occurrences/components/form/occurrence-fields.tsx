@@ -31,7 +31,7 @@ export function OccurrenceFields({ form }: { form: ReturnType<typeof useOccurren
         <QuantityStepper label="Quantidade de materiais afetados" value={form.values.affectedQuantity} onChange={(value) => form.change('affectedQuantity', value)} min={0} max={MAX_AFFECTED_QUANTITY} unitLabel={form.values.affectedQuantity === 1 ? 'unidade' : 'unidades'} valueTextSize="section" disabled={form.sending} />
         {form.errors.affectedQuantity ? <Text accessibilityRole="alert" className="font-montserrat text-helper text-error-text">{form.errors.affectedQuantity}</Text> : null}
       </View>
-      <OccurrenceImageField image={form.image} disabled={form.sending || form.picking} error={form.errors.image} onChoose={() => form.setImageChooserOpen(true)} onRemove={form.removeImage} />
+      <OccurrenceImageField images={form.images} disabled={form.sending || form.picking} error={form.imageError ?? form.errors.image} onChoose={() => form.setImageChooserOpen(true)} onRemove={form.removeImage} />
     </View>
   );
 }
