@@ -76,6 +76,10 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Conferência visual final no tablet 834x1194 e checks estáticos/exportação. Celular e desktop dispensados neste fluxo pelo humano em 2026-10-19.
 - [ ] Validar integração web após CORS no backend e envio com conta VIEWER real; próximas telas aguardam prints. Câmera nativa não conferida em dispositivo físico.
 - [x] Corrigir origem da imagem conforme print/Figma97:7404, painel inferior Galeria/Câmera; tablet834x1194 com dados locais, tipos/lint/diff aprovados (API fora do ar,2026-10-19).
+- [x] Cliente para múltiplas fotos JPG/PNG até20MB no total: seleção/adição/remoção/prévias/contador/validação agregada; tablet e checks aprovados (2026-10-19).
+- [x] Contrato múltiplo disponibilizado pelo backend e reconferido em 2026-10-19: images repetido/imageIds, até 5 fotos e 5 MB cada; manter 20 MB agregados. Bloqueio provisório substituído pela integração abaixo.
+- [x] Miniaturas compactas com+ para adicionar, +N para abrir galeria e feedback de sucesso conforme print/Figma97:7533; tablet834x1194, ações e erro/sucesso verificados com fixtures; tipos/lint/diff aprovados (2026-10-19).
+- [x] Integrar contrato múltiplo confirmado: campo multipart images repetido -> imageIds -> uma ocorrência; até5 fotos/5MB cada/20MB total; validar resposta completa e preservar feedbacks (2026-10-19).
 - Administração de usuários fora do escopo do cliente.
 
 ### Fase 6 - Responsividade e fechamento
@@ -106,4 +110,3 @@ Não concluir fase com checklist aberto. Mudança de ordem ou critério exige ap
 - Toda chamada de API trata erro; toda lista tem skeleton, pull to refresh, vazio e erro.
 - Lint e typecheck sem erros; fluxos verificados manualmente.
 - Visual conforme `design-guidelines.md`.
-

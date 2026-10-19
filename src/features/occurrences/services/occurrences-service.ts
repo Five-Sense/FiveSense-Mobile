@@ -2,7 +2,8 @@ import { AppError } from '@/shared/services/api/app-error';
 import { requestJson } from '@/shared/services/api/client';
 
 import { imageUploadSchema, occurrenceOptionsSchema, occurrenceRequestSchema } from '../schemas/occurrence-schema';
-import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES, type OccurrenceImage, type OccurrenceOption } from '../types/occurrence';
+import type { OccurrenceImage, OccurrenceOption } from '../types/occurrence';
+import { validateOccurrenceImages } from '../utils/occurrence-images';
 
 export async function getOccurrenceOptions(kind: 'problems' | 'materials', signal?: AbortSignal): Promise<OccurrenceOption[]> {
   const response = await requestJson(`/${kind}/options`, { role: 'VIEWER', signal });
@@ -11,24 +12,27 @@ export async function getOccurrenceOptions(kind: 'problems' | 'materials', signa
   return parsed.data;
 }
 
-export async function uploadOccurrenceImage(image: OccurrenceImage, signal?: AbortSignal): Promise<string> {
-  const size = image.file?.size ?? image.size;
-  if (!ACCEPTED_IMAGE_TYPES.includes(image.mimeType) || !Number.isFinite(size) || size < 1 || size > MAX_IMAGE_BYTES) {
-    throw new AppError('validation', 'Selecione uma imagem JPG ou PNG de até 5 MB.');
-  }
+export async function uploadOccurrenceImages(images: readonly OccurrenceImage[], signal?: AbortSignal): Promise<string[]> {
+  validateOccurrenceImages(images);
+  if (!images.length) return [];
+
   const formData = new FormData();
-  if (image.file) formData.append('image', image.file, image.name);
-  // O FormData nativo aceita {uri,name,type}; o TypeScript usa a assinatura DOM.
-  else formData.append('image', { uri: image.uri, name: image.name, type: image.mimeType } as unknown as Blob);
+  for (const image of images) {
+    if (image.file) formData.append('images', image.file, image.name);
+    // O FormData nativo aceita {uri,name,type}; o TypeScript usa a assinatura DOM.
+    else formData.append('images', { uri: image.uri, name: image.name, type: image.mimeType } as unknown as Blob);
+  }
   const response = await requestJson('/occurrences/images', { method: 'POST', formData, role: 'VIEWER', signal });
   const parsed = imageUploadSchema.safeParse(response);
-  if (!parsed.success) throw new AppError('unknown', 'Não foi possível confirmar o upload da imagem. Tente novamente.');
-  return parsed.data.imageId;
+  if (!parsed.success || parsed.data.imageIds.length !== images.length) {
+    throw new AppError('unknown', 'Não foi possível confirmar o upload de todas as fotos. Seus anexos foram mantidos; tente novamente.');
+  }
+  return parsed.data.imageIds;
 }
 
-type CreateOccurrence = { problemId: string; materialId: string; affectedQuantity: number; reportedByUserId: string; imageId?: string };
+type CreateOccurrence = { problemId: string; materialId: string; affectedQuantity: number; reportedByUserId: string; imageIds?: string[] };
 
 export async function createOccurrence(values: CreateOccurrence, signal?: AbortSignal): Promise<void> {
-  occurrenceRequestSchema.parse(values);
-  await requestJson('/occurrences', { method: 'POST', body: values, role: 'VIEWER', responseType: 'void', signal });
+  const payload = occurrenceRequestSchema.parse(values);
+  await requestJson('/occurrences', { method: 'POST', body: payload, role: 'VIEWER', responseType: 'void', signal });
 }
