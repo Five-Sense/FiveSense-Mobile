@@ -17,6 +17,22 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-19] - Correção: ISSUE-003 (Cards da Home com largura uniforme)
+
+- **Causa:** `grow` com `max-w-[369px]` fazia os cards da linha de cima dividirem o espaço e o card sozinho da linha de baixo chegar a 369, gerando larguras diferentes.
+- **O que foi feito:** `home-screen.tsx` mede o contêiner (`onLayout`), calcula o número de colunas (mín. 320, gap 16) e aplica uma única largura (máx. 369) a todos os cards. Em 754 de contêiner: 2 colunas de 369; no celular: 1 coluna de largura total.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros. Sem conferência visual em navegador/dispositivo.
+- **Riscos:** largura inline calculada em runtime (necessária por não haver CSS grid no RN); primeira renderização usa largura total até o `onLayout`.
+
+## [2026-10-19] - Correção: ISSUE-003 (Fidelidade da Home ao Figma)
+
+- **Fase:** Fase 2 (Home existente). Docs lidos antes do código.
+- **Causa:** `md:text-page` no "Olá!" resolvia para a cor `--color-page` (#FCFCFC), não para o tamanho, deixando o título invisível sobre o fundo page a partir de 768px. Os cards ficavam largos por `md:w-1/2` e o layout mudava por breakpoint.
+- **O que foi feito:** título usa `md:text-page-heading` (28/36, alias já existente). Grade dos cards passou a `flex-row flex-wrap gap-[16px]` com itens `basis-[320px] grow min-w-[280px] max-w-[369px]`: cards de até 369 (largura do Figma tablet), gap 16, quebra em linhas sem troca de layout. Margem horizontal do tablet 40 (Figma 834: 2x369 + 16 = 754 = 834 - 80).
+- **Arquivos:** `src/features/auth/screens/home-screen.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros. Não conferido visualmente no navegador nem em Android/iOS.
+- **Riscos:** margem 40 no tablet difere da tabela genérica de `design-guidelines.md` (24), mas segue o frame do Figma e a tela de ocorrência. Altura do card (Figma 258, hug) depende do texto.
+
 ## [2026-10-19] - Correção: ISSUE-006 (Origem da imagem conforme Figma)
 
 - **Pedido e fonte:** humano corrigiu o diálogo de origem com novo print; contexto/screenshot Figma97:7404/97:7405. Branch feature/occurence-creation-flow e alterações anteriores preservadas; spec antes do código.
