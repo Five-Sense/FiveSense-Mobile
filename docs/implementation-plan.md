@@ -57,7 +57,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento (apenas o componente de detalhes do material, a pedido do humano; telas e API seguem planejadas)
 
 - [x] Componente `MaterialDetailsCard` (Figma `208:7927`), somente apresentação (2026-10-16).
-- [ ] Materiais: lista e detalhes para o Visualizador, sem feedback de estoque baixo; exibir quantidade como dado.
+- [x] Materiais: lista e detalhes para o Visualizador em `/materiais`, sem feedback de estoque baixo; quantidade como dado (2026-10-19). Falta validar com a API real no navegador (CORS) e em dispositivo.
+- [ ] Código do material: aguardar campo na API (lacuna 19); busca hoje só por nome.
 - Gestão de problemas e CRUD de materiais fora do escopo; seleção de problema na ocorrência continua dependendo da API.
 
 ### Fase 4 - Equipes
