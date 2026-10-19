@@ -9,10 +9,12 @@ import { OccurrenceFields } from '../components/form/occurrence-fields';
 import { OccurrenceHeading } from '../components/form/occurrence-heading';
 import { ImageSourceDialog } from '../components/image/image-source-dialog';
 import { useOccurrenceForm } from '../hooks/use-occurrence-form';
+import { OccurrenceSuccessScreen } from './occurrence-success-screen';
 
 export default function OccurrenceCreationScreen() {
   const form = useOccurrenceForm();
   usePreventRemove(form.sending, form.showPendingNotice);
+  if (form.completed) return <OccurrenceSuccessScreen onCreateAnother={form.createAnother} />;
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function OccurrenceCreationScreen() {
             {form.uncertain ? <Button variant="secondary" onPress={form.acknowledgeRetry}>Conferi, liberar nova tentativa</Button> : null}
             <OccurrenceFields form={form} />
           </View>
-          <Button icon={ArrowRight} iconPosition="end" iconSize={32} disabled={!form.canSubmit && !form.sending} loading={form.sending} loadingLabel={form.phase === 'uploading' ? 'Enviando imagem...' : 'Enviando ocorrência...'} onPress={form.submit}>Enviar ocorrência</Button>
+          <Button icon={ArrowRight} iconPosition="end" iconSize={32} disabled={!form.canSubmit && !form.sending} loading={form.sending} loadingLabel={form.phase === 'uploading' ? 'Enviando imagens...' : 'Enviando ocorrência...'} onPress={form.submit}>Enviar ocorrência</Button>
         </View>
       </ScrollView>
       <ImageSourceDialog visible={form.imageChooserOpen} onClose={() => form.setImageChooserOpen(false)} onChoose={form.pickImage} />

@@ -17,6 +17,33 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-19] - Entrega: ISSUE-006 (Integração de várias imagens na API)
+
+- **Fase/escopo:** Fase 5, branch feature/occurence-creation-flow; docs/spec antes de código, mudanças anteriores preservadas. Humano informou suporte múltiplo; contrato oficial reconferido por GET.
+- **Alterações:** upload único multipart images repetido -> imageIds completos/únicos -> uma ocorrência com todos os IDs. Zero fotos pula upload/lista; removido bloqueio provisório. Validar até5 JPG/PNG, 5MB cada e20MB agregados na seleção e serviço; + desabilitado em5, remoção libera, textos/loading atualizados. Upload parcial/inválido impede registro e mantém fotos; campos plurais/indexados mapeados. Sem alteração de timeout/retry/sessão, novo endpoint, conversão ou dependência.
+- **Arquivos:** occurrences/{services/occurrences-service.ts,services/occurrence-image-service.ts,schemas/occurrence-schema.ts,types/occurrence.ts,hooks/use-occurrence-form.ts,utils/occurrence-images.ts,utils/occurrence-error-fields.ts,components/image/occurrence-image-field.tsx,components/image/image-source-dialog.tsx,screens/occurrence-creation-screen.tsx}.
+- **Checks:** tsc --noEmit, expo lint --no-cache, git diff --check; contrato transitório 0/1/3/5 fotos, limites5/5MB/20MB, multipart web/nativo simulado, erros/IDs parciais/inválidos/duplicados e sem retry. Tablet834x1194 com fixtures: lote3 cria uma ocorrência com3 IDs; lote2 parcial não cria/preserva dados; nova tentativa completa cria com2 IDs; limite5/+1/galeria/remoção libera+. Sem overflow/avisos/erros. Sem celular/desktop conforme instrução humana.
+- **Docs:** data-model, arquitetura, workflows, security, design, issues/plano/testing, decisão0013 e este log. Decisão0012/bloqueio anterior substituídos pelo contrato atual, preservando histórico.
+- **Limites:** nenhuma ocorrência/e-mail real; conta VIEWER real, CORS atual e câmera física não verificados. Arquivos temporários consumidos pelo backend; reenvio exige novo upload e resultado incerto mantém confirmação explícita. Sem idempotência ou garantia de entrega de e-mail. Fixtures/evidências/scripts fora do repo, sem demonstração permanente, commit ou push. Issue/fase abertas pela validação externa e próximas telas.
+
+## [2026-10-19] - Entrega: ISSUE-006 (Miniaturas, galeria e feedback de sucesso)
+
+- **Pedido/fonte:** dois prints do humano e contexto/screenshot Figma97:7533/96:2227; branch feature/occurence-creation-flow, mudanças anteriores preservadas e spec registrada antes de código.
+- **Anexos:** montagem central200x200 na área tracejada303, até4 fotos cover e+N dinâmico (total menos4;9 -> +5), + em alvo48 para adicionar. Miniaturas/+N abrem pop-up com todas as fotos, quantidade/tamanho, previews/remoção existentes, rolagem, X/fundo/Escape/voltar. Nova composição substitui cards abertos no formulário; mantém JPG/PNG, limite agregado20MB e bloqueio múltiplo enquanto aguarda backend.
+- **Confirmação:** OccurrenceSuccessScreen exibida na mesma rota somente após2xx confirmado; card754x236, selo80/check36, título28/36 e descrição16/24 verdes, Buttons com ArrowRight/Plus à direita. Voltar ao menu principal -> /home; Criar outra ocorrência -> formulário limpo. Erros/resultado incerto mantêm dados sem falso sucesso; sem garantir entrega de e-mail.
+- **Arquivos:** occurrences/components/image/{image-thumbnail-mosaic,occurrence-image-gallery,occurrence-image-field,image-source-dialog}.tsx; hooks/{use-image-dialog-dismiss,use-occurrence-form}.ts; screens/{occurrence-creation-screen,occurrence-success-screen}.tsx. Reutilizados Icon/Lucide, Button, preview, tokens e moldura; sem dependência ou asset remoto novo.
+- **Checks:** tsc --noEmit, expo lint --no-cache e git diff --check aprovados. Somente tablet834x1194:0/1/4/9 fotos/+5, pop-up com todas/rolagem/remoção, fechar X/Escape/fundo e+ abre origem; sucesso201 com foto, criar outra limpa,400 não mostra sucesso,201 sem foto e voltarHome. Card754x236/Check36/título28/36 medidos; sem overflow e sem avisos/erros do navegador. Diferença preexistente de1px na altura do header compartilhado documentada, sem alterar global.
+- **Docs:** issues/plano/design/workflows/testing/log. Nenhum POST real ou e-mail/câmera de teste; fixtures externas. Backend múltiplo permanece pendente pela decisão0012. Sem demonstração permanente, commit ou push; issue/fase abertas pelas pendências externas.
+
+## [2026-10-19] - Entrega parcial: ISSUE-006 (Seleção de várias fotos,20MB no total)
+
+- **Escopo:** branch feature/occurence-creation-flow inicialmente limpa. Docs lidos antes de código/spec atualizada; humano confirmou20MB no total e que backend ainda não suporta várias fotos, sem possibilidade de implementar agora.
+- **Cliente entregue:** galeria com seleção múltipla, câmera com capturas sucessivas, coleção com prévias/nome/tamanho/remoção por item, contador/tamanho agregado e botão Adicionar mais fotos. Validação JPG/PNG e20*1024*1024 bytes total, repetida antes do envio; lote inválido/cancelamento preservam anexos anteriores. Novo hook local separa seleção/estado do formulário; util local centraliza soma/validação/formatação. Painel/tokens/Icon/Button existentes reutilizados; sem dependência nova.
+- **Integração preservada e pendente:** nenhuma invenção de imageIds ou truncamento. Com mais de uma foto, aviso e nenhum upload/POST; zero/uma foto mantém contrato imageId existente. O limite20MB é do cliente solicitado; backend ainda pode impor5MB e413 é tratado. Upload/vínculo de várias fotos e limite remoto20MB aguardam contrato do backend, conforme confirmação humana. Não considerar fluxo completo entregue.
+- **Arquivos:** occurrences/types/occurrence.ts; utils/occurrence-images.ts; hooks/{use-occurrence-images,use-occurrence-form}.ts; services/{occurrence-image-service,occurrences-service}.ts; components/form/occurrence-fields.tsx; components/image/{occurrence-image-field,occurrence-image-preview,image-source-dialog}.tsx.
+- **Checks:** tsc --noEmit, expo lint e git diff --check aprovados. Tablet834x1194: seleção2/adição3ª/remoção2ª, lote22MB recusado sem perder fotos, prévias/contador e bloqueio múltiplo com0 uploads/0 criações; sem overflow. Verificação transitória externa de limite exato20MB/20MB+1, tipos/tamanhos reais, seleção múltipla/câmera/cancelamento. Sem ocorrências reais ou câmera física. Consulta pública do contrato expirou; backend sem suporte plural confirmado pelo humano.
+- **Docs:** issues/plano/data-model/workflows/security/design/testing/decisão0012/log. Issue/fase abertas pela integração externa. Sem demonstração permanente, commit ou push.
+
 ## [2026-10-19] - Correção: ISSUE-006 (Origem da imagem conforme Figma)
 
 - **Pedido e fonte:** humano corrigiu o diálogo de origem com novo print; contexto/screenshot Figma97:7404/97:7405. Branch feature/occurence-creation-flow e alterações anteriores preservadas; spec antes do código.
@@ -281,4 +308,3 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 - **Checks:** revisão documental. Nenhum código; lint/typecheck não aplicáveis. Figma não pôde ser lido (exige login).
 - **Docs atualizados:** os listados acima.
 - **Riscos/Débito técnico:** API pública, sem token nem autorização; 16 lacunas entre requisitos e API em `data-model.md`; enums de `role`/`status` não confirmados; NativeWind v5 está em release candidate; docs sujeitos a ajuste após ver o Figma.
-
