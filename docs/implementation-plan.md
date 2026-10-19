@@ -47,8 +47,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 - [x] Tela inicial do login do Visualizador em feature/login-flow, fiel ao print/Figma, usando componentes existentes e API atual; Nome de usuário (decisão do humano), feedbacks de obrigatórios, tamanho e credenciais incorretas; confirmação de sucesso na mesma tela.
 - [ ] Integração web real: backend liberar CORS; conferir sucesso com conta VIEWER e dispositivo nativo.
-- [ ] Conta, logout e página principal: próximos prints/escopo; confirmação na própria tela aprovada enquanto o destino não chega.
-- [ ] Login, logout, informações da conta e página principal do Visualizador. Visual da página principal (`HomeScreen` + `AccessCard`) entregue em 2026-10-16; faltam sessão (nome/perfil reais), login, logout e conta.
+- [x] Integrar login à Home existente em /home, proteger grupo app e executar logout; 401 na ocorrência volta ao login com aviso (2026-10-19). Conta e demais telas aguardam prints.
+- [ ] Informações da conta e personalização da Home com nome real. Home existente integrada ao login/logout em 2026-10-19; saudação genérica preservada.
 - [ ] Sessão expirada (401) e acesso negado (403), tratados no cliente de API.
 - [ ] Recuperação, redefinição e alteração de senha: bloqueadas até a API ter os endpoints.
 
@@ -70,9 +70,12 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 5 - Ocorrências
 
-**Status:** Planejada
+**Status:** Em andamento (formulário autorizado em 2026-10-19)
 
-- [ ] Ocorrência com problema, material, quantidade e imagem (câmera/galeria, 5 MB, upload prévio).
+- [x] Formulário /ocorrencias: opções reais, quantidade, câmera/galeria até 5 MB, upload antes do registro, sessão VIEWER, feedbacks e prevenção de reenvio incerto; branch feature/occurence-creation-flow (2026-10-19).
+- [x] Conferência visual final no tablet 834x1194 e checks estáticos/exportação. Celular e desktop dispensados neste fluxo pelo humano em 2026-10-19.
+- [ ] Validar integração web após CORS no backend e envio com conta VIEWER real; próximas telas aguardam prints. Câmera nativa não conferida em dispositivo físico.
+- [x] Corrigir origem da imagem conforme print/Figma97:7404, painel inferior Galeria/Câmera; tablet834x1194 com dados locais, tipos/lint/diff aprovados (API fora do ar,2026-10-19).
 - Administração de usuários fora do escopo do cliente.
 
 ### Fase 6 - Responsividade e fechamento

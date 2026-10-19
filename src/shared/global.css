@@ -17,6 +17,7 @@
   --color-text-muted: #64748b;
 
   --color-page: #fcfcfc;
+  --color-overlay: #111827;
   --color-surface: #ffffff;
   --color-surface-subtle: #f1f5f9;
   --color-surface-hover: #f8fafc;
@@ -53,6 +54,7 @@
   --spacing: 4px;
   --spacing-control: 48px;
   --spacing-icon-slot: 32px;
+  --spacing-menu-slot: 56px;
   --spacing-sidebar: 222px;
   --spacing-nav-item: 56px;
   --radius-control: 8px;
@@ -89,4 +91,10 @@
   --text-section: 24px;
   --text-section--line-height: 32px;
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
+}
+
+/* Alias Page: text-page também nomeia uma cor no Tailwind. */
+@theme {
+  --text-page-heading: 28px;
+  --text-page-heading--line-height: 36px;
 }

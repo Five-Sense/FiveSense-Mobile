@@ -57,3 +57,16 @@ Para revisões exclusivamente documentais, conferir links locais, rastreabilidad
 ## Após a retirada do catálogo - 2026-10-16
 
 A rota /components e seus exemplos foram removidos por pedido do humano (decisão 0009). Conferências anteriores ficam no deployment-log; não há página permanente de demonstração. Para esta remoção: tipos, lint, diff, busca por referências órfãs e exportação web sem /components; materiais sem aviso de estoque baixo e MenuButton/AppMenu preservados.
+
+## Ocorrência - 2026-10-19
+
+Escopo de aceite atualizado pelo humano: somente tablet, referência 834x1194. As exigências gerais de celular/desktop acima não se aplicam a este incremento. Conferência final no navegador com API temporária local, fora do produto: login -> Home -> Ocorrências; marca 199x26, título 28/36, preview limitado ao campo303, sem overflow horizontal, navegação ativa e controles acessíveis. Typecheck/lint/diff/export web aprovados.
+
+Estados exercitados: seletores loading/falha/retry e preenchimento, quantidade zero/positiva, progresso0..3 e botão habilitado; imagem acima de5MB recusada, seleção/prévia/substituição/remoção; upload multipart antes do registro com imageId; 201 vazio confirmado e formulário limpo; loading bloqueia campos/menu/saída e reenvio; upload503 não chama criação; validação400 preserva campos, 403 mostra recusa, 401 encerra sessão com aviso; desconexão após POST apresenta resultado incerto, com reenvio bloqueado até confirmação explícita.
+
+Verificação transitória de schemas e serviços fora do app: UUID/quantidade/tamanho/tipo, cancelamento e permissão de câmera simulados, header VIEWER, FormData sem Content-Type manual, payload com usuário da sessão, upload inválido e HTTP400/401/403/413/422/503, rede e 201 sem corpo. Sem suíte permanente ou dependência nova. Desconexão forçada evidenciou repetição pelo transporte do navegador; o app não aplica retry de POST e não promete garantia de unicidade sem idempotência no backend.
+
+GETs na API pública retornaram200; web com API real segue bloqueado por CORS. Sem criar registros reais ou disparar e-mails. Conta real/câmera em dispositivo físico não verificadas. Conferências anteriores de outros tamanhos não ampliam o aceite solicitado; nenhuma nova rodada de celular/desktop após essa instrução. Para abrir: npx expo start --web; usar somente tablet neste fluxo. O cliente usa a URL real por padrão; fixtures e exportações temporárias ficam fora do repositório.
+## Correção da origem da imagem - 2026-10-19
+
+Somente tablet834x1194, com API temporária local externa ao produto. Confirmados painel754x368 em40/786, cards341x166, ícones28 brancos, sombra/superfície/backdrop, textos e ausência de overflow. Fechar pelo fundo/Escape preserva problema/material/quantidade e restaura foco; Galeria e Câmera web abriram o seletor de arquivo e retornaram PNG local para a prévia. Câmera física não acionada. Verificação transitória de serviços confirma JPG/PNG aceitos e GIF/WebP/HEIC recusados antes de qualquer requisição, tamanho5MB e cancelamento preservados. Tipos/lint/diff aprovados, navegador sem avisos/erros. API pública não acessada por indisponibilidade informada pelo humano; nenhum envio real. Nenhuma fixture ou demonstração no app.

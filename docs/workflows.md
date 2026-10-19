@@ -6,13 +6,13 @@ Fluxos e telas do Visualizador (decisão 0009, 2026-10-16). Fonte: briefing de d
 
 ## Incremento de login vigente - 2026-10-16
 
-Por decisão do humano, este cliente usa Nome de usuário e senha; o protótipo que mostrava e-mail está incorreto. Campos obrigatórios/tamanho validados antes da API; nome de usuário pode não ser e-mail. Alert acima dos campos informa dados ausentes ou credenciais incorretas; bordas destacam somente os campos envolvidos. API recebe username/password e retorna sessão VIEWER. Loading bloqueia reenvio; conexão, timeout, indisponibilidade, perfil não permitido e resposta inválida recebem feedback recuperável. Sucesso é confirmado na mesma tela enquanto o próximo print não chega. Recuperação e demais telas seguem fora deste incremento.
+Por decisão do humano, este cliente usa Nome de usuário e senha; o protótipo que mostrava e-mail está incorreto. Campos obrigatórios/tamanho validados antes da API; nome de usuário pode não ser e-mail. Alert acima dos campos informa dados ausentes ou credenciais incorretas; bordas destacam somente os campos envolvidos. API recebe username/password e retorna sessão VIEWER. Loading bloqueia reenvio; conexão, timeout, indisponibilidade, perfil não permitido e resposta inválida recebem feedback recuperável. Desde o incremento de ocorrência de 2026-10-19, sucesso inicia a sessão e abre a Home existente em /home; a confirmação provisória na própria tela foi substituída para dar acesso ao fluxo autorizado. Recuperação e demais telas seguem fora deste incremento.
 
 ## Navegação por perfil
 
 | Perfil | Menu principal |
 | --- | --- |
-| Visualizador | Ocorrências, Equipes, Materiais |
+| Visualizador | Home, Ocorrências, Equipes, Materiais |
 | Visualizador | Informações da conta, Sair |
 
 ## Telas e requisitos
@@ -32,13 +32,13 @@ Por decisão do humano, este cliente usa Nome de usuário e senha; o protótipo 
 
 ## Fluxos-chave
 
-- **Login vigente:** nome de usuário e senha, botão Login, confirmação na própria tela. Credencial incorreta mantém no formulário com Alert; falha de rede permite tentar de novo. Sem fluxos de outros perfis neste cliente.
+- **Login vigente:** nome de usuário e senha, botão Login, abertura da Home existente em /home após autenticar. Credencial incorreta mantém no formulário com Alert; falha de rede permite tentar de novo. Sem fluxos de outros perfis neste cliente.
 - **Recuperação (bloqueada, sem endpoint na API):** Esqueci minha senha, e-mail, link recebido (deep link), nova senha e confirmação. Token vale 10 min (RN024). Senha: mínimo 8 caracteres, 1 maiúscula, 1 número, 1 especial (RN025).
 - **Logout:** limpa a sessão local e volta ao login.
-- **Sessão expirada (401, quando a API emitir token):** interrompe a ação, limpa a sessão, mostra "Sua sessão expirou" e leva ao login. A ação interrompida não aparece como concluída.
+- **Sessão recusada (401):** interrompe a ação, limpa a sessão, mostra "Sua sessão expirou" e leva ao login. A ação interrompida não aparece como concluída.
 - **Acesso negado (403):** mensagem "Você não possui permissão para realizar esta ação", sessão mantida.
 - **Detalhes:** equipes e materiais abrem em pop-up de consulta, com fechamento acessível; sem ações de cadastro, edição ou exclusão de gestão.
-- **Ocorrência:** problema, material, quantidade (+/-), imagem opcional (câmera ou galeria, máx. 5 MB pela API; upload antes do envio, que devolve `imageId`). Sucesso limpa o formulário. Se registrar mas o e-mail falhar, mostrar aviso de resultado parcial sem induzir reenvio.
+- **Ocorrência:** problema, material, quantidade (+/-), imagem opcional (câmera ou galeria, máx. 5 MB pela API; upload antes do envio, que devolve `imageId`). Sucesso limpa o formulário. A resposta atual não informa entrega do e-mail: confirmar somente o registro. Progresso Etapa 0 a 3 representa os três campos obrigatórios, sem wizard adicional (Figma preenchido 132:6302). Durante envio, bloquear campos/menu/saída. Erros preservam dados; rede/timeout/5xx após iniciar registro mostram resultado incerto e exigem conferência antes de reenvio explícito, sem retry automático. Rota protegida /ocorrencias; verificação visual deste incremento somente em tablet.
 - **Status de 5S:** Visualizador toca na própria equipe para alternar Fazendo 5S e Não fazendo 5S. Outra equipe ou sem vínculo mostra mensagem de permissão. Em falha, mantém o último status confirmado.
 - **Estoque:** MaterialItem e MaterialDetailsCard não exibem feedback de estoque baixo; a quantidade no detalhe é informativa.
 - **Representantes e horário de equipe:** texto livre (a API não tem lista estruturada).
