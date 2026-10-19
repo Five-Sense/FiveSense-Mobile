@@ -43,8 +43,11 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 2 - Autenticação e conta
 
-**Status:** Planejada
+**Status:** Em andamento (incremento de login autorizado em 2026-10-16; demais telas aguardam prints)
 
+- [x] Tela inicial do login do Visualizador em feature/login-flow, fiel ao print/Figma, usando componentes existentes e API atual; Nome de usuário (decisão do humano), feedbacks de obrigatórios, tamanho e credenciais incorretas; confirmação de sucesso na mesma tela.
+- [ ] Integração web real: backend liberar CORS; conferir sucesso com conta VIEWER e dispositivo nativo.
+- [ ] Conta, logout e página principal: próximos prints/escopo; confirmação na própria tela aprovada enquanto o destino não chega.
 - [ ] Login, logout, informações da conta e página principal do Visualizador. Visual da página principal (`HomeScreen` + `AccessCard`) entregue em 2026-10-16; faltam sessão (nome/perfil reais), login, logout e conta.
 - [ ] Sessão expirada (401) e acesso negado (403), tratados no cliente de API.
 - [ ] Recuperação, redefinição e alteração de senha: bloqueadas até a API ter os endpoints.

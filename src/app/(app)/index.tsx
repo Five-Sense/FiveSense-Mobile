@@ -1,3 +1,6 @@
-import { HomeScreen } from '@/features/auth';
+import { View } from 'react-native';
 
-export default HomeScreen;
+// Página principal do Visualizador: vazia no protótipo "04 · Principal". O conteúdo entra na Fase 2.
+export default function HomeScreen() {
+  return <View className="flex-1 bg-page" />;
+}

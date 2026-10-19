@@ -2,16 +2,20 @@
 
 Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte: documentação da API enviada pelo humano em 2026-10-09. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
 
+## Revisão de autenticação - 2026-10-16
+
+Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. As descrições e lacunas abaixo datadas de 2026-10-09 são referência histórica quando conflitarem com esta revisão de autenticação. Perfis retornados continuam pertencendo ao contrato externo; o cliente de login atual admite somente VIEWER por instrução do humano. Não ampliar outros módulos por mudanças identificadas na API nesta consulta.
+
 ## Convenções
 
 - **Paginação** (Spring `Page`): query `page` (base 0, padrão 0) e `size` (padrão 20, máx. 100). Resposta: `content[]`, `totalElements`, `totalPages`, `size`, `number`.
 - **Erros:** ProblemDetail (RFC 9457). Conflito de exclusão: 409. Validação: 400/422 (?) com detalhes por campo (formato a confirmar).
 - **IDs:** UUID. **Datas:** ISO 8601 UTC.
-- **Autenticação:** todas as rotas são públicas; não há token (ver `security.md`).
+- **Autenticação atual (2026-10-16):** `/auth/**` público; demais rotas exigem `X-User-Role` (401 se ausente/inválido, 403 sem permissão). Header didático e forjável; não é JWT nem substitui autenticação real (ver `security.md`).
 
 ## Endpoints e modelos
 
-**Auth:** `POST /auth/login` `{email, password}` -> `{authenticated, userId, name, email, role}`.
+**Auth (reconferido em 2026-10-16):** `POST /auth/login` `{username, password}` -> `{authenticated, userId, name, username, email, role}`. Username e senha obrigatórios, até 255 caracteres; username sem distinguir caixa. Credenciais incorretas/usuário inativo retornam 400 (ProblemDetail, detail "Invalid credentials"). No cliente deste incremento somente VIEWER inicia sessão. Não há JWT nem expiração na resposta. `POST /auth/forgot-password` agora aparece no contrato, com `{email,newPassword}` -> `{updated,userId,email}`; não faz parte do print/pedido atual, não implementar nem assumir fluxo por link.
 
 **User** `{id, name, email, role, status, createdAt, updatedAt}`; `role`: `VIEWER` (outros valores, ex. `ADMIN` e `MANAGER`, a confirmar); `status`: `ACTIVE` (outros a confirmar).
 - `GET /users` (paginado), `GET /users/{id}`
@@ -44,7 +48,8 @@ Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferença
 
 | Campo | Regra |
 | --- | --- |
-| E-mail | formato válido |
+| E-mail (quando solicitado) | formato válido; login usa username, não e-mail |
+| Login: username e password | obrigatórios, até 255; username trim, senha preservada; sem regras de cadastro |
 | Senha (cadastro/troca) | mín. 8, 1 maiúscula, 1 número, 1 especial (RN025), se a API oferecer o fluxo |
 | Nome do problema | até 20 caracteres, com contador |
 | E-mail do problema | até 255 caracteres |
@@ -60,7 +65,7 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | --- | --- | --- | --- |
 | 1 | RF001/NF001/NF005 token JWT, expiração (RN022) | Login devolve só dados do usuário; sem token. O humano confirmou que os tokens expiram (inclusive o do Visualizador; duração a definir). | Perguntar ao responsável da API; app já prevê 401 -> login. |
 | 2 | RF002 logout | Sem endpoint | Logout local (limpar sessão). |
-| 3 | RF003 recuperar senha, RF004 alterar senha | Sem endpoints | Telas ficam bloqueadas até a API existir. Manter Fase 2 sem elas? |
+| 3 | RF003 recuperar senha, RF004 alterar senha | Atualização 2026-10-16: forgot-password recebe email/newPassword diretamente; não há fluxo por link/token documentado | Fora do incremento atual; definir o fluxo com novos prints antes de implementar. |
 | 4 | RF005 senha aleatória por e-mail (RN003) | Admin informa a senha no cadastro | Campo de senha no formulário de cadastro. |
 | 5 | RF008 editar perfil de usuário | `PUT` não aceita `role` | Perfil não editável; editar nome, e-mail e status. |
 | 6 | RN005/RN008/RN021 representantes, limite | `representatives` é texto livre | Campo de texto livre; sem chips nem limite. |
@@ -71,7 +76,7 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 11 | RN019 alerta de estoque | API calcula `lowStock` | Mostrar alerta quando `lowStock` for verdadeiro, para Gestor e Visualizador. |
 | 12 | RN012 resposta padrão | Campo `defaultResponse` | Campo no formulário do problema. |
 | 13 | RF014 problemas para o Visualizador | `/problems/options` | Usar as opções. Idem materiais. |
-| 14 | Perfis (NF002) | Rotas públicas, sem checagem de perfil | Controle só na interface (ver `security.md`). |
+| 14 | Perfis (NF002) | Atualização 2026-10-16: X-User-Role obrigatório fora de /auth/**; header forjável | VIEWER no cliente; proteção real ainda depende da API (ver security.md). |
 | 15 | Listas | Materiais também são paginados | Paginar materiais. |
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
 | 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |

@@ -4,6 +4,10 @@ Fluxos e telas do Visualizador (decisão 0009, 2026-10-16). Fonte: briefing de d
 
 > **Atenção:** a API v1 não cobre recuperação/alteração de senha, token, vínculo usuário-equipe nem calendário, e limita imagens a 5 MB. Onde este documento (vindo do briefing) divergir, vale `data-model.md`, seção "Lacunas".
 
+## Incremento de login vigente - 2026-10-16
+
+Por decisão do humano, este cliente usa Nome de usuário e senha; o protótipo que mostrava e-mail está incorreto. Campos obrigatórios/tamanho validados antes da API; nome de usuário pode não ser e-mail. Alert acima dos campos informa dados ausentes ou credenciais incorretas; bordas destacam somente os campos envolvidos. API recebe username/password e retorna sessão VIEWER. Loading bloqueia reenvio; conexão, timeout, indisponibilidade, perfil não permitido e resposta inválida recebem feedback recuperável. Sucesso é confirmado na mesma tela enquanto o próximo print não chega. Recuperação e demais telas seguem fora deste incremento.
+
 ## Navegação por perfil
 
 | Perfil | Menu principal |
@@ -28,7 +32,7 @@ Fluxos e telas do Visualizador (decisão 0009, 2026-10-16). Fonte: briefing de d
 
 ## Fluxos-chave
 
-- **Login:** e-mail e senha, `Entrar`, página principal do Visualizador. Credencial incorreta mantém no login com mensagem; falha de rede permite tentar de novo. Primeiro acesso usa a senha enviada por e-mail (troca não é obrigatória).
+- **Login vigente:** nome de usuário e senha, botão Login, confirmação na própria tela. Credencial incorreta mantém no formulário com Alert; falha de rede permite tentar de novo. Sem fluxos de outros perfis neste cliente.
 - **Recuperação (bloqueada, sem endpoint na API):** Esqueci minha senha, e-mail, link recebido (deep link), nova senha e confirmação. Token vale 10 min (RN024). Senha: mínimo 8 caracteres, 1 maiúscula, 1 número, 1 especial (RN025).
 - **Logout:** limpa a sessão local e volta ao login.
 - **Sessão expirada (401, quando a API emitir token):** interrompe a ação, limpa a sessão, mostra "Sua sessão expirou" e leva ao login. A ação interrompida não aparece como concluída.
