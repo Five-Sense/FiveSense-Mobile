@@ -39,7 +39,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Demonstração de MenuButton/AppMenu criada e conferida em 2026-10-16; removida por novo pedido do humano na mesma data. Permanecem somente os componentes.
 - [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
 - [x] Catálogo geral entregue e verificado anteriormente; removido por novo pedido do humano em 2026-10-16. Correções reais dos componentes permanecem.
-- [ ] Cliente de API (`src/services/api`) com `AppError`, contexto de sessão e permissões.
+- [x] Cliente de API (`src/shared/services/api`) com `AppError`, timeout e header `X-User-Role` (2026-10-19).
+- [ ] Contexto de sessão e permissões (o perfil hoje é fixo em VIEWER no cliente).
 
 ### Fase 2 - Autenticação e conta
 
@@ -62,7 +63,9 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento (apenas componentes de card, a pedido do humano; telas e API seguem planejadas)
 
 - [x] Componentes `TeamCard` (Figma `228:7974`), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` e `TeamStatusBadge`, somente apresentação (2026-10-16).
+- [x] Tela de lista de equipes (`/equipes`) com dados simulados, busca, skeleton, refresh, vazio e erro (2026-10-19); falta API real, paginação e detalhes.
 - [ ] Lista paginada com status e detalhes para o Visualizador. CRUD e gestão de representantes fora do escopo.
+- [x] Tela de calendário (`/equipes/calendario`) com dados simulados e navegação a partir da lista (2026-10-19); falta dado real da API.
 - [ ] Visualizador altera status da própria equipe e consulta o calendário.
 
 ### Fase 5 - Ocorrências
