@@ -22,6 +22,10 @@ A API v1 documentada tem **todas as rotas públicas** e login "simples" que devo
 
 Este risco pertence à API e deve ser tratado lá. No app: ocultar ações por perfil, nunca tratar a interface como barreira de segurança e registrar o risco em cada entrega relevante.
 
+## Header de perfil (2026-10-19)
+
+A API passou a exigir `X-User-Role` em toda rota fora de `/auth/**`, mas o header não é autenticado (pode ser forjado; a própria API o chama de controle didático). O cliente em `src/shared/services/api/client.ts` envia `VIEWER` fixo, porque o app é exclusivo do Visualizador e ainda não há login. Quando a sessão existir (ISSUE-003), o valor deve vir do `role` do login. O risco "controle por perfil só na interface" permanece.
+
 ## Sessão no app
 
 - Após o login, guardar apenas o necessário (`userId`, `name`, `email`, `role`) em armazenamento seguro (`expo-secure-store` no nativo; no web, equivalente mais fraco).
