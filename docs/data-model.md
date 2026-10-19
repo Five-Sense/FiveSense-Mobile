@@ -81,6 +81,11 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
 | 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |
 | 18 | Minicards de representantes no detalhe da equipe | `representatives` é um único texto livre | `TeamDetailsCard` recebe `string[]`; quem monta o card separa os nomes. Regra de separação (vírgula? quebra de linha?) a definir. |
+| 19 | Lista de materiais do Figma (10 · Materiais) mostra código "MAT-024" e busca por "nome ou código" | GET /materials (conferido na API real em 2026-10-19) devolve só `id`, `name`, `stockQuantity`, `minimumStock`, `active`, `lowStock`; não há código nem filtro de busca | O app não inventa código: itens e detalhes mostram só o nome; busca local por nome sobre todos os materiais ativos (páginas de 100 percorridas pelo serviço). Confirmar com a API se haverá código. |
+
+## Revisão de materiais - 2026-10-19
+
+GET /materials?page&size com X-User-Role: VIEWER (200 real, 5 materiais). Resposta Spring Page; o cliente valida `content[].{id (UUID), name, stockQuantity (inteiro >= 0), active}` e `totalPages`, ignora o restante e lista só `active: true`. Serviço percorre as páginas (size 100, no máximo 10) para a busca local cobrir o catálogo. Detalhe usa os dados da lista (sem GET /materials/{id}). Contagem "N materiais disponíveis" = materiais ativos carregados. Sem aviso de estoque baixo (decisão 0009). OpenAPI repete nomes de schema (`Response`) entre controllers, então o formato acima vem da resposta real. Web real depende de CORS no backend.
 
 ## Revisão inicial de ocorrência - 2026-10-19 (histórico; anexos substituídos pela revisão múltipla abaixo)
 

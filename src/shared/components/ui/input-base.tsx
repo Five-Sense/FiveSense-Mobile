@@ -4,6 +4,8 @@ import { Platform, Text, TextInput, View, type TextInputProps } from 'react-nati
 export type InputProps = Omit<TextInputProps, 'multiline'> & {
   label: string;
   required?: boolean;
+  /** Acrescenta "(Opcional)" ao rótulo de campos não obrigatórios. Desligue em campos de busca/filtro. */
+  optionalIndicator?: boolean;
   error?: boolean;
   helperText?: string;
   disabled?: boolean;
@@ -17,6 +19,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
   {
     label,
     required = false,
+    optionalIndicator = true,
     error = false,
     helperText,
     disabled = false,
@@ -57,7 +60,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
 
   const displayLabel = label.endsWith('*')
     ? label
-    : `${label}${required ? ' *' : ' (Opcional)'}`;
+    : `${label}${required ? ' *' : optionalIndicator ? ' (Opcional)' : ''}`;
 
   return (
     <View className={`w-full gap-2 ${containerClassName}`}>
@@ -78,7 +81,7 @@ export const Input = forwardRef<TextInput, InputProps>(function Input(
           multiline={false}
           readOnly={isReadOnly}
           editable={!disabled && !isReadOnly}
-          accessibilityLabel={accessibilityLabel ?? `${label}${required ? ', obrigatório' : ', opcional'}`}
+          accessibilityLabel={accessibilityLabel ?? `${label}${required ? ', obrigatório' : optionalIndicator ? ', opcional' : ''}`}
           accessibilityLabelledBy={`${id}-label`}
           accessibilityHint={[accessibilityHint, helperText].filter(Boolean).join('. ') || undefined}
           accessibilityState={{ ...accessibilityState, disabled }}
