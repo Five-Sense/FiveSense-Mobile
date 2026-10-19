@@ -9,7 +9,7 @@ type SessionContextValue = {
   restoring: boolean;
   storageError: string | null;
   startSession: (session: Session) => Promise<void>;
-  endSession: () => Promise<void>;
+  endSession: (notice?: string) => Promise<void>;
 };
 
 const SessionContext = createContext<SessionContextValue | null>(null);
@@ -35,10 +35,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setSession(next);
   }
 
-  async function endSession() {
+  async function endSession(notice?: string) {
+    setStorageError(notice ?? null);
     setSession(null);
     try { await storage.clearSession(); }
-    catch { throw new AppError('unknown', 'Não foi possível limpar o acesso salvo. Tente novamente.'); }
+    catch { setStorageError('Não foi possível limpar o acesso salvo. Tente sair novamente.'); throw new AppError('unknown', 'Não foi possível limpar o acesso salvo. Tente novamente.'); }
   }
 
   return (

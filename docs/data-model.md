@@ -81,3 +81,18 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
 | 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |
 | 18 | Minicards de representantes no detalhe da equipe | `representatives` é um único texto livre | `TeamDetailsCard` recebe `string[]`; quem monta o card separa os nomes. Regra de separação (vírgula? quebra de linha?) a definir. |
+
+## Revisão de ocorrência - 2026-10-19
+
+Fontes: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs, consultadas nesta entrega. GET /problems/options e /materials/options exigem X-User-Role: VIEWER e devolvem arrays {id,name} ativos (200 real: 10 e 5 opções respectivamente). IDs são UUID; o cliente aceita apenas escolhas presentes nas opções carregadas. Quantidade inteira positiva, de 1 a 999 no Stepper existente. reportedByUserId vem exclusivamente da sessão validada.
+
+Imagem opcional: POST /occurrences/images com FormData, campo image e no máximo 5*1024*1024 bytes; não definir Content-Type manualmente. Validar tipo de imagem e tamanho conhecido antes do upload; cancelamento preserva foto anterior. Resposta precisa conter imageId UUID. Somente depois chamar POST /occurrences com problemId, materialId, affectedQuantity, reportedByUserId e imageId opcional. 2xx confirma registro mesmo sem JSON de resposta. Não há alteração de estoque.
+
+A API tenta notificar responsáveis ativos e contato do problema por e-mail, mas não informa o resultado da entrega. O cliente confirma somente o registro; não consegue mostrar aviso específico de falha de e-mail sem novo contrato. OpenAPI reutiliza nomes de schemas de controllers diferentes (CreateRequest), produzindo exemplo incompatível; para este payload valem a documentação legível oficial e os campos acima.
+
+POST sem retry automático no app. Rede/timeout/5xx após iniciar registro têm resultado incerto: manter dados e impedir novo envio até o usuário confirmar que conferiu com os responsáveis. A API não oferece chave de idempotência; bloqueio local não garante unicidade contra repetição pelo transporte ou outro dispositivo. Imagem já enviada pode ficar sem ocorrência se o registro falhar; não há endpoint de remoção documentado.
+
+Web real depende de CORS (origem, GET/POST/OPTIONS, Content-Type e X-User-Role). Nenhum bypass/proxy implementado; os testes de POST/upload foram locais, sem registros ou e-mails reais.
+### Formatos do anexo - 2026-10-19
+
+O painel de origem enviado pelo humano especifica JPG/PNG. O cliente valida image/jpeg e image/png tanto no picker quanto antes do multipart, com erro junto ao campo para outros tipos. Esta restrição do cliente não modifica a API; o limite de5MB permanece. Sem conversão automática ou dependência nova. API indisponível nesta correção: sem nova verificação remota do contrato.

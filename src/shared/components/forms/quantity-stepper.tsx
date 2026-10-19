@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react-native';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 import { QuantityStepperButton } from './quantity-stepper-button';
 
@@ -18,6 +18,7 @@ export type QuantityStepperProps = {
   /** Nome acessivel do controle. Padrao: "Quantidade". */
   label?: string;
   disabled?: boolean;
+  valueTextSize?: 'card' | 'section';
 };
 
 /** Controle de quantidade: [-] valor [+]. Reutilizavel por materiais e ocorrencias. */
@@ -30,20 +31,18 @@ export function QuantityStepper({
   unitLabel = 'unidades',
   label = 'Quantidade',
   disabled = false,
+  valueTextSize = 'card',
 }: QuantityStepperProps) {
   const decrease = () => onChange(Math.max(min, value - step));
   const increase = () => onChange(Math.min(max, value + step));
 
   return (
     <View
-      accessible
-      accessibilityRole="adjustable"
+      accessible={Platform.OS !== 'web'}
+      accessibilityRole={Platform.OS === 'web' ? undefined : 'adjustable'}
+      role={Platform.OS === 'web' ? 'group' : undefined}
       accessibilityLabel={label}
       accessibilityValue={{ min, max, now: value, text: `${value} ${unitLabel}` }}
-      aria-valuemin={min}
-      aria-valuemax={max}
-      aria-valuenow={value}
-      aria-valuetext={`${value} ${unitLabel}`}
       aria-disabled={disabled}
       accessibilityState={{ disabled }}
       accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
@@ -63,7 +62,7 @@ export function QuantityStepper({
       />
 
       <View className="min-h-[52px] shrink items-center justify-center" accessibilityLiveRegion="polite">
-        <Text className="font-montserrat-semibold text-card text-text-primary">{value}</Text>
+        <Text className={`font-montserrat-semibold text-text-primary ${valueTextSize === 'section' ? 'text-section' : 'text-card'}`}>{value}</Text>
         <Text className="font-montserrat text-label text-text-secondary">{unitLabel}</Text>
       </View>
 

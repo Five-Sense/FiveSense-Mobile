@@ -28,6 +28,7 @@ export type SelectProps<T extends string | number> = {
   /** Acrescenta "(Opcional)" ao rotulo. */
   optional?: boolean;
   helperText?: string;
+  valueTextSize?: 'body' | 'helper';
   /** Mensagem de validacao, exibida abaixo do campo com icone. */
   error?: string;
   disabled?: boolean;
@@ -70,6 +71,7 @@ export function Select<T extends string | number>({
   required = false,
   optional = false,
   helperText,
+  valueTextSize = 'body',
   error,
   disabled = false,
   loading = false,
@@ -177,7 +179,7 @@ export function Select<T extends string | number>({
           onPress={() => handleSelect(option)}
           className={`min-h-control flex-row items-center justify-between gap-[8px] rounded-control px-[16px] ${rowBackground}`}
         >
-          <Text className={`shrink font-montserrat text-body ${rowColors}`}>{option.label}</Text>
+          <Text className={`shrink font-montserrat ${valueTextSize === 'helper' ? 'text-helper' : 'text-body'} ${rowColors}`}>{option.label}</Text>
           {isSelected ? <Icon icon={Check} size={24} className="text-brand-primary" /> : null}
         </Pressable>
       );
@@ -204,7 +206,7 @@ export function Select<T extends string | number>({
         >
           <Text
             numberOfLines={1}
-            className={`shrink font-montserrat text-body ${
+            className={`shrink font-montserrat ${valueTextSize === 'helper' ? 'text-helper' : 'text-body'} ${
               disabled ? 'text-disabled-text' : selected ? 'text-text-primary' : 'text-text-muted'
             }`}
           >

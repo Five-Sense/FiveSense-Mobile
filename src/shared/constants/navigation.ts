@@ -10,7 +10,7 @@ export type NavigationItem = {
 
 /** Menu principal do Visualizador (docs/workflows.md; Home conforme o protótipo 04 · Principal). */
 export const VIEWER_NAVIGATION_ITEMS: readonly NavigationItem[] = [
-  { id: 'home', label: 'Home', icon: House, href: '/' },
+  { id: 'home', label: 'Home', icon: House, href: '/home' },
   { id: 'occurrences', label: 'Ocorrências', icon: FileExclamationPoint, href: '/ocorrencias' },
   { id: 'teams', label: 'Equipes', icon: Users, href: '/equipes' },
   { id: 'materials', label: 'Materiais', icon: Package, href: '/materiais' },

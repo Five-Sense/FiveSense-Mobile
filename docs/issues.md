@@ -132,12 +132,39 @@ Estado atual: 2026-10-16 (IA) criados em `src/features/teams/`: `TeamCard` (Figm
 
 ## ISSUE-006 - Ocorrências
 
-**Tipo:** Feature | **Status:** Planejada | **Fase:** Fase 5
+**Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 5
 
 Objetivo: RF014 a RF016. Aceite: envio pelo Visualizador com imagem até 5 MB e falhas de envio tratadas. Administração de usuários fora do cliente (decisão 0009).
+
+### Incremento autorizado - 2026-10-19: formulário de ocorrência
+
+- **Branch:** feature/occurence-creation-flow, solicitada pelo humano; limpa no início. Docs e componentes lidos antes de código. Fonte: print enviado e contexto/screenshot Figma 96:2189, frame 834x1194.
+- **Escopo:** rota /ocorrencias na área autenticada do Visualizador; problema e material ativos, quantidade positiva e imagem opcional. Reutilizar AppLayout/AppHeader/MenuButton/AppMenu, Select, QuantityStepper, Button, Alert, Icon, Spinner e tokens. Nenhuma tela de gestão, listagem de ocorrências ou dependência nova.
+- **Visual:** conteúdo com margens 40 no tablet, padding superior 32, título Page 28/36, progresso 0 a 3 dos três campos obrigatórios; card raio 12/borda sutil/padding 32/gap 20. Upload 303 de altura, ícone ImagePlus 28 em slot 56, área tracejada. Botão no rodapé do conteúdo com seta à direita, inicialmente disabled. Tela rola e preserva header/menu/áreas seguras; status textual e foco acessíveis. Select ganha tamanho opcional Helper; Stepper, valor Section, sem duplicação dos componentes. Cabeçalho pode receber variante de referência nesta rota, preservando o padrão de outras telas.
+- **Contrato atual conferido:** GET /problems/options e /materials/options -> [{id,name}], X-User-Role: VIEWER. POST /occurrences/images, multipart campo image, até 5 MB -> imageId. POST /occurrences com problemId/materialId/affectedQuantity/reportedByUserId/imageId opcional. O userId vem exclusivamente da sessão. A API registra e tenta enviar e-mail aos responsáveis/contato do problema; não modifica estoque. Não prometer entrega de e-mail, pois a resposta não informa seu resultado.
+- **Diferença do print:** exibir máximo 5 MB, não 20 MB, conforme API e docs existentes. Quantidade começa em zero, apenas positiva habilita envio; manter o máximo 999 do Stepper existente. O OpenAPI reutiliza nomes de schemas incompatíveis entre controllers; para o payload prevalecem os exemplos da documentação oficial e o data-model, sem inventar campos.
+- **Estados:** opções com loading/vazio/falha/tentar novamente; pull to refresh; seleção controlada, progresso por preenchimento; validação antes de qualquer POST. Imagem por galeria/câmera com permissão solicitada apenas na ação pertinente, cancelamento sem perda, validação de tipo/tamanho, prévia/substituir/remover. Upload somente ao enviar, antes do registro; sem Content-Type manual no multipart. Falha de upload não registra ocorrência. Loading bloqueia campos/envio; erros preservam dados; sucesso limpa formulário e mostra Alert. Falha de rede/timeout após iniciar registro tem resultado incerto: avisar antes de permitir reenvio explícito, sem retry automático de POST.
+- **Integração indispensável:** resolver colisão preexistente entre raiz de login e índice do grupo app: Home em /home, rota fina exportando o HomeScreen existente; entrada pós-login para Home, grupo protegido por sessão e logout real. Menus/atalhos apontam /ocorrencias. Sem alterar o design do login ou adicionar outra home. 401 limpa sessão e volta ao login com aviso; 403 fica como acesso negado. QueryProvider do TanStack já instalado, somente GETs com cache por usuário, sem retry de mutações.
+- **Aceite:** tipos/lint/export/diff aprovados; testar opções, validação, foto e sequência upload/registro, sucesso/erros/resultado incerto, bloqueio de repetição e navegação ativa, somente em tablet (834x1194), conforme instrução do humano em 2026-10-19; celular e desktop dispensados neste fluxo. Verificações/fixtures transitórias fora do produto. Não criar ocorrências reais nem enviar e-mails de teste a terceiros. Registrar CORS e limites de dispositivo/conta real.
+
+### Entrega do formulário - 2026-10-19
+
+Incremento cliente concluído: rota protegida, seletores de opções da API, progresso por três campos, Stepper, foto com prévia/substituição/remoção, upload antes do registro e feedbacks. Campos e navegação bloqueados durante envio; falha de upload não cria ocorrência; resultado incerto exige conferência e liberação explícita antes de reenviar. Login agora abre /home (Home existente), logout real e 401 com aviso; removida colisão entre rotas raiz e marcadores de merge preexistentes no barrel de auth.
+
+Typecheck, lint, diff e exportação web aprovados. Conferência final somente em tablet 834x1194, conforme pedido; marca efetiva 199x26, título 28/36 e prévia limitada ao campo, sem overflow horizontal. Verificações transitórias locais cobriram opções, validação, imagem, sucesso com 201 vazio, bloqueio do envio, falha de upload, 400/401/403 e resultado incerto. Nenhuma fixture ou rota de demonstração adicionada ao app.
+
+GETs reais retornaram 200 (10 problemas e 5 materiais), mas o navegador com a API pública ainda depende de CORS no backend. Nenhuma ocorrência real ou e-mail de teste foi criado. Sucesso com conta real e câmera/dispositivo físico não conferidos. ISSUE-006/Fase 5 continuam Em andamento para a validação externa e próximos prints; não exigir celular/desktop neste incremento.
 
 ## ISSUE-007 - Responsividade e fechamento
 
 **Tipo:** Chore | **Status:** Planejada | **Fase:** Fase 6
 
 Objetivo: layouts celular/tablet/desktop, acessibilidade e revisão final.
+
+### Correção autorizada - origem da imagem (2026-10-19)
+
+Substituir diálogo central criado anteriormente pelo painel inferior do print e Figma97:7404: overlay #111827 a40%, margens laterais/inferior40, superfície page, raio16, sombra Modal, padding24/gap20, alça48x4 e duas opções Galeria/Câmera lado a lado com círculos56 e ícones Lucide28. Textos e hierarquia conforme referência; retirar botão Cancelar visível, preservar fechar pelo fundo/Escape/voltar sem perda. Rodapé JPG/PNG com5MB do contrato vigente (20MB do protótipo não altera o backend); validar formatos exibidos. Reutilizar Icon/tokens e callbacks do picker, sem dependências, alterações de API ou demonstração permanente. Conferência somente tablet834x1194 com fixtures externas: API informada fora do ar pelo humano. Tipos/lint/diff e verificação visual/interativa antes de concluir.
+
+### Estado atual - correção da origem da imagem (2026-10-19)
+
+Concluída: painel inferior do Figma97:7404 substitui o diálogo central e botões empilhados. Medido em tablet834x1194: painel x40/y786/754x368, cards341x166, ícones28 nos círculos56, superfície page, overlay e sombra corretos. Alça decorativa, título/descrição/rodapé e Galeria/Câmera conforme referência; ortografia dispositivo corrigida e limite5MB mantido pelo contrato. Formatos JPG/PNG validados no picker e antes do upload, com mensagem ao campo. Fechar pelo fundo/Escape mantém valores e devolve foco ao acionador; voltar/acessibilidade mantidos no nativo. Galeria e Câmera web abriram seletores e retornaram fixture PNG, sem usar câmera física. Typecheck/lint/diff aprovados, sem avisos do navegador. API pública não acessada (humano informou indisponibilidade); fixtures externas ao repo, sem POST real. Nenhuma dependência nova ou commit/push.

@@ -14,7 +14,7 @@ export function AppMenu({ children, accessibilityLabel = 'Navegação principal'
       {...(Platform.OS === 'web' ? { role: 'navigation' as const } : {})}
       accessibilityLabel={accessibilityLabel}
       className="w-full border-t border-border-subtle bg-surface p-1">
-      <View className="min-h-menu-slot flex-row flex-wrap items-center justify-center gap-6 p-[10px]">
+      <View className="min-h-menu-slot flex-row flex-wrap items-center justify-center gap-2 p-[10px] sm:gap-6">
         {children}
       </View>
     </View>
