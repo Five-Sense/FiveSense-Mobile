@@ -114,6 +114,8 @@ Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/4
 - **Estado do incremento:** cliente implementado; tipos, lint, diff e exportação web aprovados. Layout, assets e controles conferidos em web (1280x720, 834x1194, 390x844, 320x640), sem transbordamento horizontal. Obrigatórios completos/parciais, foco para senha, mostrar/ocultar, Enter, loading desabilitado, erro e sucesso confirmados; fixtures locais para estados remotos e sessão web reiniciada no reload. API real confirmou 400 para credenciais fictícias. Sem dependências novas nem suíte permanente. ISSUE-003/Fase 2 permanecem Em andamento pelas demais telas e pendências externas.
 - **Bloqueio externo:** web real sem CORS para localhost (OPTIONS 200 sem Access-Control-Allow-Origin); backend precisa liberar origem, POST/OPTIONS e Content-Type. O app informa falha de conexão e permite novo envio. Não houve bypass/proxy nem alteração na API. Sucesso com conta real VIEWER e execução Android/iOS ainda não verificados.
 
+- **2026-10-19 (IA, correção da Home):** "Olá!" sumia a partir de `md` porque `text-page` é também cor; trocado por `text-page-heading`. Cards da Home com largura máx. 369 e gap 16 em grade com quebra, margem tablet 40, conforme Figma. Tipos e lint aprovados; sem conferência visual em dispositivo.
+
 ## ISSUE-004 - Consulta de materiais
 
 **Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 3
