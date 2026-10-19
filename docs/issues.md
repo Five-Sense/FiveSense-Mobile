@@ -114,7 +114,7 @@ Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/4
 - **Estado do incremento:** cliente implementado; tipos, lint, diff e exportação web aprovados. Layout, assets e controles conferidos em web (1280x720, 834x1194, 390x844, 320x640), sem transbordamento horizontal. Obrigatórios completos/parciais, foco para senha, mostrar/ocultar, Enter, loading desabilitado, erro e sucesso confirmados; fixtures locais para estados remotos e sessão web reiniciada no reload. API real confirmou 400 para credenciais fictícias. Sem dependências novas nem suíte permanente. ISSUE-003/Fase 2 permanecem Em andamento pelas demais telas e pendências externas.
 - **Bloqueio externo:** web real sem CORS para localhost (OPTIONS 200 sem Access-Control-Allow-Origin); backend precisa liberar origem, POST/OPTIONS e Content-Type. O app informa falha de conexão e permite novo envio. Não houve bypass/proxy nem alteração na API. Sucesso com conta real VIEWER e execução Android/iOS ainda não verificados.
 
-## ISSUE-004 - Materiais e Problemas
+## ISSUE-004 - Consulta de materiais
 
 **Tipo:** Feature | **Status:** Em andamento | **Fase:** Fase 3
 

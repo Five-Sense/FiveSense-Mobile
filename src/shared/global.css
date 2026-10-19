@@ -84,4 +84,9 @@
   --text-wordmark: 24px;
   --text-wordmark--line-height: 32px;
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
+  --text-page: 28px;
+  --text-page--line-height: 36px;
+  --text-section: 24px;
+  --text-section--line-height: 32px;
+  --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
 }

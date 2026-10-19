@@ -102,8 +102,8 @@ export function Button({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled: blocked, busy: loading }}
-      aria-disabled={blocked}
       aria-busy={loading}
+      aria-disabled={blocked}
       onPress={handlePress}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
