@@ -17,6 +17,7 @@
   --color-text-muted: #64748b;
 
   --color-page: #fcfcfc;
+  --color-overlay: #111827;
   --color-surface: #ffffff;
   --color-surface-subtle: #f1f5f9;
   --color-surface-hover: #f8fafc;
@@ -54,11 +55,19 @@
   --spacing-control: 48px;
   --spacing-icon-slot: 32px;
   --spacing-menu-slot: 56px;
+  --spacing-sidebar: 222px;
+  --spacing-nav-item: 56px;
   --radius-control: 8px;
   --radius-card: 12px;
   --radius-modal: 16px;
   --font-montserrat: Montserrat_400Regular;
   --font-montserrat-semibold: Montserrat_600SemiBold;
+  --text-auth: 32px;
+  --text-auth--line-height: 40px;
+  --text-button: 16px;
+  --text-button--line-height: 24px;
+  --text-nav: 16px;
+  --text-nav--line-height: 24px;
   --text-button: 16px;
   --text-button--line-height: 24px;
   --text-body: 16px;
@@ -74,5 +83,18 @@
   --text-card-title--line-height: 26px;
   --text-section: 24px;
   --text-section--line-height: 32px;
+  --text-wordmark: 24px;
+  --text-wordmark--line-height: 32px;
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
+  --text-page: 28px;
+  --text-page--line-height: 36px;
+  --text-section: 24px;
+  --text-section--line-height: 32px;
+  --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
+}
+
+/* Alias Page: text-page também nomeia uma cor no Tailwind. */
+@theme {
+  --text-page-heading: 28px;
+  --text-page-heading--line-height: 36px;
 }

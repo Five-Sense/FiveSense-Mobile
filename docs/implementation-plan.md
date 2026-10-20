@@ -44,9 +44,12 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 2 - Autenticação e conta
 
-**Status:** Planejada
+**Status:** Em andamento (incremento de login autorizado em 2026-10-16; demais telas aguardam prints)
 
-- [ ] Login, logout, informações da conta e página principal do Visualizador.
+- [x] Tela inicial do login do Visualizador em feature/login-flow, fiel ao print/Figma, usando componentes existentes e API atual; Nome de usuário (decisão do humano), feedbacks de obrigatórios, tamanho e credenciais incorretas; confirmação de sucesso na mesma tela.
+- [ ] Integração web real: backend liberar CORS; conferir sucesso com conta VIEWER e dispositivo nativo.
+- [x] Integrar login à Home existente em /home, proteger grupo app e executar logout; 401 na ocorrência volta ao login com aviso (2026-10-19). Conta e demais telas aguardam prints.
+- [ ] Informações da conta e personalização da Home com nome real. Home existente integrada ao login/logout em 2026-10-19; saudação genérica preservada.
 - [ ] Sessão expirada (401) e acesso negado (403), tratados no cliente de API.
 - [ ] Recuperação, redefinição e alteração de senha: bloqueadas até a API ter os endpoints.
 
@@ -55,7 +58,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 **Status:** Em andamento (apenas o componente de detalhes do material, a pedido do humano; telas e API seguem planejadas)
 
 - [x] Componente `MaterialDetailsCard` (Figma `208:7927`), somente apresentação (2026-10-16).
-- [ ] Materiais: lista e detalhes para o Visualizador, sem feedback de estoque baixo; exibir quantidade como dado.
+- [x] Materiais: lista e detalhes para o Visualizador em `/materiais`, sem feedback de estoque baixo; quantidade como dado (2026-10-19). Falta validar com a API real no navegador (CORS) e em dispositivo.
+- [ ] Código do material: aguardar campo na API (lacuna 19); busca hoje só por nome.
 - Gestão de problemas e CRUD de materiais fora do escopo; seleção de problema na ocorrência continua dependendo da API.
 
 ### Fase 4 - Equipes
@@ -70,16 +74,23 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 5 - Ocorrências
 
-**Status:** Planejada
+**Status:** Em andamento (formulário autorizado em 2026-10-19)
 
-- [ ] Ocorrência com problema, material, quantidade e imagem (câmera/galeria, 5 MB, upload prévio).
+- [x] Formulário /ocorrencias: opções reais, quantidade, câmera/galeria até 5 MB, upload antes do registro, sessão VIEWER, feedbacks e prevenção de reenvio incerto; branch feature/occurence-creation-flow (2026-10-19).
+- [x] Conferência visual final no tablet 834x1194 e checks estáticos/exportação. Celular e desktop dispensados neste fluxo pelo humano em 2026-10-19.
+- [ ] Validar integração web após CORS no backend e envio com conta VIEWER real; próximas telas aguardam prints. Câmera nativa não conferida em dispositivo físico.
+- [x] Corrigir origem da imagem conforme print/Figma97:7404, painel inferior Galeria/Câmera; tablet834x1194 com dados locais, tipos/lint/diff aprovados (API fora do ar,2026-10-19).
+- [x] Cliente para múltiplas fotos JPG/PNG até20MB no total: seleção/adição/remoção/prévias/contador/validação agregada; tablet e checks aprovados (2026-10-19).
+- [x] Contrato múltiplo disponibilizado pelo backend e reconferido em 2026-10-19: images repetido/imageIds, até 5 fotos e 5 MB cada; manter 20 MB agregados. Bloqueio provisório substituído pela integração abaixo.
+- [x] Miniaturas compactas com+ para adicionar, +N para abrir galeria e feedback de sucesso conforme print/Figma97:7533; tablet834x1194, ações e erro/sucesso verificados com fixtures; tipos/lint/diff aprovados (2026-10-19).
+- [x] Integrar contrato múltiplo confirmado: campo multipart images repetido -> imageIds -> uma ocorrência; até5 fotos/5MB cada/20MB total; validar resposta completa e preservar feedbacks (2026-10-19).
 - Administração de usuários fora do escopo do cliente.
 
 ### Fase 6 - Responsividade e fechamento
 
 **Status:** Planejada
 
-- [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem.
+- [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem. Moldura `AppLayout` (cabeçalho + conteúdo + menu inferior) entregue em 2026-10-16; falta conferir tablet/desktop e as telas.
 - [ ] Revisão de acessibilidade, estados e teclado virtual.
 - [ ] Checks finais e atualização dos logs.
 
@@ -103,4 +114,3 @@ Não concluir fase com checklist aberto. Mudança de ordem ou critério exige ap
 - Toda chamada de API trata erro; toda lista tem skeleton, pull to refresh, vazio e erro.
 - Lint e typecheck sem erros; fluxos verificados manualmente.
 - Visual conforme `design-guidelines.md`.
-

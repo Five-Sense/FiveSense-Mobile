@@ -5,7 +5,8 @@ import { Pressable, Text, View } from 'react-native';
 import { Icon } from '@/shared/components/ui/icon';
 
 export type MaterialDetailsCardProps = {
-  code: string;
+  /** Omitido quando a API não fornece código (campo "Código" não é exibido). */
+  code?: string;
   name: string;
   stockQuantity: number;
   onClose: () => void;
@@ -22,7 +23,7 @@ export function MaterialDetailsCard({
   const [closeFocused, setCloseFocused] = useState(false);
 
   const fields = [
-    { label: 'Código', value: code },
+    ...(code ? [{ label: 'Código', value: code }] : []),
     { label: 'Nome', value: name },
   ];
 

@@ -1,10 +1,10 @@
 import { Eye, EyeOff } from 'lucide-react-native';
-
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 
-import { Input, type InputProps } from './input-base';
 import { Icon } from './icon';
+import { Input, type InputProps } from './input-base';
+
 
 export type PasswordInputProps = Omit<
   InputProps,
@@ -45,11 +45,10 @@ export const PasswordInput = forwardRef<TextInput, PasswordInputProps>(function 
             inputRef.current?.focus();
           }}>
           <View accessible={false} importantForAccessibility="no-hide-descendants">
-            <Icon
-              icon={visible ? EyeOff : Eye}
-              size={24}
-              className={disabled ? 'text-disabled-text' : hasError ? 'text-error-text' : 'text-text-secondary'}
-            />
+          <Icon
+            icon={visible ? EyeOff : Eye}            size={24}
+            className={disabled ? 'text-disabled-text' : hasError ? 'text-error-text' : 'text-text-secondary'}
+          />
           </View>
         </Pressable>
       }
