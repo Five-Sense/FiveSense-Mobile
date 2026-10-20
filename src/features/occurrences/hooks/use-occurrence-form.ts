@@ -5,9 +5,8 @@ import { useSession } from '@/shared/contexts/session-context';
 import { toAppError } from '@/shared/services/api/app-error';
 
 import { occurrenceSchema } from '../schemas/occurrence-schema';
-import { createOccurrence, uploadOccurrenceImages } from '../services/occurrences-service';
+import { createOccurrence } from '../services/occurrences-service';
 import { EMPTY_OCCURRENCE, type OccurrenceFeedback, type OccurrenceField, type OccurrenceImage, type OccurrenceValues } from '../types/occurrence';
-import { OccurrenceSubmissionError } from '../types/submission-error';
 import { useOccurrenceOptions } from './use-occurrence-options';
 import { useOccurrenceImages } from './use-occurrence-images';
 import { validateOccurrenceImages } from '../utils/occurrence-images';
@@ -19,7 +18,6 @@ export function useOccurrenceForm() {
   const [values, setValues] = useState<OccurrenceValues>(EMPTY_OCCURRENCE);
   const [errors, setErrors] = useState<Partial<Record<OccurrenceField, string>>>({});
   const [feedback, setFeedback] = useState<OccurrenceFeedback | null>(null);
-  const [phase, setPhase] = useState<'uploading' | 'submitting'>('submitting');
   const [uncertain, setUncertain] = useState(false);
   const [completed, setCompleted] = useState(false);
   const busy = useRef(false);
@@ -47,15 +45,7 @@ export function useOccurrenceForm() {
   const mutation = useMutation({
     mutationKey: ['occurrence-create'], retry: false,
     mutationFn: async (input: { problemId: string; materialId: string; affectedQuantity: number; userId: string; images: OccurrenceImage[]; signal: AbortSignal }) => {
-      let stage: 'uploading' | 'submitting' = input.images.length ? 'uploading' : 'submitting';
-      try {
-        setPhase(stage);
-        const imageIds = await uploadOccurrenceImages(input.images, input.signal);
-        if (input.signal.aborted) return;
-        stage = 'submitting';
-        setPhase(stage);
-        await createOccurrence({ problemId: input.problemId, materialId: input.materialId, affectedQuantity: input.affectedQuantity, reportedByUserId: input.userId, ...(imageIds.length ? { imageIds } : {}) }, input.signal);
-      } catch (error) { throw new OccurrenceSubmissionError(toAppError(error), stage); }
+      await createOccurrence({ problemId: input.problemId, materialId: input.materialId, affectedQuantity: input.affectedQuantity, reportedByUserId: input.userId }, input.images, input.signal);
     },
   });
 
@@ -97,29 +87,28 @@ export function useOccurrenceForm() {
       setFeedback(null); setCompleted(true);
     } catch (failure) {
       if (!active.current) return;
-      const failed = failure instanceof OccurrenceSubmissionError ? failure : new OccurrenceSubmissionError(toAppError(failure), 'submitting');
-      const error = failed.error;
+      const error = toAppError(failure);
       if (error.kind === 'cancelled') return;
       if (error.kind === 'unauthorized') { await expireSession(); return; }
-      if (failed.stage === 'submitting' && (error.kind === 'network' || error.kind === 'timeout' || error.kind === 'server')) {
+      if (error.kind === 'network' || error.kind === 'timeout' || error.kind === 'server') {
         setUncertain(true);
         setFeedback({ variant: 'warning', title: 'Não foi possível confirmar o envio.', description: 'A ocorrência pode ter sido registrada. Confira com os responsáveis antes de tentar novamente para evitar duplicidade.' });
       } else {
+        const fieldErrors = occurrenceErrorFields(error.fields);
         const description = error.kind === 'forbidden' ? 'Seu acesso não permite realizar esta ação.'
           : error.status === 413 ? 'Cada foto deve ter no máximo 5 MB e a soma dos anexos não pode ultrapassar 20 MB.'
-          : error.kind === 'validation' ? (failed.stage === 'uploading' ? 'Confira as fotos: até 5 arquivos JPG ou PNG, 5 MB cada e 20 MB no total.' : 'Confira os dados e se o problema e o material continuam disponíveis.')
-          : error.kind === 'unknown' ? error.message
-          : failed.stage === 'uploading' ? 'Não foi possível enviar as fotos. Seus dados foram mantidos; tente novamente.'
+          : error.kind === 'validation' ? (fieldErrors.image ? 'Confira as fotos: até 5 arquivos JPG ou PNG, 5 MB cada e 20 MB no total.' : 'Confira os dados e se o problema e o material continuam disponíveis.')
           : error.message;
-        setFeedback({ variant: 'error', title: failed.stage === 'uploading' ? 'As imagens não foram enviadas.' : 'Não foi possível registrar.', description });
-        if (error.fields.length) setErrors(occurrenceErrorFields(error.fields));
+        setFeedback({ variant: 'error', title: 'Não foi possível registrar.', description });
+        if (error.status === 413) fieldErrors.image = description;
+        setErrors(fieldErrors);
       }
     } finally { busy.current = false; if (request.current === controller) request.current = null; }
   }
 
   return {
     values, images: attachments.images, imageError: attachments.error, errors, feedback, options, progress, picking: attachments.picking, uncertain, completed,
-    sending: mutation.isPending, phase, canSubmit: !completed && ready && !mutation.isPending && !attachments.picking && !uncertain,
+    sending: mutation.isPending, canSubmit: !completed && ready && !mutation.isPending && !attachments.picking && !uncertain,
     imageChooserOpen: attachments.chooserOpen, setImageChooserOpen: attachments.setChooserOpen, change, pickImage: (source: 'camera' | 'library') => { if (busy.current) return; if (!uncertain) setFeedback(null); setErrors((current) => ({ ...current, image: undefined })); return attachments.pick(source); }, submit,
     removeImage: (index: number) => { attachments.remove(index); setErrors((current) => ({ ...current, image: undefined })); if (!uncertain) setFeedback(null); },
     createAnother: () => { if (busy.current) return; setCompleted(false); setUncertain(false); setValues(EMPTY_OCCURRENCE); attachments.reset(); setErrors({}); setFeedback(null); mutation.reset(); },
