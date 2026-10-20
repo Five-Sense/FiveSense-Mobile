@@ -1,6 +1,6 @@
 # Data Model
 
-Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte inicial: documentação da API enviada pelo humano em 2026-10-09. Ocorrências e anexos foram reconferidos em 2026-10-19; a revisão múltipla ao final deste documento prevalece sobre os registros históricos. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
+Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte inicial: documentação da API enviada pelo humano em 2026-10-09. Ocorrências e anexos foram reconferidos em 2026-10-20; a correção de envio direto ao final deste documento prevalece sobre os registros históricos de upload/imageIds. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
 
 ## Revisão de autenticação - 2026-10-16
 
@@ -40,8 +40,8 @@ Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. 
 - `DELETE /materials/{id}` -> 204 (409 se houver ocorrência)
 
 **Occurrence** `{id, problemId, materialId, reportedByUserId, affectedQuantity, createdAt}`
-- `POST /occurrences/images` multipart, campo `images` repetido, de 1 a 5 arquivos (máx. 5 MB cada) -> `{imageId, imageIds: UUID[]}`. O cliente usa apenas `imageIds`.
-- `POST /occurrences` `{problemId, materialId, affectedQuantity, reportedByUserId, imageIds?: UUID[]}` -> 201 (até 5 IDs). Não altera estoque; o e-mail ao Gestor é "best effort".
+- Não há upload separado: fotos opcionais seguem junto do próprio POST /occurrences, no campo multipart `images` repetido (até 5 arquivos, 5 MB cada); cliente mantém soma até 20 MB.
+- `POST /occurrences` multipart `{problemId, materialId, affectedQuantity, reportedByUserId, images?: arquivos}` -> 201. Sem fotos: os mesmos quatro campos obrigatórios. IDs intermediários removidos. Não altera estoque; e-mail assíncrono após commit, best effort.
 - `GET /occurrences` (paginado). O app não tem tela de listagem de ocorrências.
 
 ## Validação no app
@@ -97,7 +97,7 @@ Web real depende de CORS (origem, GET/POST/OPTIONS, Content-Type e X-User-Role).
 
 O painel de origem enviado pelo humano especifica JPG/PNG. O cliente valida image/jpeg e image/png tanto no picker quanto antes do multipart, com erro junto ao campo para outros tipos. Esta restrição do cliente não modifica a API; o limite de5MB permanece. Sem conversão automática ou dependência nova. API indisponível nesta correção: sem nova verificação remota do contrato.
 
-## Múltiplas fotos - contrato vigente (2026-10-19)
+## Múltiplas fotos - contrato anterior (2026-10-19; substituído pela correção de2026-10-20)
 
 Fontes reconferidas após o humano informar a atualização: https://fivesense-api.onrender.com/docs/index.html e https://fivesense-api.onrender.com/v3/api-docs. Esta revisão substitui a restrição provisória da decisão 0012 e os trechos históricos acima sobre campo singular/integração pendente.
 
@@ -108,3 +108,7 @@ Resposta 201: {imageId, imageIds: UUID[]}; imageId é legado e repete a primeira
 As imagens ficam em arquivos temporários, fora do banco, são anexadas ao e-mail e excluídas após o envio pelo backend. E-mail continua best effort; a resposta não confirma entrega. Não há chave de idempotência nem endpoint de limpeza documentados. Falha de upload não cria ocorrência. Rede/timeout/5xx após iniciar criação conserva o tratamento de resultado incerto e exige conferência antes do reenvio explícito; nenhum POST tem retry automático. Uma nova tentativa faz novo upload dos arquivos mantidos, sem reutilizar IDs temporários que podem ter sido consumidos. Timeout não foi alterado.
 
 O OpenAPI ainda reutiliza CreateRequest entre controllers e descreve o multipart de forma incompleta; os exemplos da documentação legível oficial especificam images repetido e imageIds. Não inferir o payload do exemplo de outro controller. Contrato público lido por GET; POSTs verificados com fixtures locais, sem registros/e-mails reais. Conta VIEWER real, CORS atual e câmera física não foram validados neste incremento.
+
+## Correção vigente - envio direto na ocorrência (2026-10-20)
+
+Fontes oficiais reconferidas: /docs/index.html e /v3/api-docs. Esta revisão substitui a integração images -> imageIds da decisão0013: não há mais endpoint separado de upload nem vínculo por imageId/imageIds. POST /api/v1/occurrences aceita multipart/form-data contendo problemId/materialId/reportedByUserId UUID, affectedQuantity inteiro positivo e partes opcionais images repetidas com os arquivos. O usuário informado deve estar ativo. Cada foto até5MB, máximo5; manter no cliente JPG/PNG e20MB agregados. JSON alternativo com images:[{name?,data:base64}] existe no contrato, mas o cliente usará multipart sem conversão e sem Content-Type manual. Backend detecta PNG/JPEG/GIF/WebP pelo conteúdo, mantém imagens só em memória e as descarta após e-mail assíncrono, enviado depois do commit. Resposta201 não espera SMTP, não garante entrega e não altera estoque. OpenAPI ainda colide CreateRequest de outros controllers; o CreateForm e a documentação legível confirmam os quatro campos obrigatórios. Sem fotos, enviar só os quatro campos. Uma única requisição, sem IDs intermediários; falhas de rede/timeout/5xx podem ter registrado ocorrência, exigindo tratamento de resultado incerto e sem retry automático.

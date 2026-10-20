@@ -80,6 +80,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Contrato múltiplo disponibilizado pelo backend e reconferido em 2026-10-19: images repetido/imageIds, até 5 fotos e 5 MB cada; manter 20 MB agregados. Bloqueio provisório substituído pela integração abaixo.
 - [x] Miniaturas compactas com+ para adicionar, +N para abrir galeria e feedback de sucesso conforme print/Figma97:7533; tablet834x1194, ações e erro/sucesso verificados com fixtures; tipos/lint/diff aprovados (2026-10-19).
 - [x] Integrar contrato múltiplo confirmado: campo multipart images repetido -> imageIds -> uma ocorrência; até5 fotos/5MB cada/20MB total; validar resposta completa e preservar feedbacks (2026-10-19).
+- [x] Corrigir contrato de2026-10-20: uma requisição multipart /occurrences com campos e images, remover upload separado/imageIds e preservar validação/feedback/resultado incerto (aprovado pelo humano).
 - Administração de usuários fora do escopo do cliente.
 
 ### Fase 6 - Responsividade e fechamento

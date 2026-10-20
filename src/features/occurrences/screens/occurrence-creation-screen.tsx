@@ -28,7 +28,7 @@ export default function OccurrenceCreationScreen() {
             {form.uncertain ? <Button variant="secondary" onPress={form.acknowledgeRetry}>Conferi, liberar nova tentativa</Button> : null}
             <OccurrenceFields form={form} />
           </View>
-          <Button icon={ArrowRight} iconPosition="end" iconSize={32} disabled={!form.canSubmit && !form.sending} loading={form.sending} loadingLabel={form.phase === 'uploading' ? 'Enviando imagens...' : 'Enviando ocorrência...'} onPress={form.submit}>Enviar ocorrência</Button>
+          <Button icon={ArrowRight} iconPosition="end" iconSize={32} disabled={!form.canSubmit && !form.sending} loading={form.sending} loadingLabel="Enviando ocorrência..." onPress={form.submit}>Enviar ocorrência</Button>
         </View>
       </ScrollView>
       <ImageSourceDialog visible={form.imageChooserOpen} onClose={() => form.setImageChooserOpen(false)} onChoose={form.pickImage} />

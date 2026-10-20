@@ -29,7 +29,7 @@ O preflight e a resposta de login consultados a partir de http://localhost:8085 
 ## Entradas e arquivos
 
 - Validar entradas no app para feedback; a API valida de fato.
-- Fotos de ocorrência: validar JPG/PNG, tamanho real conhecido/positivo, até 5 arquivos, 5 MB por foto e 20 MB na soma, tanto na seleção quanto antes do upload (contrato reconferido em 2026-10-19). Upload único com images repetido; exigir imageIds completos/únicos antes de criar uma ocorrência. Falhas/413 mantêm anexos para correção; resposta parcial não cria registro. IDs temporários não são reutilizados após criação incerta. Pedir permissão de câmera/galeria só quando o usuário escolher a origem; negação não bloqueia o envio. Sem log de arquivos ou dados de sessão.
+- Fotos de ocorrência: validar JPG/PNG, tamanho real conhecido/positivo, até 5 arquivos, 5 MB por foto e 20 MB na soma, tanto na seleção quanto antes da requisição (contrato reconferido em 2026-10-20). Enviar os quatro campos e images repetido juntos para /occurrences. Nenhum ID temporário, upload separado, base64 ou log de imagem. Falhas/413 mantêm anexos para correção; resultado incerto bloqueia reenvio automático até confirmação humana. A API detecta formato pelo conteúdo e verifica usuário ativo; a validação do cliente não substitui a do servidor. Pedir permissão de câmera/galeria só quando o usuário escolher a origem; negação não bloqueia o envio. Sem log de arquivos ou dados de sessão.
 - Mensagens de erro claras, sem expor detalhes internos (usar o `title`/`detail` do ProblemDetail somente quando for seguro mostrar).
 
 ## Segredos

@@ -159,10 +159,18 @@ Badge de 10 px e vermelho para "Sem fazer 5s" divergem das regras de acessibilid
 - **Decisão:** o cliente permite várias fotos JPG/PNG, com20MB na SOMA dos anexos; substitui a limitação anterior de uma foto/5MB das decisões/documentos prévios para o cliente. Galeria múltipla, adição sucessiva, prévias e remoção individual, sem dependência nova ou quantidade máxima inventada. Lote inválido mantém coleção anterior; conferir apenas tablet.
 - **Contrato externo:** humano confirmou que backend ainda terá de implementar múltiplas fotos e não consegue agora. Não inventar campo plural, truncar a coleção ou criar várias ocorrências. Até receber contrato, bloquear envio com mais de uma foto ANTES dos uploads/POSTs e preservar dados. Manter zero/uma foto pelo imageId existente; API pode recusar tamanho acima do limite antigo e o app trata413.
 - **Consequências:** cliente de seleção pronto; integração múltipla permanece pendente e não é anunciada como concluída. Backend precisa definir vínculos, uploads, limites compatíveis com20MB totais e falhas parciais antes do próximo incremento. Esta decisão prevalece sobre trechos anteriores conflitantes de regra de anexos do cliente; não modifica automaticamente o servidor.
-## 0013 - Integração múltipla pelo contrato publicado
+## 0013 - Integração múltipla pelo contrato publicado (substituída pela 0014)
 
 - **Data:** 2026-10-19
 - **Estado:** Aceita por solicitação humana de integrar a API atualizada; substitui o bloqueio provisório da decisão 0012.
 - **Fonte:** documentação oficial /docs/index.html e /v3/api-docs reconferidas por GET. Multipart images repetido, resposta imageIds e criação com imageIds, até 5 fotos/5 MB cada.
 - **Decisão:** um upload do lote, validação de todos os UUIDs únicos e da quantidade, depois uma ocorrência com a lista completa. Sem fotos: sem upload/lista. Preservar 20 MB agregados definidos pelo humano; impor também quantidade/tamanho da API para evitar recusa previsível. Falha parcial preserva fotos e impede registro; nenhum truncamento, singular legado, ocorrência por foto ou conversão base64. Sem nova dependência.
 - **Consequências:** + desabilitado em 5, remoção libera vaga; textos indicam os três limites. API usa arquivos temporários consumidos pelo e-mail: em nova tentativa, reenviar arquivos mantidos em vez de reutilizar IDs. Tratamento de resultado incerto, timeout e ausência de retry permanecem; sem garantia de unicidade ou entrega de e-mail. Contrato público confirmado, POSTs verificados localmente; conta real/CORS/câmera física continuam fora da validação deste incremento.
+
+## 0014 - Uma requisição de ocorrência com dados e imagens
+
+- **Data:** 2026-10-20
+- **Estado:** Aceita. Humano aprovou a correção após diagnóstico do404/400.
+- **Fonte:** documentação oficial e OpenAPI atuais: remoção de /occurrences/images e imageId/imageIds; POST /occurrences aceita JSON/base64 ou multipart com campos e imagens. CreateForm confirma os quatro campos obrigatórios; CreateRequest ainda colide com outro controller.
+- **Decisão:** usar um único multipart com os quatro campos obrigatórios e images repetido, inclusive sem fotos (só campos). Sem conversão/base64/dependência. Remover serviço/schema/tipo de erro e fase do upload separado; manter limites5fotos/5MB/20MB, JPG/PNG, cliente compartilhado e sessão VIEWER.
+- **Consequências:** o servidor registra e dispara e-mail após commit em thread separada;201 não confirma entrega. Não há IDs intermediários para reaproveitar. Rede/timeout/5xx na chamada única sempre conservam tratamento de resultado incerto, dados e liberação explícita antes de nova tentativa, sem retry. Timeout preservado. Contrato confirmado por GET; POSTs de teste somente locais, sem e-mails ou registros reais.

@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-20] - Correção: ISSUE-006 (Ocorrência e fotos em uma requisição)
+
+- **Escopo/fonte:** reparo aprovado após diagnóstico; branch atual feature/calendary-screen mantida. Contrato público atual removeu upload separado/imageIds; spec registrada antes de código.
+- **Entrega:** um multipart /occurrences com quatro campos obrigatórios e images repetido; sem fotos, só campos. Removidos uploadOccurrenceImages, schema de IDs, fase uploading e OccurrenceSubmissionError. Limites/seleção/layout mantidos. Feedback de validação/413 destaca fotos; rede/timeout/5xx preservam resultado incerto e liberação explícita, sem retry. Não alterado timeout/cliente global/sessão/dependências.
+- **Arquivos:** occurrences/services/occurrences-service.ts, schemas/occurrence-schema.ts, hooks/use-occurrence-form.ts, screens/occurrence-creation-screen.tsx e remoção do types/submission-error.ts obsoleto.
+- **Checks:** tsc aprovado; lint0 erros/1 aviso preexistente BOM em auth/screens/home-screen.tsx; diff aprovado. Contrato externo transitório0/1/3/5 fotos, campos+arquivos juntos, limites, validação/HTTP/rede/cancelamento e nativo simulado. Tablet834x1194:3 fotos/sucesso,400 preserva campos/anexo destacado,503 resultado incerto/reenvio bloqueado, liberação explícita e sucesso sem fotos.4 tentativas/2 criações/0 chamadas legadas; navegador sem overflow/avisos/erros.
+- **Docs:** data-model, architecture, workflows, security, issues/plano/testing, decisão0014 e log. Contrato de0013 mantido como histórico substituído.
+- **Limites:** POSTs somente locais; sem registro/e-mail real, conta VIEWER real, verificação do CORS atual ou câmera física.201 não garante entrega de e-mail assíncrono. Sem demonstração/suíte permanente, dependência, commit ou push. Issue/fase seguem abertas para validação externa e próximas telas.
+
 ## [2026-10-19] - Entrega: ISSUE-006 (Integração de várias imagens na API)
 
 - **Fase/escopo:** Fase 5, branch feature/occurence-creation-flow; docs/spec antes de código, mudanças anteriores preservadas. Humano informou suporte múltiplo; contrato oficial reconferido por GET.
