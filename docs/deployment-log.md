@@ -17,6 +17,53 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-19] - Entrega: ISSUE-005 (Calendário com startTime/endTime e segunda a sexta)
+
+- **Mudança da API:** `GET /teams` deixou de enviar `schedule` (texto livre) e passou a enviar `startTime` e `endTime` (`HH:MM`, podem vir vazios). Regra do humano: todos os setores trabalham de segunda a sexta.
+- **O que foi feito:** `Team` troca `schedule` por `startTime`/`endTime`; `teams-service` converte os campos. Removido o interpretador de texto (`parse-schedule.ts`). Novo `utils/working-hours.ts` (validação de `HH:MM`, janela válida, texto "Segunda a sexta · 13:00 - 15:00", `isWorkingDay`). `buildScheduleSlots(teams)` não depende mais de data: linhas de 30 min do primeiro início ao último término, com as equipes cuja janela cobre cada linha. O calendário destaca "atual/passado/futuro" só de segunda a sexta; no sábado e domingo mostra o aviso "Hoje não há expediente de 5S..." e as linhas sem destaque. O pop-up mostra "Horário de 5S: Segunda a sexta · HH:MM - HH:MM" (omitido se não houver horário).
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros. Navegador (Edge headless, API real, relógio simulado): segunda 14:10 -> 20 linhas (07:00 a 16:30; 14:00 = "AL - MA", destacada); sábado -> aviso e nenhum destaque; pop-up "Produção · PR-01 ... Segunda a sexta · 07:00 - 09:00"; sem erros de console.
+- **Riscos/Débito técnico:** equipes sem horário válido (vazio, formato inválido ou fim <= início) não aparecem no calendário; horários que viram a meia-noite não são suportados; o dia útil usa o fuso do dispositivo.
+
+## [2026-10-19] - Entrega: ISSUE-005 (Interruptor de status 5S no card da equipe, RF025)
+
+- **Pedido:** os cards apareciam como "Fazendo 5S" e o status deve ser alternado ao clicar no card. Os dois cards ativos (Manutenção e Produção A) não eram mock: vinham de `GET /teams` com `DOING_5S` no banco da API; o app só exibe o valor recebido. Nenhum dado da API foi alterado para corrigir isso (decisão do humano).
+- **O que foi feito:** o `TeamCard` virou interruptor (`accessibilityRole="switch"`, `checked`): tocar no card envia `PATCH /teams/{id}/status` alternando `DOING_5S` <-> `NOT_DOING_5S`. O link "Ver dados da equipe" continua abrindo o pop-up sem alternar. Sem atualização otimista: o card só muda quando a API confirma (`workflows.md`); durante a chamada o card fica atenuado e bloqueia novos toques; em falha mantém o último status confirmado e mostra `Alert` de erro (toque para dispensar). Não há botões aninhados: o interruptor é uma camada absoluta atrás do conteúdo.
+- **Arquivos:** `team-card.tsx`, `teams-screen.tsx`, `hooks/use-teams.ts` (`toggleStatus`, `pendingIds`, `statusError`), `services/teams-service.ts` (`updateTeamStatus`).
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros. Teste no Edge headless contra a API real: 1º clique enviou `PATCH {"status":"DOING_5S"}` e o card passou a "Fazendo 5S"; o link abriu o pop-up sem alternar; 2º clique voltou a `NOT_DOING_5S`; estado final da API idêntico ao inicial (Almoxarifado foi alternado e restaurado). Sem erros no console.
+- **Riscos/Débito técnico:** a API não diz qual é a equipe do usuário (lacuna 7) e não checa isso: qualquer equipe pode ser alterada por qualquer Visualizador, em desacordo com a regra "própria equipe" (RF025). Sem conferência em Android/iOS. Após clique com mouse o anel de foco aparece no card (comportamento igual ao dos demais controles).
+
+## [2026-10-19] - Entrega: ISSUE-005 (Correções: fechar pop-up fora, sigla de 2 letras e numeração)
+
+- **Pop-up:** tocar fora do cartão não fechava porque o `ScrollView` do `ModalOverlay` cobria o fundo clicável. O fundo agora é o próprio conteúdo rolável (toque fora fecha; o cartão absorve o toque). O fundo não é um botão acessível (evita `<button>` aninhado, aviso de hidratação encontrado no teste); o fechamento acessível é o X e Esc/voltar.
+- **Sigla e numeração:** a API manda `code` livre ("ALMOX", "PROD-A") e nomes como "Produção A/B". Novo `buildTeamLabels` deriva `displayName` e `displayCode`: sigla de 2 letras (iniciais das duas primeiras palavras significativas, ou as 2 primeiras letras de nome de uma palavra) e número de 2 dígitos quando há repetição ("Produção A/B" -> "Produção", "PR-01"/"PR-02"; A=01, B=02; designador numérico mantém o número). Equipe única fica só com a sigla ("AL"). Usado nos cards, no pop-up, na busca (também aceita nome/código originais) e no calendário ("PR01 - PR02"). Resolve a lacuna 17.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros. Verificado no Edge headless (script temporário fora do repositório, removido): pop-up abre; clicar dentro não fecha; clicar fora fecha; Esc fecha; siglas "AL, EX, MA, PR 01, PR 02" na lista; calendário com PR01/PR02. Única resposta >=400: favicon.ico 404 (preexistente).
+- **Riscos/Débito técnico:** siglas de grupos diferentes podem coincidir (ex.: "Produção" e "Projetos" = PR); a sigla é só de exibição, o `code` original continua nos dados.
+
+## [2026-10-19] - Entrega: ISSUE-002/005 (Pop-up de detalhes da equipe e integração com a API)
+
+- **Fase:** Fase 1 (cliente de API) e Fase 4.
+- **Pop-up:** o botão "Ver dados da equipe" não abria nada (`onViewDetails` vazio). Agora abre o `TeamDetailsCard` (Figma `208:6581`, dentro do frame `208:6076`) em `ModalOverlay` (novo, `shared/components/overlays`): fundo #111 a 48%, largura máx. 680, fecha pelo X, tocando fora e por Esc/voltar.
+- **API:** criado o cliente único `src/shared/services/api/{client,app-error}.ts` (timeout de 60 s por causa do cold start, `AppError` tipado, header `X-User-Role: VIEWER`) e `Page<T>`. Removidos todos os dados simulados: `fetchTeams` lê todas as páginas de `GET /teams`; `representatives` vira lista (vírgula); o calendário deixa de ser mock e é montado do `schedule` de cada equipe (`parse-schedule`, `build-schedule-slots`) para o dia atual, em linhas de 30 min do primeiro início ao último término; sem equipes no dia, estado vazio. `.env.local` (ignorado pelo git) com `EXPO_PUBLIC_API_URL`.
+- **Ajustes:** `TeamCard` aceita códigos longos (quadro com altura 60 e largura mínima 60, antes fixo 60x60), pois os códigos reais são "ALMOX", "PROD-A".
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros; GET /teams real conferido (5 equipes, CORS liberado para localhost:8081); parser testado com os 5 formatos reais; bundle web com URL da API e sem mock. Não validado visualmente no navegador nem em Android/iOS.
+- **Riscos/Débito técnico:** header de perfil forjável e fixo em VIEWER até existir login; equipes com `schedule` fora do formato esperado ficam fora do calendário; o calendário só mostra o dia de hoje; a primeira chamada pode demorar (Render); a documentação anterior (`data-model.md`) foi atualizada, mas a lacuna 7 (equipe própria) continua aberta, então o status não é alterado ainda.
+
+## [2026-10-19] - Entrega: ISSUE-005 (Calendário de 5S e navegação Equipes/Calendário)
+
+- **Fase:** Fase 4.
+- **O que foi feito:** o calendário (frame Figma `208:6892`, "Lista · Visualizador" em modo Calendário) não havia sido implementado e o botão estava desabilitado; o frame fora descartado por engano como variação de protótipo. Criada a tela `TeamCalendarScreen` (`/equipes/calendario`) reutilizando `TeamScheduleRow` (shared), `Button`, `TeamListMessage`. Extraídos da lista e compartilhados: `TeamsPageFrame` (header + menu), `TeamsPageHeading`, `TeamsViewSwitch`. Rota da lista movida para `src/app/equipes/index.tsx`. Status do horário (passado/atual/futuro) vem do relógio do dispositivo; slots de 30 min das 07:30 às 17:30 simulados (MQ01/MQ02/MM01 às 11:00; MQ03/MM02/MM03 às 11:30).
+- **Arquivos:** `src/app/equipes/{index,calendario}.tsx`, `src/features/teams/{screens/team-calendar-screen,hooks/use-team-schedule,types/team-schedule,utils/get-slot-status,components/layout/*}`, `services/teams-service.ts`, `screens/teams-screen.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros; bundle web com a tela. Sem conferência visual automatizada nem Android/iOS.
+- **Riscos/Débito técnico:** a API só tem `schedule` em texto livre (lacuna 8); calendário simulado. Como o destaque "atual" segue o relógio, só aparece dentro da janela dos horários. Pull to refresh e skeleton/erro implementados.
+
+## [2026-10-19] - Entrega: ISSUE-005 (Tela Equipes — Lista · Visualizador)
+
+- **Fase:** Fase 4 (tela de lista, dados simulados).
+- **O que foi feito:** frame Figma `186:3355` (834x1194; os outros 4 frames homônimos são variações de protótipo e não foram implementados). Rota `/equipes`. Reutilizados `TeamCard`, `AppMenu`, `MenuButton`, `Button` (primário e secundário) e `Icon`. Criados: `AppHeader` (global, Figma `46:3845`), `TeamSearchField` (o `Input` global sempre exibe rótulo "(Opcional)", incompatível com o layout), `TeamCardSkeleton`, `TeamListMessage`, `useTeams`, `teams-service` (mock de 21 equipes), `filterTeams`, tipo `Team`. Grid de 1/2/3 colunas por largura (<640, >=640, >=1100).
+- **Arquivos:** `src/app/equipes.tsx`, `src/features/teams/{screens,hooks,services,types,utils,components/list}/*`, `src/shared/components/layout/app-header.tsx`.
+- **Checks:** `tsc --noEmit` e `expo lint` sem erros; bundle web gerado com a tela. Sem conferência visual automatizada nem Android/iOS.
+- **Riscos/Débito técnico:** dados simulados (sem cliente de API); Calendário desabilitado; "Ver dados da equipe", Home/Ocorrências/Materiais e sair sem destino real; `npm ci` executado (node_modules estava ausente); existem `TeamStatusBadge.tsx`/`team-status-badge.tsx` e `TeamStatus.ts`/`team-status.ts` duplicados por caixa, preexistentes.
+
 ## [2026-10-19] - Entrega: ISSUE-004 (Fluxo de consulta de materiais)
 
 - **Fase:** Fase 3 (parcial: lista e detalhes do Visualizador). Docs lidos antes do código; sem dependências novas. Fonte: prints Figma "10 · Materiais — Lista · Visualizador" e "Detalhes do material" enviados pelo humano; endpoint conferido na API real (https://fivesense-api.onrender.com).

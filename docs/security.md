@@ -18,6 +18,10 @@ Login público em POST /api/v1/auth/login por username/password, sem JWT ou expi
 
 O preflight e a resposta de login consultados a partir de http://localhost:8085 não devolvem Access-Control-Allow-Origin. O backend precisa liberar a origem do cliente web, POST/OPTIONS e Content-Type; futuras chamadas protegidas também precisam liberar X-User-Role. Não contornar CORS nem inserir proxy público. O app mostra falha de conexão e permite tentar novamente. Aplicativos nativos não dependem de CORS, mas não foram executados nesta entrega.
 
+## Header de perfil (2026-10-19)
+
+A API passou a exigir `X-User-Role` em toda rota fora de `/auth/**`, mas o header não é autenticado (pode ser forjado; a própria API o chama de controle didático). O cliente em `src/shared/services/api/client.ts` envia `VIEWER` fixo, porque o app é exclusivo do Visualizador e ainda não há login. Quando a sessão existir (ISSUE-003), o valor deve vir do `role` do login. O risco "controle por perfil só na interface" permanece.
+
 ## Sessão no app
 
 - Guardar somente userId, name, username, email e role após validar a resposta. Senha, corpo do login e tokens nunca são registrados ou persistidos.

@@ -1,76 +1,64 @@
-import { AppError, type AppErrorKind } from './app-error';
+import { AppError, kindFromStatus } from '@/shared/services/api/app-error';
 
-const API_HOST = process.env.EXPO_PUBLIC_API_URL ?? 'https://fivesense-api.onrender.com';
+const API_PREFIX = '/api/v1';
+// O host (Render) pode levar dezenas de segundos para "acordar" na primeira chamada.
 const TIMEOUT_MS = 60_000;
+
+/**
+ * Perfil enviado em `X-User-Role` (exigido pela API em toda rota fora de /auth). Este app é exclusivo do
+ * Visualizador (decisão 0009). Quando o login existir (ISSUE-003), o valor deve vir do `role` da sessão.
+ */
+const USER_ROLE = 'VIEWER';
 
 type RequestOptions = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
-  formData?: FormData;
-  responseType?: 'json' | 'void';
-  signal?: AbortSignal;
-  role?: 'VIEWER';
+  query?: Record<string, string | number | undefined>;
 };
 
-function kindForStatus(status: number): AppErrorKind {
-  if (status === 401) return 'unauthorized';
-  if (status === 403) return 'forbidden';
-  if (status === 400 || status === 413 || status === 422) return 'validation';
-  if (status === 404) return 'notFound';
-  if (status === 409) return 'conflict';
-  return status >= 500 ? 'server' : 'unknown';
+function baseUrl(): string {
+  const url = process.env.EXPO_PUBLIC_API_URL;
+  if (!url) throw new AppError('config');
+  return url.replace(/\/+$/, '');
 }
 
-function validationFields(data: unknown): string[] {
-  if (!data || typeof data !== 'object' || !('errors' in data)) return [];
-  const errors = data.errors;
-  if (Array.isArray(errors)) {
-    return errors.flatMap((entry: unknown) =>
-      entry && typeof entry === 'object' && 'field' in entry && typeof entry.field === 'string'
-        ? [entry.field] : [],
-    );
-  }
-  return errors && typeof errors === 'object' ? Object.keys(errors) : [];
-}
+/** Único ponto de saída HTTP do app. Devolve dado tipado ou lança `AppError`. */
+export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const { method = 'GET', body, query } = options;
 
-/** Único ponto HTTP; conteúdo bruto de erros nunca é exibido nem registrado. */
-export async function requestJson(path: string, options: RequestOptions = {}): Promise<unknown> {
+  const params = Object.entries(query ?? {})
+    .filter((entry): entry is [string, string | number] => entry[1] !== undefined)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+    .join('&');
+  const url = `${baseUrl()}${API_PREFIX}${path}${params ? `?${params}` : ''}`;
+
   const controller = new AbortController();
-  let timedOut = false;
-  const cancel = () => controller.abort();
-  options.signal?.addEventListener('abort', cancel, { once: true });
-  if (options.signal?.aborted) controller.abort();
-  const timer = setTimeout(() => { timedOut = true; controller.abort(); }, TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
+  let response: Response;
   try {
-    const response = await fetch(`${API_HOST.replace(/\/+$/, '')}/api/v1${path}`, {
-      method: options.method ?? 'GET',
+    response = await fetch(url, {
+      method,
+      signal: controller.signal,
       headers: {
         Accept: 'application/json',
-        ...(options.body !== undefined && !options.formData ? { 'Content-Type': 'application/json' } : {}),
-        ...(options.role ? { 'X-User-Role': options.role } : {}),
+        'X-User-Role': USER_ROLE,
+        ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
       },
-      ...(options.formData ? { body: options.formData } : options.body !== undefined ? { body: JSON.stringify(options.body) } : {}),
-      signal: controller.signal,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
     });
-    if (response.ok && options.responseType === 'void') return null;
-    const text = await response.text();
-    let data: unknown;
-    try { data = text ? JSON.parse(text) : null; }
-    catch {
-      if (response.ok) throw new AppError('unknown', 'Resposta inesperada do serviço. Tente novamente.');
-    }
-    if (!response.ok) {
-      throw new AppError(kindForStatus(response.status), 'A solicitação não foi concluída.', response.status, validationFields(data));
-    }
-    return data;
   } catch (error) {
-    if (timedOut) throw new AppError('timeout', 'O serviço demorou para responder. Tente novamente.');
-    if (controller.signal.aborted) throw new AppError('cancelled', 'Solicitação cancelada.');
-    if (error instanceof AppError) throw error;
-    throw new AppError('network', 'Não foi possível conectar. Verifique sua conexão e tente novamente.');
+    throw new AppError(error instanceof Error && error.name === 'AbortError' ? 'timeout' : 'network');
   } finally {
     clearTimeout(timer);
-    options.signal?.removeEventListener('abort', cancel);
+  }
+
+  if (!response.ok) throw new AppError(kindFromStatus(response.status), response.status);
+  if (response.status === 204) return undefined as T;
+
+  try {
+    return (await response.json()) as T;
+  } catch {
+    throw new AppError('unknown', response.status);
   }
 }
