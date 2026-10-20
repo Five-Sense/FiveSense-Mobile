@@ -122,7 +122,9 @@ Objetivo: RF001 e RF002 (RF003 e RF004 bloqueados pela API), tratamento de 401/4
 
 Objetivo vigente: consulta e detalhes de materiais pelo Visualizador (RF032, RF033), com skeleton/refresh/vazio/erro e sem feedback de estoque baixo. CRUD de materiais e gestão de problemas fora do cliente (decisão 0009).
 
-Estado atual: 2026-10-16 (IA) `MaterialDetailsCard` criado em `src/features/materials/components/details/` a partir do Figma `208:7927`, 100% fiel (decisão do humano, `decision-log.md` 0008). Só apresentação: sem tela, hook, serviço nem Modal. Status passa a Em andamento.
+Estado atual: 2026-10-19 (IA) fluxo de consulta de materiais criado em `/materiais` (somente leitura), a pedido do humano, a partir dos prints Figma "10 · Materiais — Lista" e "Detalhes do material". Reutiliza AppLayout/AppMenu, Input, MaterialItem, MaterialDetailsCard, Alert, Button e Icon. GET /materials real (X-User-Role: VIEWER); lista de ativos com contagem, busca local por nome, skeleton, pull to refresh, vazio, vazio de busca, erro com "Tentar novamente" (aviso quando a atualização falha com dados em tela), detalhes em pop-up (X, fundo, Escape/voltar), 401 volta ao login e 403 mostra acesso negado. A API não tem código de material: não exibido (lacuna 19 em `data-model.md`). `tsc`, `expo lint` e exportação web aprovados; sem conferência visual em navegador/dispositivo.
+
+Estado anterior: 2026-10-16 (IA) `MaterialDetailsCard` criado em `src/features/materials/components/details/` a partir do Figma `208:7927`, 100% fiel (decisão do humano, `decision-log.md` 0008). Só apresentação: sem tela, hook, serviço nem Modal. Status passa a Em andamento.
 
 ## ISSUE-005 - Equipes
 
@@ -130,7 +132,7 @@ Estado atual: 2026-10-16 (IA) `MaterialDetailsCard` criado em `src/features/mate
 
 Objetivo vigente: consulta de equipes e detalhes, status da própria equipe e calendário pelo Visualizador (RF023 a RF026), respeitando lacunas da API. CRUD e gestão de representantes fora do cliente; dados existentes continuam visíveis nos cards.
 
-Estado atual: 2026-10-16 (IA) criados em `src/features/teams/`: `TeamCard` (Figma `228:7974`, variantes sem fazer/fazendo 5S), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` (minicard atomizado) e `TeamStatusBadge` (reutilizada pelos dois cards; a Badge 5S não existia em nenhuma branch). 100% fiéis ao Figma (`decision-log.md` 0008). Só apresentação. Lacunas 17 e 18 registradas em `data-model.md`. Status passa a Em andamento.
+Estado atual: 2026-10-19 (IA) tela "07 · Equipes — Lista · Visualizador" (Figma `186:3355`) em `/equipes`, com dados simulados, busca por nome/código, skeleton, pull to refresh, vazio e erro com retry; usa AppHeader (novo, global), TeamCard, AppMenu/MenuButton e Button. 2026-10-19 (IA, 4) calendário e pop-up adaptados à API com `startTime`/`endTime`, dias úteis de segunda a sexta. 2026-10-19 (IA, 3) card da equipe é um interruptor de status (PATCH /teams/{id}/status, RF025), sem atualização otimista; falta a regra de "própria equipe" (lacuna 7). 2026-10-19 (IA, 2) pop-up de detalhes aberto por "Ver dados da equipe" e telas de lista/calendário integradas à API real (`GET /teams`), sem dados simulados; cliente de API criado em `shared/services/api` (ISSUE-002). Status da própria equipe segue pendente (lacuna 7). 2026-10-19 (IA) calendário de 5S (RF026) em `/equipes/calendario` (Figma `208:6892`, antes omitido por engano), com `TeamScheduleRow` global, alternância Equipes/Calendário e dados simulados. Pendente: API real e detalhes da equipe. 2026-10-16 (IA) criados em `src/features/teams/`: `TeamCard` (Figma `228:7974`, variantes sem fazer/fazendo 5S), `TeamDetailsCard` (`208:6580`), `RepresentativeCard` (minicard atomizado) e `TeamStatusBadge` (reutilizada pelos dois cards; a Badge 5S não existia em nenhuma branch). 100% fiéis ao Figma (`decision-log.md` 0008). Só apresentação. Lacunas 17 e 18 registradas em `data-model.md`. Status passa a Em andamento.
 
 ## ISSUE-006 - Ocorrências
 

@@ -6,6 +6,13 @@ Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferença
 
 Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. As descrições e lacunas abaixo datadas de 2026-10-09 são referência histórica quando conflitarem com esta revisão de autenticação. Perfis retornados continuam pertencendo ao contrato externo; o cliente de login atual admite somente VIEWER por instrução do humano. Não ampliar outros módulos por mudanças identificadas na API nesta consulta.
 
+## Atualização da API (2026-10-19, conferida em https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs)
+
+- **Perfil por header:** toda rota fora de `/auth/**` exige `X-User-Role` (`ADMIN`, `MANAGER` ou `VIEWER`). Ausente/inválido: 401; sem permissão: 403. O header não é autenticado e pode ser forjado (controle didático). Isso substitui "todas as rotas são públicas" e a lacuna 14 em parte; ver `security.md`.
+- **Login:** `POST /auth/login` recebe `username` e `password` (a doc anterior dizia e-mail). `User` tem `username`; `status` pode ser `ACTIVE`/`INACTIVE`. Existe `POST /auth/forgot-password` (a conferir; lacuna 3).
+- **Equipes (`GET /teams`, `?page=0&size=100`):** `representatives` é texto com nomes separados por vírgula (ex.: "Marcos Andrade, Fernanda Souza"; o app divide por vírgula, lacuna 18). **Horário (alterado em 2026-10-19):** `schedule` em texto livre foi substituído por `startTime` e `endTime` (`HH:MM`, aceitam vazio); todos os setores trabalham de segunda a sexta (regra do humano), então não há campo de dias. O calendário (lacuna 8) é montado desses dois campos em linhas de 30 min; equipes sem horário válido ficam fora. `code` real é livre ("ALMOX", "PROD-A"; lacuna 17).
+- `PATCH /materials/{id}/stock` (ajuste de estoque) e `GET /materials/stock` existem; o Visualizador pode alterar o status da equipe e o estoque.
+
 ## Convenções
 
 - **Paginação** (Spring `Page`): query `page` (base 0, padrão 0) e `size` (padrão 20, máx. 100). Resposta: `content[]`, `totalElements`, `totalPages`, `size`, `number`.
@@ -23,7 +30,7 @@ Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. 
 - `PUT /users/{id}` `{name, email, status}` (não altera `role` nem senha)
 - Não há exclusão de usuário.
 
-**Team** `{id, name, code, representatives (texto livre), schedule (texto livre), status}`; `status`: `DOING_5S` | `NOT_DOING_5S`.
+**Team** `{id, name, code, representatives (texto livre), startTime, endTime, status}` (`schedule` foi substituído por `startTime`/`endTime` em 2026-10-19); `status`: `DOING_5S` | `NOT_DOING_5S`.
 - `GET /teams` (paginado, por nome), `GET /teams/{id}`
 - `POST /teams` e `PUT /teams/{id}` `{name, code, representatives, schedule}` (nome ou código obrigatório)
 - `PATCH /teams/{id}/status` `{status}`
@@ -70,7 +77,7 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 5 | RF008 editar perfil de usuário | `PUT` não aceita `role` | Perfil não editável; editar nome, e-mail e status. |
 | 6 | RN005/RN008/RN021 representantes, limite | `representatives` é texto livre | Campo de texto livre; sem chips nem limite. |
 | 7 | RF025 "própria equipe" do Visualizador | Sem vínculo usuário-equipe; `PATCH` sem checagem | Precisa de campo na API; sem ele o Visualizador não tem como identificar sua equipe. |
-| 8 | RF026 calendário (por turno e equipe) | Sem endpoint; só `schedule` em texto | Montar a visão a partir de `schedule` das equipes, sem inferir datas. |
+| 8 | RF026 calendário (por turno e equipe) | Sem endpoint; a equipe tem `startTime`/`endTime` (`HH:MM`), sem dias | Montar a visão a partir de `startTime`/`endTime`; dias úteis fixos de segunda a sexta (regra do humano, 2026-10-19). |
 | 9 | RN017 imagem de material | Material não tem imagem | Placeholder com ícone; sem upload. |
 | 10 | RN013 anexos até 20 MB no total (correção humana) | API atual aceita até 5 fotos, 5 MB cada | Aplicar os três limites: 5 fotos, 5 MB por foto e 20 MB agregados. |
 | 11 | RN019 alerta de estoque | API calcula `lowStock` | Mostrar alerta quando `lowStock` for verdadeiro, para Gestor e Visualizador. |
@@ -81,6 +88,11 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
 | 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |
 | 18 | Minicards de representantes no detalhe da equipe | `representatives` é um único texto livre | `TeamDetailsCard` recebe `string[]`; quem monta o card separa os nomes. Regra de separação (vírgula? quebra de linha?) a definir. |
+| 19 | Lista de materiais do Figma (10 · Materiais) mostra código "MAT-024" e busca por "nome ou código" | GET /materials (conferido na API real em 2026-10-19) devolve só `id`, `name`, `stockQuantity`, `minimumStock`, `active`, `lowStock`; não há código nem filtro de busca | O app não inventa código: itens e detalhes mostram só o nome; busca local por nome sobre todos os materiais ativos (páginas de 100 percorridas pelo serviço). Confirmar com a API se haverá código. |
+
+## Revisão de materiais - 2026-10-19
+
+GET /materials?page&size com X-User-Role: VIEWER (200 real, 5 materiais). Resposta Spring Page; o cliente valida `content[].{id (UUID), name, stockQuantity (inteiro >= 0), active}` e `totalPages`, ignora o restante e lista só `active: true`. Serviço percorre as páginas (size 100, no máximo 10) para a busca local cobrir o catálogo. Detalhe usa os dados da lista (sem GET /materials/{id}). Contagem "N materiais disponíveis" = materiais ativos carregados. Sem aviso de estoque baixo (decisão 0009). OpenAPI repete nomes de schema (`Response`) entre controllers, então o formato acima vem da resposta real. Web real depende de CORS no backend.
 
 ## Revisão inicial de ocorrência - 2026-10-19 (histórico; anexos substituídos pela revisão múltipla abaixo)
 
