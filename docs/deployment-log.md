@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-21] - Correção: ISSUE-002 (Navegação unificada e logo Home)
+
+- **Escopo:** branch feature/improve-navigation já selecionada/limpa; docs lidos e spec antes de código. Pedido humano: menu Equipes para outros módulos, inconsistências de navegação e logo para Home.
+- **Entrega:** rotas Equipes/Calendário em(app), URLs preservadas e um AppLayout/menu/header/guarda/logout. Retirados TeamsPageFrame e callbacks vazios/saída sem limpar sessão. Alternância Lista/Calendário mantida, Equipes ativo no calendário; clique no destino atual não duplica navegação. Logo acessível199x26 em alvo48 volta a Home; bloqueio menu/logo/logout no envio/saída e áreas seguras preservados.401 de equipes alinha endSession e ignora respostas após unmount. Props inconsistentes do cabeçalho corrigidas, sem novo desenho/tokens/API.
+- **Arquivos:** src/app/(app)/_layout.tsx, equipes/{index,calendario}.tsx movidos para(app); shared/components/layout/{app-header,app-layout}; teams/index.ts, screens/{teams-screen,team-calendar-screen}, hooks/use-teams.ts; removido teams-page-frame.tsx. Sem dependência ou código de demonstração.
+- **Checks:** TypeScript/lint/diff aprovados. Export web final aprovado,13 rotas, aviso preexistente favicon ausente. Testes externos sem rede:20 combinaçõesorigem/destino, logoHome, activeCalendário, logout/guards/bloqueios/ListaCalendário,401/403/unmount. Testes lógicos com mocks não comprovam toque/renderização/histórico real.
+- **Docs:** issues/plano/architecture/workflows/design/security/testing, decisão0016 e log.
+- **Limites:** inspeção visual do Chrome interrompida por Computer Use porque não conseguiu identificar URL atual com segurança. Nenhuma ação posterior no navegador; conferência visual tablet pendente, sem alegar celular/desktop/dispositivo ou API real. Fixtures/scripts/build externos e servidores temporários encerrados. Sem commit/push. Issue/fase gerais seguem abertas, implementação deste reparo concluída.
+
 ## [2026-10-21] - Configuração: erro config no login
 
 - **Causa/escopo:** EXPO_PUBLIC_API_URL obrigatório, mas só havia.env.example e variável ausente; correção autorizada pelo humano após diagnóstico.

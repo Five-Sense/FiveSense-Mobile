@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { FlatList, Pressable, RefreshControl, Text, useWindowDimensions, View } from 'react-native';
 
 import { TeamDetailsCard } from '@/features/teams/components/details/team-details-card';
-import { TeamsPageFrame } from '@/features/teams/components/layout/teams-page-frame';
 import { TeamsPageHeading } from '@/features/teams/components/layout/teams-page-heading';
 import { TeamsViewSwitch } from '@/features/teams/components/layout/teams-view-switch';
 import { TeamCard } from '@/features/teams/components/list/team-card';
@@ -17,8 +16,6 @@ import { Alert } from '@/shared/components/feedback/alert';
 import { ModalOverlay } from '@/shared/components/overlays/modal-overlay';
 
 export type TeamsScreenProps = {
-  onLogout: () => void;
-  onNavigateHome: () => void;
   onOpenCalendar: () => void;
 };
 
@@ -32,7 +29,7 @@ function columnsFor(width: number): number {
 }
 
 /** "07 · Equipes — Lista · Visualizador" (Figma, frame 186:3355). */
-export function TeamsScreen({ onLogout, onNavigateHome, onOpenCalendar }: TeamsScreenProps) {
+export function TeamsScreen({ onOpenCalendar }: TeamsScreenProps) {
   const { width } = useWindowDimensions();
   const {
     teams,
@@ -86,8 +83,9 @@ export function TeamsScreen({ onLogout, onNavigateHome, onOpenCalendar }: TeamsS
   );
 
   return (
-    <TeamsPageFrame onLogout={onLogout} onNavigateHome={onNavigateHome}>
+    <View className="flex-1 bg-page">
       <FlatList
+        className="flex-1"
         // A troca de colunas exige nova instância do FlatList.
         key={columns}
         data={data}
@@ -150,6 +148,6 @@ export function TeamsScreen({ onLogout, onNavigateHome, onOpenCalendar }: TeamsS
           />
         ) : null}
       </ModalOverlay>
-    </TeamsPageFrame>
+    </View>
   );
 }

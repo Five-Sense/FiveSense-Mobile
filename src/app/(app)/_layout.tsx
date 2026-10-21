@@ -22,7 +22,7 @@ export default function AppGroupLayout() {
   function handleNavigate(itemId: string) {
     if (sending || loggingOut) return;
     const item = VIEWER_NAVIGATION_ITEMS.find((candidate) => candidate.id === itemId);
-    if (item) router.navigate(item.href as Href);
+    if (item && pathname !== item.href) router.navigate(item.href as Href);
   }
 
   async function handleLogout() {
@@ -34,8 +34,9 @@ export default function AppGroupLayout() {
   }
 
   return (
-    <AppLayout items={VIEWER_NAVIGATION_ITEMS} activeItemId={activeItem?.id} onNavigate={handleNavigate} onLogout={handleLogout}
-      navigationDisabled={sending || loggingOut} logoutDisabled={sending || loggingOut} referenceHeader={pathname === '/ocorrencias'}>
+    <AppLayout items={VIEWER_NAVIGATION_ITEMS} activeItemId={activeItem?.id} onNavigate={handleNavigate}
+      onNavigateHome={() => handleNavigate('home')} onLogout={handleLogout}
+      navigationDisabled={sending || loggingOut} logoutDisabled={sending || loggingOut}>
       <Slot />
     </AppLayout>
   );

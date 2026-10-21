@@ -10,6 +10,8 @@ Por decisão do humano, este cliente usa Nome de usuário e senha; o protótipo 
 
 ## Navegação por perfil
 
+Navegação autenticada unificada em2026-10-21: menu Home/Ocorrências/Equipes/Materiais funciona a partir de qualquer uma das telas, inclusive /equipes/calendario. Logo no canto superior esquerdo volta diretamente a /home; Home e logo não abrem o login nem encerram sessão. Lista/Calendário usam as URLs públicas existentes e deixam Equipes selecionado. Sair encerra sessão e abre login em todas as telas; voltar/link direto sem sessão não reabre conteúdo protegido. Equipes agora também trata401 inicial/atualização/status encerrando o acesso;403 mantém sessão e feedback. Durante envio de ocorrência/logout, menu/logo/saída ficam desabilitados. Área segura e componentes existentes preservados; sem Sidebar/NavItem ou demonstração.
+
 | Perfil | Menu principal |
 | --- | --- |
 | Visualizador | Home, Ocorrências, Equipes, Materiais |

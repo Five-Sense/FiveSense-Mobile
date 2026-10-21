@@ -40,3 +40,7 @@ AppError traduz status HTTP numérico ou códigos locais para mensagens de um ca
 ## Segredos
 
 O app não contém segredos. `EXPO_PUBLIC_*` é público; usar apenas para a URL da API (`EXPO_PUBLIC_API_URL`).
+
+## Guarda de equipes e navegação - 2026-10-21
+
+Rotas /equipes e /equipes/calendario agora pertencem ao grupo autenticado(app), com a mesma guarda e logout das demais telas; não expor screens com menu/saída paralelos sem sessão. Logo navega para Home e respeita bloqueio durante envio/logout.401 inicial/refresh/PATCH de equipes chama endSession com aviso;403 conserva sessão e feedback. Requisições não atualizam componentes desmontados ou sessão trocada. Não alterada a regra de autorização de status da equipe nem a limitação do header didático da API. Back/link direto sem sessão é redirecionado pela guarda do grupo.

@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { RefreshControl, ScrollView, Text, useWindowDimensions, View } from 'react-native';
 
-import { TeamsPageFrame } from '@/features/teams/components/layout/teams-page-frame';
 import { TeamsPageHeading } from '@/features/teams/components/layout/teams-page-heading';
 import { TeamsViewSwitch } from '@/features/teams/components/layout/teams-view-switch';
 import { TeamListMessage } from '@/features/teams/components/list/team-list-message';
@@ -12,8 +11,6 @@ import { isWorkingDay } from '@/features/teams/utils/working-hours';
 import { TeamScheduleRow } from '@/shared/components/data-display/team-schedule-row';
 
 export type TeamCalendarScreenProps = {
-  onLogout: () => void;
-  onNavigateHome: () => void;
   onOpenTeams: () => void;
 };
 
@@ -21,8 +18,6 @@ const SKELETON_ROWS = Array.from({ length: 10 }, (_, index) => index);
 
 /** "07 · Equipes — Lista · Visualizador" no modo Calendário (Figma, frame 208:6892). */
 export function TeamCalendarScreen({
-  onLogout,
-  onNavigateHome,
   onOpenTeams,
 }: TeamCalendarScreenProps) {
   const { width } = useWindowDimensions();
@@ -33,8 +28,9 @@ export function TeamCalendarScreen({
   const slots = useMemo(() => buildScheduleSlots(teams), [teams]);
 
   return (
-    <TeamsPageFrame onLogout={onLogout} onNavigateHome={onNavigateHome}>
+    <View className="flex-1 bg-page">
       <ScrollView
+        className="flex-1"
         refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refresh} />}
         contentContainerStyle={{
           gap: 24,
@@ -92,6 +88,6 @@ export function TeamCalendarScreen({
           )}
         </View>
       </ScrollView>
-    </TeamsPageFrame>
+    </View>
   );
 }
