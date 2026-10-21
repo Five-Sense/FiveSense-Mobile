@@ -115,6 +115,10 @@ AppError recebe status HTTP numérico, por exemplo new AppError(401), e traduz k
 
 ## Navegação
 
+Estado vigente2026-10-21: Home, Ocorrências, Materiais, Equipes e Calendário ficam sob src/app/(app)/_layout.tsx, com um AppLayout/menu/header e a mesma guarda de sessão. Equipes usa (app)/equipes/index.tsx e calendario.tsx; grupos não mudam os endereços públicos /equipes e /equipes/calendario. Screens de equipes recebem somente ações de troca Lista/Calendário e não compõem menu, sessão ou logout próprios; TeamsPageFrame duplicado removido. API pública da feature teams exporta as duas screens. Callbacks da moldura navegam pelos itens globais e não fazem nova navegação para o mesmo destino. Prefixo /equipes mantém item Equipes selecionado também no calendário.
+
+AppHeader recebe onNavigateHome/onLogout e estados de bloqueio. Logo existente é botão acessível para /home, mínimo48 e foco por token; não recebe destino de login. Área segura superior/inferior pertence ao AppLayout. Envio de ocorrência ou logout bloqueia menu, logo e saída, sem remover o usePreventRemove do formulário. Logout usa endSession de qualquer tela; sem sessão, o grupo redireciona para /.401 em equipes inicial/refresh/status encerra sessão com aviso, como materiais/ocorrências; respostas antigas após desmontagem/troca de sessão não atualizam a tela. Nenhum novo endpoint, storage de sessão ou controle de permissão do backend.
+
 - Expo Router. Grupos: `(auth)` para login (e recuperação, quando houver) e `(app)` para telas autenticadas.
 - Arquivos em `src/app` apenas exportam a screen da feature. Guarda de rota por sessão e por perfil (`Stack.Protected` ou equivalente; conferir docs da versão). Acesso indevido mostra "Acesso negado".
 - Pop-ups (detalhes, cadastro, confirmações) como modal. Layout lateral em tablet/desktop e painel no celular.

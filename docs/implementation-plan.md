@@ -44,6 +44,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Configurar EXPO_PUBLIC_API_URL em.env.local e verificar carregamento no login, corrigindo config por variável ausente (2026-10-21).
 - [ ] Contexto de sessão e permissões (o perfil hoje é fixo em VIEWER no cliente).
 
+- [x] Unificar navegação autenticada de Equipes/Calendário com Home/Materiais/Ocorrências, logo para Home, logout/401 consistentes e bloqueio durante envio; branch feature/improve-navigation (2026-10-21).
+
 ### Fase 2 - Autenticação e conta
 
 **Status:** Em andamento (incremento de login autorizado em 2026-10-16; demais telas aguardam prints)

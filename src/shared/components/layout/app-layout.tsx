@@ -19,21 +19,21 @@ export type AppLayoutProps = {
   items: readonly AppLayoutItem[];
   activeItemId?: string;
   onNavigate: (itemId: string) => void;
+  onNavigateHome: () => void;
   onLogout: () => void;
   /** Conteúdo da tela, entre o cabeçalho e o menu. */
   children: ReactNode;
   navigationDisabled?: boolean;
   logoutDisabled?: boolean;
-  referenceHeader?: boolean;
 };
 
 /** Moldura do sistema (protótipo "04 · Principal"): cabeçalho, conteúdo e menu inferior. */
-export function AppLayout({ items, activeItemId, onNavigate, onLogout, children, navigationDisabled = false, logoutDisabled = false, referenceHeader = false }: AppLayoutProps) {
+export function AppLayout({ items, activeItemId, onNavigate, onNavigateHome, onLogout, children, navigationDisabled = false, logoutDisabled = false }: AppLayoutProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View className="flex-1 bg-page">
-      <AppHeader onLogout={onLogout} logoutDisabled={logoutDisabled} referenceSize={referenceHeader} />
+    <View className="flex-1 bg-page" style={{ paddingTop: insets.top }}>
+      <AppHeader onNavigateHome={onNavigateHome} homeDisabled={navigationDisabled} onLogout={onLogout} logoutDisabled={logoutDisabled} />
       <View className="flex-1">{children}</View>
       <View className="bg-surface" style={{ paddingBottom: insets.bottom }}>
         <AppMenu>

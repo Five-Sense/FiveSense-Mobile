@@ -248,3 +248,7 @@ Sucesso Figma97:7533: conteúdo x40/top32/gap24; card754x236 com padding top36/x
 ### Limites da API múltipla - 2026-10-19 (vigente)
 
 Contrato atualizado substitui menções anteriores a quantidade ilimitada/bloqueio múltiplo: até 5 fotos JPG/PNG, 5 MB cada e 20 MB no total. Mostrar esses três limites no campo, dica acessível e rodapé da origem. Ao atingir 5, desabilitar + com token disabled-text, mantendo miniaturas/galeria e remoção disponíveis; remover libera adição. Montagem, pop-up e confirmação preservados; +N continua dinâmico (5 fotos -> +1). O exemplo de 9 fotos/+5 acima é referência histórica anterior ao novo limite. Conferência continua somente tablet 834x1194.
+
+### Interação da navegação - 2026-10-21
+
+Pedido humano: logo existente no AppHeader vira controle para Home, preservando marca199x26, ícone de saída32 e altura72 do tablet; alvo mínimo48 e nome acessível Five Sense: ir para a Home, foco por token, desabilitado enquanto envia ocorrência ou encerra sessão. AppLayout respeita área segura superior/inferior e usa a mesma barra em equipes/calendário e demais telas. Não há novo desenho do Figma nem novos tokens; alteração de comportamento e remoção de moldura duplicada. Conferência visual em tablet pretendida, mas interrompida pelo Computer Use por não conseguir identificar com segurança a URL da janela; não declarar aceite visual neste incremento.
