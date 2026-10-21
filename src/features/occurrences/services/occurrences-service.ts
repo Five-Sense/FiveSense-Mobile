@@ -8,7 +8,7 @@ import { validateOccurrenceImages } from '../utils/occurrence-images';
 export async function getOccurrenceOptions(kind: 'problems' | 'materials', signal?: AbortSignal): Promise<OccurrenceOption[]> {
   const response = await requestJson(`/${kind}/options`, { role: 'VIEWER', signal });
   const parsed = occurrenceOptionsSchema.safeParse(response);
-  if (!parsed.success) throw new AppError('unknown', 'As opções recebidas não puderam ser carregadas. Tente novamente.');
+  if (!parsed.success) throw new AppError('invalidResponse');
   return parsed.data;
 }
 

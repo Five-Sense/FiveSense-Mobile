@@ -17,6 +17,21 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-21] - Configuração: erro config no login
+
+- **Causa/escopo:** EXPO_PUBLIC_API_URL obrigatório, mas só havia.env.example e variável ausente; correção autorizada pelo humano após diagnóstico.
+- **Entrega:**.env.local ignorado pelo Git com host público já indicado, sem/api/v1; README com instrução para novas cópias/recarga. Cliente e código de negócio preservados. Docs issues/plano/log atualizados.
+- **Checks:** Expo config confirmou carregamento do arquivo/variável. Verificação transitória externa com@expo/env instalado aprovou development/production; requestJson montou URL de login e chegou ao fetch simulado sem config. Nenhuma requisição real, senha ou e-mail. git diff --check aprovado; sem teste visual/credenciais reais. Typecheck global segue com erro preexistente AppLayout/AppHeader documentado no reparo anterior; nenhum novo código TypeScript nesta entrega.
+- **Operação:** recarregar completamente o app já aberto para incorporar a variável. Sem reiniciar processos alheios, dependência, suíte permanente, commit ou push; configuração local não é versionada.
+
+## [2026-10-21] - Reparo: ISSUE-002 (requestJson, services e AppError)
+
+- **Causa:** merge8690255 substituiu o cliente compartilhado pela versão apiRequest de equipes (a400277), removendo requestJson e recursos que os consumidores continuavam usando. Autorização humana para restaurar e adequar erros; spec antes de código, branch feature/fix-routes.
+- **Entrega:** requestJson central com JSON/FormData/query/role/signal/void, timeout60s incluindo corpo e sem retry; apiRequest compatível delega ao mesmo transporte. Auth/materials/teams/occurrences usam requestJson. AppError recebe status HTTP numérico ou código local tipado e traduz mensagens centralizadas, preservando status/kind/fields/cancelled e413. Corrigidos construtores antigos de services/picker/validador/session-context. Nenhum texto livre/backend bruto exposto. Host env obrigatório mantido; auth sem header, protegidos VIEWER. Ocorrência continua um multipart com dados e imagens.
+- **Arquivos:** shared/services/api/{client,app-error}.ts, shared/contexts/session-context.tsx, features/{auth,materials,teams,occurrences}/services e occurrences/utils/occurrence-images.ts. Nenhuma interface/rota ou dependência alterada; auth local sem newline preservado.
+- **Checks:** testes transitórios externos do transporte e services aprovados: JSON/multipart/query/PATCH,0/1/3/5 fotos, status/campos/mensagens, cancelamento/timeout fetch+body/limpeza,201/204 e sem retry. Zero rede real. Lint sem cache/diff aprovados. Tipos de rota regenerados pelo Expo; typecheck global resta1 erro preexistente AppLayout/AppHeader (props logoutDisabled/referenceSize), confirmado emHEAD. Não declarar build global aprovado.
+- **Docs:** architecture/security/issues/plan/testing, decisão0015 e log. Sem suíte permanente, POST real, teste visual/dispositivo, commit ou push. Issue/fase seguem abertas para pendências gerais; reparo da API implementado e verificado logicamente.
+
 ## [2026-10-20] - Correção: ISSUE-006 (Ocorrência e fotos em uma requisição)
 
 - **Escopo/fonte:** reparo aprovado após diagnóstico; branch atual feature/calendary-screen mantida. Contrato público atual removeu upload separado/imageIds; spec registrada antes de código.

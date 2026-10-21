@@ -14,7 +14,7 @@ export function validatePickedImage(asset: ImagePicker.ImagePickerAsset): Occurr
   const extension = name.split('.').pop()?.toLowerCase() ?? '';
   const mimeType = asset.file?.type || asset.mimeType || MIME_BY_EXTENSION[extension];
   if (!ACCEPTED_IMAGE_TYPES.includes(mimeType ?? '') || (asset.type && asset.type !== 'image')) {
-    throw new AppError('validation', 'Selecione fotos nos formatos JPG ou PNG.');
+    throw new AppError('invalidImageType');
   }
   const image = { uri: asset.uri, name, mimeType, size: size ?? 0, ...(asset.file ? { file: asset.file } : {}) };
   validateOccurrenceImages([image]);
@@ -24,7 +24,7 @@ export function validatePickedImage(asset: ImagePicker.ImagePickerAsset): Occurr
 export async function pickOccurrenceImages(source: 'camera' | 'library'): Promise<OccurrenceImage[]> {
   if (source === 'camera' && Platform.OS !== 'web') {
     const permission = await ImagePicker.requestCameraPermissionsAsync();
-    if (!permission.granted) throw new AppError('validation', 'Permita o acesso à câmera ou escolha fotos da galeria.');
+    if (!permission.granted) throw new AppError('cameraPermissionDenied');
   }
   const options: ImagePicker.ImagePickerOptions = { mediaTypes: ['images'], allowsEditing: false, quality: 1 };
   const result = await (source === 'camera'

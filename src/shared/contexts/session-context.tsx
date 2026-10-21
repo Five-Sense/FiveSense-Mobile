@@ -30,7 +30,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   async function startSession(next: Session) {
     try { await storage.saveSession(next); }
-    catch { throw new AppError('unknown', 'Não foi possível guardar seu acesso com segurança. Tente novamente.'); }
+    catch { throw new AppError('sessionSaveFailed'); }
     setStorageError(null);
     setSession(next);
   }
@@ -39,7 +39,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setStorageError(notice ?? null);
     setSession(null);
     try { await storage.clearSession(); }
-    catch { setStorageError('Não foi possível limpar o acesso salvo. Tente sair novamente.'); throw new AppError('unknown', 'Não foi possível limpar o acesso salvo. Tente novamente.'); }
+    catch { setStorageError('Não foi possível limpar o acesso salvo. Tente sair novamente.'); throw new AppError('sessionClearFailed'); }
   }
 
   return (

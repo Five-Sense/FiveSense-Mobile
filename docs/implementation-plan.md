@@ -40,6 +40,8 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Integrar a develop em `feature/nav-component` (2026-10-16), preservando o histórico de entregas e ajustando o import de Icon do MenuButton para `src/shared/`; lint e typecheck aprovados.
 - [x] Catálogo geral entregue e verificado anteriormente; removido por novo pedido do humano em 2026-10-16. Correções reais dos componentes permanecem.
 - [x] Cliente de API (`src/shared/services/api`) com `AppError`, timeout e header `X-User-Role` (2026-10-19).
+- [x] Reparar regressão de merge no cliente: restaurar requestJson/JSON/multipart/query/signal/void/fields/cancelled, migrar services e AppError por status/códigos centralizados; manter apiRequest compatível. Contratos/lint aprovados; typecheck global bloqueado por AppHeader/AppLayout preexistente (2026-10-21).
+- [x] Configurar EXPO_PUBLIC_API_URL em.env.local e verificar carregamento no login, corrigindo config por variável ausente (2026-10-21).
 - [ ] Contexto de sessão e permissões (o perfil hoje é fixo em VIEWER no cliente).
 
 ### Fase 2 - Autenticação e conta

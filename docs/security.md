@@ -18,10 +18,11 @@ Login público em POST /api/v1/auth/login por username/password, sem JWT ou expi
 
 O preflight e a resposta de login consultados a partir de http://localhost:8085 não devolvem Access-Control-Allow-Origin. O backend precisa liberar a origem do cliente web, POST/OPTIONS e Content-Type; futuras chamadas protegidas também precisam liberar X-User-Role. Não contornar CORS nem inserir proxy público. O app mostra falha de conexão e permite tentar novamente. Aplicativos nativos não dependem de CORS, mas não foram executados nesta entrega.
 
-## Header de perfil (2026-10-19)
+## Header de perfil e erros (2026-10-21)
 
-A API passou a exigir `X-User-Role` em toda rota fora de `/auth/**`, mas o header não é autenticado (pode ser forjado; a própria API o chama de controle didático). O cliente em `src/shared/services/api/client.ts` envia `VIEWER` fixo, porque o app é exclusivo do Visualizador e ainda não há login. Quando a sessão existir (ISSUE-003), o valor deve vir do `role` do login. O risco "controle por perfil só na interface" permanece.
+requestJson envia X-User-Role: VIEWER somente quando o serviço protegido informa role; auth/login não recebe header de perfil. O wrapper legado apiRequest conserva VIEWER padrão para compatibilidade. Sessões atuais são validadas como VIEWER; header é forjável e continua sem equivaler a autenticação real. EXPO_PUBLIC_API_URL obrigatório aponta só para o host; o cliente acrescenta /api/v1. Nenhum token, proxy ou bypass novo.
 
+AppError traduz status HTTP numérico ou códigos locais para mensagens de um catálogo interno, nunca detail/message bruto do backend. Nomes de campos de errors são extraídos para validação, sem registrar corpo, credenciais, fotos ou sessão. Cancelamento externo é diferente de timeout; ambos removem listeners/timers. Falhas locais de fotos/câmera/armazenamento preservam mensagens específicas, sem falsificar status HTTP. Sem retry automático de mutações.
 ## Sessão no app
 
 - Guardar somente userId, name, username, email e role após validar a resposta. Senha, corpo do login e tokens nunca são registrados ou persistidos.
