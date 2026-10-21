@@ -20,7 +20,7 @@ export async function getMaterials(signal?: AbortSignal): Promise<Material[]> {
     const response = await requestJson(`/materials?page=${page}&size=${PAGE_SIZE}`, { role: 'VIEWER', signal });
     const parsed = materialPageSchema.safeParse(response);
     if (!parsed.success) {
-      throw new AppError('unknown', 'Os materiais recebidos não puderam ser carregados. Tente novamente.');
+      throw new AppError('invalidResponse');
     }
     for (const item of parsed.data.content) {
       if (item.active) materials.push({ id: item.id, name: item.name, stockQuantity: item.stockQuantity });

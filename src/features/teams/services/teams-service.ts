@@ -1,7 +1,7 @@
 import type { Team } from '@/features/teams/types/team';
 import type { TeamStatus } from '@/features/teams/types/TeamStatus';
 import { buildTeamLabels } from '@/features/teams/utils/team-labels';
-import { apiRequest } from '@/shared/services/api/client';
+import { requestJson } from '@/shared/services/api/client';
 import type { Page } from '@/shared/types/page';
 
 /** Formato de GET /teams (docs/data-model.md). Não vaza para as telas. */
@@ -20,7 +20,8 @@ const PAGE_SIZE = 100;
 
 /** PATCH /teams/{id}/status. Devolve o status confirmado pela API. */
 export async function updateTeamStatus(id: string, status: TeamStatus): Promise<TeamStatus> {
-  const result = await apiRequest<TeamDto>(`/teams/${encodeURIComponent(id)}/status`, {
+  const result = await requestJson<TeamDto>(`/teams/${encodeURIComponent(id)}/status`, {
+    role: 'VIEWER',
     method: 'PATCH',
     body: { status },
   });
@@ -49,7 +50,8 @@ export async function fetchTeams(): Promise<Team[]> {
   let totalPages = 1;
 
   while (page < totalPages) {
-    const result = await apiRequest<Page<TeamDto>>('/teams', {
+    const result = await requestJson<Page<TeamDto>>('/teams', {
+      role: 'VIEWER',
       query: { page, size: PAGE_SIZE },
     });
     teams.push(...result.content.map(toTeam));

@@ -12,13 +12,13 @@ const identitySchema = z.object({ role: z.string() });
 export async function login(credentials: LoginCredentials, signal?: AbortSignal): Promise<Session> {
   const response = await requestJson('/auth/login', { method: 'POST', body: credentials, signal });
   const auth = authenticatedSchema.safeParse(response);
-  if (!auth.success) throw new AppError('unknown', 'Resposta inesperada do serviço. Tente novamente.');
-  if (!auth.data.authenticated) throw new AppError('unauthorized', 'Credenciais incorretas.');
+  if (!auth.success) throw new AppError('invalidResponse');
+  if (!auth.data.authenticated) throw new AppError('invalidCredentials');
   const identity = identitySchema.safeParse(response);
   if (identity.success && identity.data.role !== 'VIEWER') {
-    throw new AppError('forbidden', 'Este aplicativo está disponível apenas para o perfil Visualizador.');
+    throw new AppError('viewerOnly');
   }
   const result = sessionSchema.safeParse(response);
-  if (!result.success) throw new AppError('unknown', 'Resposta inesperada do serviço. Tente novamente.');
+  if (!result.success) throw new AppError('invalidResponse');
   return result.data;
 }
