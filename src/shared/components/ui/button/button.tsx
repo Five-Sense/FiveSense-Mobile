@@ -116,10 +116,7 @@ export function Button({
           <Icon icon={icon} size={iconSize} className={colors.content} />
         </View>
       ) : null}
-      <Text
-        numberOfLines={1}
-        className={`shrink text-center text-button font-montserrat-semibold ${colors.content}`}
-      >
+      <Text className={`text-center text-button font-montserrat-semibold ${colors.content}`}>
         {label}
       </Text>
       {!loading && icon && iconPosition === 'end' ? (
