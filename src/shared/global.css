@@ -63,38 +63,38 @@
   --font-montserrat: Montserrat_400Regular;
   --font-montserrat-semibold: Montserrat_600SemiBold;
   --text-auth: 32px;
-  --text-auth--line-height: 40px;
+  --text-auth--line-height: calc(40 / 32);
   --text-button: 16px;
-  --text-button--line-height: 24px;
+  --text-button--line-height: calc(24 / 16);
   --text-nav: 16px;
-  --text-nav--line-height: 24px;
+  --text-nav--line-height: calc(24 / 16);
   --text-button: 16px;
-  --text-button--line-height: 24px;
+  --text-button--line-height: calc(24 / 16);
   --text-body: 16px;
-  --text-body--line-height: 24px;
+  --text-body--line-height: calc(24 / 16);
   --text-label: 14px;
-  --text-label--line-height: 20px;
+  --text-label--line-height: calc(20 / 14);
   --text-helper: 14px;
-  --text-helper--line-height: 20px;
+  --text-helper--line-height: calc(20 / 14);
   --text-card: 18px;
-  --text-card--line-height: 26px;
+  --text-card--line-height: calc(26 / 18);
   /* Alias já utilizado por MaterialItem. */
   --text-card-title: 18px;
-  --text-card-title--line-height: 26px;
+  --text-card-title--line-height: calc(26 / 18);
   --text-section: 24px;
-  --text-section--line-height: 32px;
+  --text-section--line-height: calc(32 / 24);
   --text-wordmark: 24px;
-  --text-wordmark--line-height: 32px;
+  --text-wordmark--line-height: calc(32 / 24);
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
   --text-page: 28px;
-  --text-page--line-height: 36px;
+  --text-page--line-height: calc(36 / 28);
   --text-section: 24px;
-  --text-section--line-height: 32px;
+  --text-section--line-height: calc(32 / 24);
   --shadow-menu: 0 4px 16px rgb(0 0 0 / 10%);
 }
 
 /* Alias Page: text-page também nomeia uma cor no Tailwind. */
 @theme {
   --text-page-heading: 28px;
-  --text-page-heading--line-height: 36px;
+  --text-page-heading--line-height: calc(36 / 28);
 }
