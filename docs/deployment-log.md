@@ -17,6 +17,15 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-23] - Correção: ISSUE-002 - (2026-10-23 08:34:44) (Tipografia e rem no nativo)
+
+- **Fase:** Fase 1 - Scaffold técnico (tema). Branch `fix/native-typography-rem`, criada a partir de `b62d7ec`.
+- **O que foi feito:** diagnóstico e correção da responsividade errada no emulador de tablet. Causa: os 14 tokens `--text-*--line-height` de `src/shared/global.css` estavam em `px`, e o `react-native-css` trata o valor como multiplicador da fonte (rótulo 14/20 virava 280 dp; menu de 361 dp; texto com altura negativa). Todos passaram a `calc(altura / fonte)`. Segunda causa: o compilador nativo usa 1rem = 14px (web 16); `metro.config.js` agora passa `inlineRem: 16` ao `withNativewind`, só para o nativo (breakpoints sm/md de 560/672 para 640/768; `text-lg` 15,75 para 18; `rounded-xl` 10,5 para 12).
+- **Arquivos modificados:** `src/shared/global.css`, `metro.config.js`, `docs/decision-log.md` (0017), `docs/deployment-log.md`, `docs/issues.md`, `docs/implementation-plan.md`.
+- **Checks:** `npx tsc --noEmit` sem erros; ESLint em `metro.config.js` sem avisos. Emulador Medium_Tablet (1280x800 dp), Metro com `--clear`, medido por `uiautomator` antes e depois: rótulo "Home" 280 para 20 dp; botão do menu 332 para 72; menu 361 para 101; "O que você deseja fazer hoje?" de -372 para 20; "Olá!" 36; título de card 26. Screenshot confirma Home com os três cards e o menu no rodapé. Web: o Chrome computou `calc(h / f)` como a altura exata nos 8 pares do design (20, 20, 24, 24, 26, 32, 36, 40). Compilador nativo conferido com e sem `inlineRem`.
+- **Docs atualizados:** `decision-log.md` (0017), `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** (1) Não rodei a tela de Equipes nem o fluxo de ocorrência no emulador; só a Home (sessão já ativa). (2) A web não foi reexportada de ponta a ponta nem comparada visualmente; a verificação foi do valor de `line-height` no Chrome. (3) Telas que usam `useWindowDimensions` com limites fixos (equipes, calendário, select) não mudam. (4) `rem` 16 altera utilitários do Tailwind baseados em `rem` no nativo para o valor da web; foram poucos usos (`text-lg` x3, `text-sm` x1, `rounded-xl` x1). (5) O servidor Expo do desenvolvedor (porta 8081) segue com o `metro.config.js` antigo em memória: precisa ser reiniciado com `npx expo start --clear` para enxergar a correção. (6) `package-lock.json` está modificado no working tree desde antes desta tarefa (inclui `@react-native-community/cli`); não é desta entrega e não deve ir no commit. (7) Sem commit nem push.
+
 ## [2026-10-21] - Correção: ISSUE-002 (Navegação unificada e logo Home)
 
 - **Escopo:** branch feature/improve-navigation já selecionada/limpa; docs lidos e spec antes de código. Pedido humano: menu Equipes para outros módulos, inconsistências de navegação e logo para Home.

@@ -31,7 +31,7 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 - [x] Remover telas e componentes de exemplo do template Expo (2026-10-09).
 - [x] Instalar e configurar NativeWind, Lucide, fonte, secure-store, image-picker, zod e TanStack Query; Montserrat carregada em `_layout.tsx` e conferida no catálogo em 2026-10-16.
 - [x] Ajustar `app.json` (orientação livre, tema claro).
-- [x] Tokens do tema em `src/shared/global.css`, conforme `colors.tokens.json` e `design-guidelines.md`. Base de fontes, raios, dimensões e tipografia restaurada após perdas no merge; conferida nos componentes em web (2026-10-16).
+- [x] Tokens do tema em `src/shared/global.css`, conforme `colors.tokens.json` e `design-guidelines.md`. Base de fontes, raios, dimensões e tipografia restaurada após perdas no merge; conferida nos componentes em web (2026-10-16). Alturas de linha em razão e `rem` 16 no nativo, conferidos no emulador de tablet (2026-10-23, decisão 0017).
 - [x] Estrutura de pastas global e de features conforme `architecture.md` (esqueleto criado em 2026-10-09; `.env.example` com a URL da API).
 - [ ] Componentes globais em `src/components/<função>/` (Button, Input, Badge, Modal, Alert, Skeleton, EmptyState, ErrorState, Pagination), mapeando variantes/slots existentes e distinguindo estados ainda sem componente no Figma. **Button** (hoje em `src/components/ui/button`, a mover para `actions/`), **Select** e **MaterialItem** (feature `materials`) criados em 2026-10-09; **Alert** entregue em 2026-10-09 (`feedback/alert.tsx`, node Figma `33:2952`, 4 variantes); restantes pendentes.
 - [x] Nav/AppSidebar entregues anteriormente; componentes e tokens exclusivos retirados do escopo pelo humano em 2026-10-16 (decisão 0009).
