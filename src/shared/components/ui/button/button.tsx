@@ -117,6 +117,7 @@ export function Button({
         </View>
       ) : null}
       <Text
+        numberOfLines={1}
         className={`shrink text-center text-button font-montserrat-semibold ${colors.content}`}
       >
         {label}
