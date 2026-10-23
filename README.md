@@ -10,6 +10,14 @@ Expo, React Native, TypeScript, Expo Router e NativeWind.
 
 ## Como rodar
 
+Antes de iniciar, copie `.env.example` para `.env.local` na raiz do projeto. O arquivo local é ignorado pelo Git e deve conter:
+
+```env
+EXPO_PUBLIC_API_URL=https://fivesense-api.onrender.com
+```
+
+Use somente o host; o cliente adiciona `/api/v1`. Após alterar a configuração, faça uma recarga completa do app. Se aparecer o erro `config`, confira se a variável está preenchida no ambiente usado pelo Expo.
+
 ```bash
 npm install
 npx expo start

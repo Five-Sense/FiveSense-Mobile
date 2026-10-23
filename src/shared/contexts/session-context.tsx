@@ -1,0 +1,56 @@
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+
+import { AppError } from '@/shared/services/api/app-error';
+import * as storage from '@/shared/services/storage/session-storage';
+import type { Session } from '@/shared/types/session';
+
+type SessionContextValue = {
+  session: Session | null;
+  restoring: boolean;
+  storageError: string | null;
+  startSession: (session: Session) => Promise<void>;
+  endSession: (notice?: string) => Promise<void>;
+};
+
+const SessionContext = createContext<SessionContextValue | null>(null);
+
+export function SessionProvider({ children }: { children: ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null);
+  const [restoring, setRestoring] = useState(true);
+  const [storageError, setStorageError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    storage.readSession()
+      .then((saved) => { if (active) setSession(saved); })
+      .catch(() => { if (active) setStorageError('Não foi possível restaurar seu acesso. Entre novamente.'); })
+      .finally(() => { if (active) setRestoring(false); });
+    return () => { active = false; };
+  }, []);
+
+  async function startSession(next: Session) {
+    try { await storage.saveSession(next); }
+    catch { throw new AppError('sessionSaveFailed'); }
+    setStorageError(null);
+    setSession(next);
+  }
+
+  async function endSession(notice?: string) {
+    setStorageError(notice ?? null);
+    setSession(null);
+    try { await storage.clearSession(); }
+    catch { setStorageError('Não foi possível limpar o acesso salvo. Tente sair novamente.'); throw new AppError('sessionClearFailed'); }
+  }
+
+  return (
+    <SessionContext.Provider value={{ session, restoring, storageError, startSession, endSession }}>
+      {children}
+    </SessionContext.Provider>
+  );
+}
+
+export function useSession(): SessionContextValue {
+  const context = useContext(SessionContext);
+  if (!context) throw new Error('useSession deve estar dentro de SessionProvider.');
+  return context;
+}

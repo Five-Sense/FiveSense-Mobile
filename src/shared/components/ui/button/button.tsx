@@ -1,5 +1,4 @@
 import type { LucideIcon } from 'lucide-react-native';
-
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Icon } from '../icon';
@@ -19,8 +18,10 @@ export type ButtonProps = {
   loading?: boolean;
   /** Rotulo no estado de carregamento (ex.: "Salvando..."). Sem ele, mantem `children`. */
   loadingLabel?: string;
-  /** Icone Lucide opcional, exibido antes do rotulo. */
+  /** Ícone Lucide opcional; posição inicial preserva os usos existentes. */
   icon?: LucideIcon;
+  iconPosition?: 'start' | 'end';
+  iconSize?: number;
 };
 
 const ICON_SIZE = 24;
@@ -75,6 +76,8 @@ export function Button({
   loading = false,
   loadingLabel,
   icon,
+  iconPosition = 'start',
+  iconSize = ICON_SIZE,
 }: ButtonProps) {
   const [focused, setFocused] = useState(false);
 
@@ -95,10 +98,10 @@ export function Button({
 
   return (
     <Pressable
+      disabled={blocked}
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled: blocked, busy: loading }}
-      disabled={blocked}
       aria-busy={loading}
       aria-disabled={blocked}
       onPress={handlePress}
@@ -108,9 +111,9 @@ export function Button({
     >
       {loading ? (
         <Spinner size={20} className={colors.content} />
-      ) : icon ? (
+      ) : icon && iconPosition === 'start' ? (
         <View className="size-icon-slot items-center justify-center">
-          <Icon icon={icon} size={ICON_SIZE} className={colors.content} />
+          <Icon icon={icon} size={iconSize} className={colors.content} />
         </View>
       ) : null}
       <Text
@@ -118,6 +121,11 @@ export function Button({
       >
         {label}
       </Text>
+      {!loading && icon && iconPosition === 'end' ? (
+        <View className="size-icon-slot items-center justify-center">
+          <Icon icon={icon} size={iconSize} className={colors.content} />
+        </View>
+      ) : null}
     </Pressable>
   );
 }

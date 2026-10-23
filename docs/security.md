@@ -12,29 +12,35 @@ Escopo exclusivo do Visualizador (decisão 0009, 2026-10-16). A interface não o
 | Materiais | Consulta |
 | Conta | Login, informações e logout |
 
-## Situação da API (risco alto)
+## Situação da API (reconferida em 2026-10-16)
 
-A API v1 documentada tem **todas as rotas públicas** e login "simples" que devolve os dados do usuário, sem token. Consequências:
+Login público em POST /api/v1/auth/login por username/password, sem JWT ou expiração documentados. Usuário inativo ou credencial incorreta retorna 400. Demais rotas exigem X-User-Role; ausente/inválido dá 401, sem permissão dá 403. Esse header é didático, pode ser forjado e não constitui autenticação real. O cliente não deve tratá-lo como proteção de dados. Este incremento inicia sessão somente para VIEWER, conforme escopo do humano; não oferece fluxos administrativos.
 
-- O controle por perfil existe apenas na interface do app. Qualquer cliente pode chamar qualquer rota, e o app não consegue impedir isso.
-- O `userId` enviado em `POST /occurrences` vem do cliente e pode ser forjado.
-- Não há 401/403 documentados. O humano informou que os tokens expiram; a API precisa expor isso (token, duração, resposta 401) antes do app depender dele.
+O preflight e a resposta de login consultados a partir de http://localhost:8085 não devolvem Access-Control-Allow-Origin. O backend precisa liberar a origem do cliente web, POST/OPTIONS e Content-Type; futuras chamadas protegidas também precisam liberar X-User-Role. Não contornar CORS nem inserir proxy público. O app mostra falha de conexão e permite tentar novamente. Aplicativos nativos não dependem de CORS, mas não foram executados nesta entrega.
 
-Este risco pertence à API e deve ser tratado lá. No app: ocultar ações por perfil, nunca tratar a interface como barreira de segurança e registrar o risco em cada entrega relevante.
+## Header de perfil e erros (2026-10-21)
 
+requestJson envia X-User-Role: VIEWER somente quando o serviço protegido informa role; auth/login não recebe header de perfil. O wrapper legado apiRequest conserva VIEWER padrão para compatibilidade. Sessões atuais são validadas como VIEWER; header é forjável e continua sem equivaler a autenticação real. EXPO_PUBLIC_API_URL obrigatório aponta só para o host; o cliente acrescenta /api/v1. Nenhum token, proxy ou bypass novo.
+
+AppError traduz status HTTP numérico ou códigos locais para mensagens de um catálogo interno, nunca detail/message bruto do backend. Nomes de campos de errors são extraídos para validação, sem registrar corpo, credenciais, fotos ou sessão. Cancelamento externo é diferente de timeout; ambos removem listeners/timers. Falhas locais de fotos/câmera/armazenamento preservam mensagens específicas, sem falsificar status HTTP. Sem retry automático de mutações.
 ## Sessão no app
 
-- Após o login, guardar apenas o necessário (`userId`, `name`, `email`, `role`) em armazenamento seguro (`expo-secure-store` no nativo; no web, equivalente mais fraco).
-- Se a API passar a emitir token: enviar `Authorization: Bearer`, tratar 401 como "Sua sessão expirou" (limpar sessão e ir ao login) e 403 como "Acesso negado".
-- Logout limpa a sessão local.
-- Nunca registrar senha, token ou dados da sessão em logs.
+- Guardar somente userId, name, username, email e role após validar a resposta. Senha, corpo do login e tokens nunca são registrados ou persistidos.
+- Nativo: expo-secure-store com WHEN_UNLOCKED_THIS_DEVICE_ONLY. Falha de gravação impede concluir a sessão e tem feedback; dados salvos inválidos são limpos, falha de restauração pede novo login.
+- Web: memória durante a visita, sem localStorage/sessionStorage/cookies; recarregar exige novo login. Sem armazenamento seguro equivalente no navegador, não persistir os dados de sessão.
+- Sem inventar token, duração de sessão ou Authorization: Bearer. Se a API oferecer autenticação real, revisar o contrato antes de implementar.
+- Serviço de login diferencia falhas de credenciais, perfil, rede/timeout e contrato inválido; nunca apresenta detail bruto da API. O contexto de sessão fornece limpeza local para o futuro fluxo de saída; UI de logout não faz parte deste print.
 
 ## Entradas e arquivos
 
 - Validar entradas no app para feedback; a API valida de fato.
-- Imagem de ocorrência: validar tamanho (limite da API, 5 MB) antes do envio. Pedir permissão de câmera/galeria só quando o usuário escolher a origem; negação não bloqueia o envio.
+- Fotos de ocorrência: validar JPG/PNG, tamanho real conhecido/positivo, até 5 arquivos, 5 MB por foto e 20 MB na soma, tanto na seleção quanto antes da requisição (contrato reconferido em 2026-10-20). Enviar os quatro campos e images repetido juntos para /occurrences. Nenhum ID temporário, upload separado, base64 ou log de imagem. Falhas/413 mantêm anexos para correção; resultado incerto bloqueia reenvio automático até confirmação humana. A API detecta formato pelo conteúdo e verifica usuário ativo; a validação do cliente não substitui a do servidor. Pedir permissão de câmera/galeria só quando o usuário escolher a origem; negação não bloqueia o envio. Sem log de arquivos ou dados de sessão.
 - Mensagens de erro claras, sem expor detalhes internos (usar o `title`/`detail` do ProblemDetail somente quando for seguro mostrar).
 
 ## Segredos
 
 O app não contém segredos. `EXPO_PUBLIC_*` é público; usar apenas para a URL da API (`EXPO_PUBLIC_API_URL`).
+
+## Guarda de equipes e navegação - 2026-10-21
+
+Rotas /equipes e /equipes/calendario agora pertencem ao grupo autenticado(app), com a mesma guarda e logout das demais telas; não expor screens com menu/saída paralelos sem sessão. Logo navega para Home e respeita bloqueio durante envio/logout.401 inicial/refresh/PATCH de equipes chama endSession com aviso;403 conserva sessão e feedback. Requisições não atualizam componentes desmontados ou sessão trocada. Não alterada a regra de autorização de status da equipe nem a limitação do header didático da API. Back/link direto sem sessão é redirecionado pela guarda do grupo.

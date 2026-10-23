@@ -1,17 +1,28 @@
 # Data Model
 
-Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte: documentação da API enviada pelo humano em 2026-10-09. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
+Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferenças em relação ao Documento de Requisitos. Fonte inicial: documentação da API enviada pelo humano em 2026-10-09. Ocorrências e anexos foram reconferidos em 2026-10-20; a correção de envio direto ao final deste documento prevalece sobre os registros históricos de upload/imageIds. Enums e campos marcados com (?) não aparecem na documentação e devem ser confirmados em `/v3/api-docs`.
+
+## Revisão de autenticação - 2026-10-16
+
+Fonte atual: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs. As descrições e lacunas abaixo datadas de 2026-10-09 são referência histórica quando conflitarem com esta revisão de autenticação. Perfis retornados continuam pertencendo ao contrato externo; o cliente de login atual admite somente VIEWER por instrução do humano. Não ampliar outros módulos por mudanças identificadas na API nesta consulta.
+
+## Atualização da API (2026-10-19, conferida em https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs)
+
+- **Perfil por header:** toda rota fora de `/auth/**` exige `X-User-Role` (`ADMIN`, `MANAGER` ou `VIEWER`). Ausente/inválido: 401; sem permissão: 403. O header não é autenticado e pode ser forjado (controle didático). Isso substitui "todas as rotas são públicas" e a lacuna 14 em parte; ver `security.md`.
+- **Login:** `POST /auth/login` recebe `username` e `password` (a doc anterior dizia e-mail). `User` tem `username`; `status` pode ser `ACTIVE`/`INACTIVE`. Existe `POST /auth/forgot-password` (a conferir; lacuna 3).
+- **Equipes (`GET /teams`, `?page=0&size=100`):** `representatives` é texto com nomes separados por vírgula (ex.: "Marcos Andrade, Fernanda Souza"; o app divide por vírgula, lacuna 18). **Horário (alterado em 2026-10-19):** `schedule` em texto livre foi substituído por `startTime` e `endTime` (`HH:MM`, aceitam vazio); todos os setores trabalham de segunda a sexta (regra do humano), então não há campo de dias. O calendário (lacuna 8) é montado desses dois campos em linhas de 30 min; equipes sem horário válido ficam fora. `code` real é livre ("ALMOX", "PROD-A"; lacuna 17).
+- `PATCH /materials/{id}/stock` (ajuste de estoque) e `GET /materials/stock` existem; o Visualizador pode alterar o status da equipe e o estoque.
 
 ## Convenções
 
 - **Paginação** (Spring `Page`): query `page` (base 0, padrão 0) e `size` (padrão 20, máx. 100). Resposta: `content[]`, `totalElements`, `totalPages`, `size`, `number`.
 - **Erros:** ProblemDetail (RFC 9457). Conflito de exclusão: 409. Validação: 400/422 (?) com detalhes por campo (formato a confirmar).
 - **IDs:** UUID. **Datas:** ISO 8601 UTC.
-- **Autenticação:** todas as rotas são públicas; não há token (ver `security.md`).
+- **Autenticação atual (2026-10-16):** `/auth/**` público; demais rotas exigem `X-User-Role` (401 se ausente/inválido, 403 sem permissão). Header didático e forjável; não é JWT nem substitui autenticação real (ver `security.md`).
 
 ## Endpoints e modelos
 
-**Auth:** `POST /auth/login` `{email, password}` -> `{authenticated, userId, name, email, role}`.
+**Auth (reconferido em 2026-10-16):** `POST /auth/login` `{username, password}` -> `{authenticated, userId, name, username, email, role}`. Username e senha obrigatórios, até 255 caracteres; username sem distinguir caixa. Credenciais incorretas/usuário inativo retornam 400 (ProblemDetail, detail "Invalid credentials"). No cliente deste incremento somente VIEWER inicia sessão. Não há JWT nem expiração na resposta. `POST /auth/forgot-password` agora aparece no contrato, com `{email,newPassword}` -> `{updated,userId,email}`; não faz parte do print/pedido atual, não implementar nem assumir fluxo por link.
 
 **User** `{id, name, email, role, status, createdAt, updatedAt}`; `role`: `VIEWER` (outros valores, ex. `ADMIN` e `MANAGER`, a confirmar); `status`: `ACTIVE` (outros a confirmar).
 - `GET /users` (paginado), `GET /users/{id}`
@@ -19,7 +30,7 @@ Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferença
 - `PUT /users/{id}` `{name, email, status}` (não altera `role` nem senha)
 - Não há exclusão de usuário.
 
-**Team** `{id, name, code, representatives (texto livre), schedule (texto livre), status}`; `status`: `DOING_5S` | `NOT_DOING_5S`.
+**Team** `{id, name, code, representatives (texto livre), startTime, endTime, status}` (`schedule` foi substituído por `startTime`/`endTime` em 2026-10-19); `status`: `DOING_5S` | `NOT_DOING_5S`.
 - `GET /teams` (paginado, por nome), `GET /teams/{id}`
 - `POST /teams` e `PUT /teams/{id}` `{name, code, representatives, schedule}` (nome ou código obrigatório)
 - `PATCH /teams/{id}/status` `{status}`
@@ -36,21 +47,22 @@ Contrato real da API (Five Sense API v1, base path `/api/v1`, JSON) e diferença
 - `DELETE /materials/{id}` -> 204 (409 se houver ocorrência)
 
 **Occurrence** `{id, problemId, materialId, reportedByUserId, affectedQuantity, createdAt}`
-- `POST /occurrences/images` multipart, campo `image` (máx. 5 MB) -> `{imageId}`
-- `POST /occurrences` `{problemId, materialId, affectedQuantity, reportedByUserId, imageId?}` -> 201. Não altera estoque; o e-mail ao Gestor é "best effort".
+- Não há upload separado: fotos opcionais seguem junto do próprio POST /occurrences, no campo multipart `images` repetido (até 5 arquivos, 5 MB cada); cliente mantém soma até 20 MB.
+- `POST /occurrences` multipart `{problemId, materialId, affectedQuantity, reportedByUserId, images?: arquivos}` -> 201. Sem fotos: os mesmos quatro campos obrigatórios. IDs intermediários removidos. Não altera estoque; e-mail assíncrono após commit, best effort.
 - `GET /occurrences` (paginado). O app não tem tela de listagem de ocorrências.
 
 ## Validação no app
 
 | Campo | Regra |
 | --- | --- |
-| E-mail | formato válido |
+| E-mail (quando solicitado) | formato válido; login usa username, não e-mail |
+| Login: username e password | obrigatórios, até 255; username trim, senha preservada; sem regras de cadastro |
 | Senha (cadastro/troca) | mín. 8, 1 maiúscula, 1 número, 1 especial (RN025), se a API oferecer o fluxo |
 | Nome do problema | até 20 caracteres, com contador |
 | E-mail do problema | até 255 caracteres |
 | Nome do material | até 55 caracteres |
 | Estoque e mínimo | inteiro 0 a 999 |
-| Imagem de ocorrência | limite da API: 5 MB |
+| Fotos de ocorrência (cliente vigente) | JPG/PNG, até 5 fotos opcionais, 5 MB cada e soma até 20 MB; tamanho real conhecido e positivo |
 
 O app valida para dar feedback rápido; a API é a autoridade.
 
@@ -60,19 +72,55 @@ O app valida para dar feedback rápido; a API é a autoridade.
 | --- | --- | --- | --- |
 | 1 | RF001/NF001/NF005 token JWT, expiração (RN022) | Login devolve só dados do usuário; sem token. O humano confirmou que os tokens expiram (inclusive o do Visualizador; duração a definir). | Perguntar ao responsável da API; app já prevê 401 -> login. |
 | 2 | RF002 logout | Sem endpoint | Logout local (limpar sessão). |
-| 3 | RF003 recuperar senha, RF004 alterar senha | Sem endpoints | Telas ficam bloqueadas até a API existir. Manter Fase 2 sem elas? |
+| 3 | RF003 recuperar senha, RF004 alterar senha | Atualização 2026-10-16: forgot-password recebe email/newPassword diretamente; não há fluxo por link/token documentado | Fora do incremento atual; definir o fluxo com novos prints antes de implementar. |
 | 4 | RF005 senha aleatória por e-mail (RN003) | Admin informa a senha no cadastro | Campo de senha no formulário de cadastro. |
 | 5 | RF008 editar perfil de usuário | `PUT` não aceita `role` | Perfil não editável; editar nome, e-mail e status. |
 | 6 | RN005/RN008/RN021 representantes, limite | `representatives` é texto livre | Campo de texto livre; sem chips nem limite. |
 | 7 | RF025 "própria equipe" do Visualizador | Sem vínculo usuário-equipe; `PATCH` sem checagem | Precisa de campo na API; sem ele o Visualizador não tem como identificar sua equipe. |
-| 8 | RF026 calendário (por turno e equipe) | Sem endpoint; só `schedule` em texto | Montar a visão a partir de `schedule` das equipes, sem inferir datas. |
+| 8 | RF026 calendário (por turno e equipe) | Sem endpoint; a equipe tem `startTime`/`endTime` (`HH:MM`), sem dias | Montar a visão a partir de `startTime`/`endTime`; dias úteis fixos de segunda a sexta (regra do humano, 2026-10-19). |
 | 9 | RN017 imagem de material | Material não tem imagem | Placeholder com ícone; sem upload. |
-| 10 | RN013 imagem até 20 MB | API limita a 5 MB | Usar 5 MB. |
+| 10 | RN013 anexos até 20 MB no total (correção humana) | API atual aceita até 5 fotos, 5 MB cada | Aplicar os três limites: 5 fotos, 5 MB por foto e 20 MB agregados. |
 | 11 | RN019 alerta de estoque | API calcula `lowStock` | Mostrar alerta quando `lowStock` for verdadeiro, para Gestor e Visualizador. |
 | 12 | RN012 resposta padrão | Campo `defaultResponse` | Campo no formulário do problema. |
 | 13 | RF014 problemas para o Visualizador | `/problems/options` | Usar as opções. Idem materiais. |
-| 14 | Perfis (NF002) | Rotas públicas, sem checagem de perfil | Controle só na interface (ver `security.md`). |
+| 14 | Perfis (NF002) | Atualização 2026-10-16: X-User-Role obrigatório fora de /auth/**; header forjável | VIEWER no cliente; proteção real ainda depende da API (ver security.md). |
 | 15 | Listas | Materiais também são paginados | Paginar materiais. |
 | 16 | RN009, RN023, RN027 | Inconsistências do documento | Ignorar duplicatas; confirmar RN009. |
 | 17 | Card de equipe mostra o código como "AA" em destaque e "11" ao lado (Figma: "AA-11") | `code` é texto livre, sem formato definido; nome ou código podem faltar | `TeamCard` separa o `code` no primeiro hífen (`splitTeamCode`); sem hífen, tudo vai no quadro azul. Confirmar o formato do código. |
 | 18 | Minicards de representantes no detalhe da equipe | `representatives` é um único texto livre | `TeamDetailsCard` recebe `string[]`; quem monta o card separa os nomes. Regra de separação (vírgula? quebra de linha?) a definir. |
+| 19 | Lista de materiais do Figma (10 · Materiais) mostra código "MAT-024" e busca por "nome ou código" | GET /materials (conferido na API real em 2026-10-19) devolve só `id`, `name`, `stockQuantity`, `minimumStock`, `active`, `lowStock`; não há código nem filtro de busca | O app não inventa código: itens e detalhes mostram só o nome; busca local por nome sobre todos os materiais ativos (páginas de 100 percorridas pelo serviço). Confirmar com a API se haverá código. |
+
+## Revisão de materiais - 2026-10-19
+
+GET /materials?page&size com X-User-Role: VIEWER (200 real, 5 materiais). Resposta Spring Page; o cliente valida `content[].{id (UUID), name, stockQuantity (inteiro >= 0), active}` e `totalPages`, ignora o restante e lista só `active: true`. Serviço percorre as páginas (size 100, no máximo 10) para a busca local cobrir o catálogo. Detalhe usa os dados da lista (sem GET /materials/{id}). Contagem "N materiais disponíveis" = materiais ativos carregados. Sem aviso de estoque baixo (decisão 0009). OpenAPI repete nomes de schema (`Response`) entre controllers, então o formato acima vem da resposta real. Web real depende de CORS no backend.
+
+## Revisão inicial de ocorrência - 2026-10-19 (histórico; anexos substituídos pela revisão múltipla abaixo)
+
+Fontes: https://fivesense-api.onrender.com/docs/index.html e /v3/api-docs, consultadas nesta entrega. GET /problems/options e /materials/options exigem X-User-Role: VIEWER e devolvem arrays {id,name} ativos (200 real: 10 e 5 opções respectivamente). IDs são UUID; o cliente aceita apenas escolhas presentes nas opções carregadas. Quantidade inteira positiva, de 1 a 999 no Stepper existente. reportedByUserId vem exclusivamente da sessão validada.
+
+Imagem opcional: POST /occurrences/images com FormData, campo image e no máximo 5*1024*1024 bytes; não definir Content-Type manualmente. Validar tipo de imagem e tamanho conhecido antes do upload; cancelamento preserva foto anterior. Resposta precisa conter imageId UUID. Somente depois chamar POST /occurrences com problemId, materialId, affectedQuantity, reportedByUserId e imageId opcional. 2xx confirma registro mesmo sem JSON de resposta. Não há alteração de estoque.
+
+A API tenta notificar responsáveis ativos e contato do problema por e-mail, mas não informa o resultado da entrega. O cliente confirma somente o registro; não consegue mostrar aviso específico de falha de e-mail sem novo contrato. OpenAPI reutiliza nomes de schemas de controllers diferentes (CreateRequest), produzindo exemplo incompatível; para este payload valem a documentação legível oficial e os campos acima.
+
+POST sem retry automático no app. Rede/timeout/5xx após iniciar registro têm resultado incerto: manter dados e impedir novo envio até o usuário confirmar que conferiu com os responsáveis. A API não oferece chave de idempotência; bloqueio local não garante unicidade contra repetição pelo transporte ou outro dispositivo. Imagem já enviada pode ficar sem ocorrência se o registro falhar; não há endpoint de remoção documentado.
+
+Web real depende de CORS (origem, GET/POST/OPTIONS, Content-Type e X-User-Role). Nenhum bypass/proxy implementado; os testes de POST/upload foram locais, sem registros ou e-mails reais.
+### Formatos do anexo - 2026-10-19
+
+O painel de origem enviado pelo humano especifica JPG/PNG. O cliente valida image/jpeg e image/png tanto no picker quanto antes do multipart, com erro junto ao campo para outros tipos. Esta restrição do cliente não modifica a API; o limite de5MB permanece. Sem conversão automática ou dependência nova. API indisponível nesta correção: sem nova verificação remota do contrato.
+
+## Múltiplas fotos - contrato anterior (2026-10-19; substituído pela correção de2026-10-20)
+
+Fontes reconferidas após o humano informar a atualização: https://fivesense-api.onrender.com/docs/index.html e https://fivesense-api.onrender.com/v3/api-docs. Esta revisão substitui a restrição provisória da decisão 0012 e os trechos históricos acima sobre campo singular/integração pendente.
+
+Upload opcional: POST /occurrences/images, FormData com o campo images repetido, de 1 a 5 arquivos. Cada foto deve ter no máximo 5*1024*1024 bytes; o cliente mantém o limite humano de 20*1024*1024 bytes na SOMA. Aceitar JPG/PNG, tamanho real conhecido e positivo; revalidar a coleção antes do upload. Não definir Content-Type manualmente nem converter para base64. Seleção inválida/cancelada mantém as fotos anteriores. O seletor nativo limita cada escolha a 5; a validação da coleção também limita adições sucessivas e a seleção web, sem truncamento silencioso.
+
+Resposta 201: {imageId, imageIds: UUID[]}; imageId é legado e repete a primeira foto. O cliente exige imageIds únicos, entre 1 e 5 e quantidade igual à de arquivos enviados. Resposta parcial, duplicada ou inválida impede criar a ocorrência e mantém o formulário. Só após um upload completo, POST /occurrences recebe problemId, materialId, affectedQuantity, reportedByUserId da sessão e imageIds. Uma única ocorrência vincula todas as fotos; sem fotos, pular upload e omitir imageIds. Não enviar imageId singular. Header X-User-Role: VIEWER e cliente HTTP compartilhado permanecem.
+
+As imagens ficam em arquivos temporários, fora do banco, são anexadas ao e-mail e excluídas após o envio pelo backend. E-mail continua best effort; a resposta não confirma entrega. Não há chave de idempotência nem endpoint de limpeza documentados. Falha de upload não cria ocorrência. Rede/timeout/5xx após iniciar criação conserva o tratamento de resultado incerto e exige conferência antes do reenvio explícito; nenhum POST tem retry automático. Uma nova tentativa faz novo upload dos arquivos mantidos, sem reutilizar IDs temporários que podem ter sido consumidos. Timeout não foi alterado.
+
+O OpenAPI ainda reutiliza CreateRequest entre controllers e descreve o multipart de forma incompleta; os exemplos da documentação legível oficial especificam images repetido e imageIds. Não inferir o payload do exemplo de outro controller. Contrato público lido por GET; POSTs verificados com fixtures locais, sem registros/e-mails reais. Conta VIEWER real, CORS atual e câmera física não foram validados neste incremento.
+
+## Correção vigente - envio direto na ocorrência (2026-10-20)
+
+Fontes oficiais reconferidas: /docs/index.html e /v3/api-docs. Esta revisão substitui a integração images -> imageIds da decisão0013: não há mais endpoint separado de upload nem vínculo por imageId/imageIds. POST /api/v1/occurrences aceita multipart/form-data contendo problemId/materialId/reportedByUserId UUID, affectedQuantity inteiro positivo e partes opcionais images repetidas com os arquivos. O usuário informado deve estar ativo. Cada foto até5MB, máximo5; manter no cliente JPG/PNG e20MB agregados. JSON alternativo com images:[{name?,data:base64}] existe no contrato, mas o cliente usará multipart sem conversão e sem Content-Type manual. Backend detecta PNG/JPEG/GIF/WebP pelo conteúdo, mantém imagens só em memória e as descarta após e-mail assíncrono, enviado depois do commit. Resposta201 não espera SMTP, não garante entrega e não altera estoque. OpenAPI ainda colide CreateRequest de outros controllers; o CreateForm e a documentação legível confirmam os quatro campos obrigatórios. Sem fotos, enviar só os quatro campos. Uma única requisição, sem IDs intermediários; falhas de rede/timeout/5xx podem ter registrado ocorrência, exigindo tratamento de resultado incerto e sem retry automático.
