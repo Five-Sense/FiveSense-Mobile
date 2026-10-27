@@ -11,4 +11,5 @@ export const materialPageSchema = z.object({
     }),
   ),
   totalPages: z.number().int().min(0),
+  number: z.number().int().min(0).optional(),
 });

@@ -93,6 +93,10 @@ Todos os fluxos do escopo em `project-overview.md`, com tratamento de erro, skel
 
 ### Fase 6 - Responsividade e fechamento
 
+- [x] Corrigir DEF-001/MAT-06: catálogo completo acima de10 páginas, proteção por consistência/IDs/índice, cancelamento preservado e reteste separado (2026-10-27):143 aprovados, zero falhas; TypeScript/lint/export aprovados. Evidência inicial preservada; UI/API/dispositivo e DEF-002 continuam pendentes.
+
+- [x] Entregar plano de testes rastreável, executar casos automatizados/checks e registrar evidências, defeitos e pendências de UI/API/dispositivo, sem alterar produto (2026-10-27):133 aprovados/1 reprovado/15 bloqueados; homologação integral não concedida.
+
 **Status:** Planejada
 
 - [ ] Layout tablet/desktop e celular com MenuButton/AppMenu; sem Sidebar/NavItem. Moldura `AppLayout` (cabeçalho + conteúdo + menu inferior) entregue em 2026-10-16; falta conferir tablet/desktop e as telas.

@@ -1,0 +1,35 @@
+env: load .env.local
+env: export EXPO_PUBLIC_API_URL
+Using src/app as the root directory for Expo Router.
+React Compiler enabled
+Starting Metro Bundler
+
+Static rendering is enabled. Learn more: https://docs.expo.dev/router/web/static-rendering/
+Favicon source file in Expo config (web.favicon) does not exist: ./assets/images/favicon.png
+| (node:5272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:5272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+λ Bundled 2938ms node_modules\expo\node_modules\@expo\cli\node_modules\@expo\router-server\node\render.js (3383 modules)
+Web Bundled 3435ms node_modules\expo-router\entry.js (3352 modules)
+
+› web bundles (2):
+_expo/static/css/global-f7087a3c0183990c185a55e8cc7df78a.css (23KB)
+_expo/static/js/web/entry-2c3b154adefed195d0d48b2f765172f4.js (5MB)
+
+› Static routes (13):
+/home (19KB)
+/ (index) (24KB)
+/_sitemap (18KB)
+/materiais (19KB)
+/+not-found (18KB)
+/(app)/home (19KB)
+/ocorrencias (19KB)
+/equipes (19KB)
+/(app)/materiais (19KB)
+/(app)/ocorrencias (19KB)
+/equipes/calendario (19KB)
+/(app)/equipes (19KB)
+/(app)/equipes/calendario (19KB)
+
+Exported: C:/Users/david_hillesheim/Documents/ChatGPT/FiveSense/.qa-work/pagination-fix/web-export

@@ -1,0 +1,1326 @@
+[
+  {
+    "id": "CFG-01",
+    "title": "Configuração ausente bloqueia a rede",
+    "steps": "Remover EXPO_PUBLIC_API_URL e solicitar login.",
+    "expected": "AppError config; zero chamadas de rede.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "CFG-02",
+    "title": "Host e prefixo não duplicam barras",
+    "steps": "Definir host fixture com barras finais e consultar /materials.",
+    "expected": "URL contém exatamente /api/v1/materials.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-01",
+    "title": "JSON do login preserva senha e não envia perfil",
+    "steps": "Enviar username e senha com espaços via POST.",
+    "expected": "Content-Type JSON, senha intacta, sem X-User-Role.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-02",
+    "title": "Query escapada e perfil nas rotas protegidas",
+    "steps": "Consultar teams com query existente, espaço, acento e valor undefined.",
+    "expected": "Usa &, encodeURIComponent e VIEWER; omite undefined.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-03",
+    "title": "Compatibilidade apiRequest e resposta 204",
+    "steps": "Executar DELETE pelo wrapper legado e devolver204.",
+    "expected": "Delegação única com VIEWER; retorno undefined.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-400",
+    "title": "HTTP400 vira erro seguro validation",
+    "steps": "Responder HTTP400 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-401",
+    "title": "HTTP401 vira erro seguro unauthorized",
+    "steps": "Responder HTTP401 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-403",
+    "title": "HTTP403 vira erro seguro forbidden",
+    "steps": "Responder HTTP403 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-404",
+    "title": "HTTP404 vira erro seguro notFound",
+    "steps": "Responder HTTP404 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-409",
+    "title": "HTTP409 vira erro seguro conflict",
+    "steps": "Responder HTTP409 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-413",
+    "title": "HTTP413 vira erro seguro validation",
+    "steps": "Responder HTTP413 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-422",
+    "title": "HTTP422 vira erro seguro validation",
+    "steps": "Responder HTTP422 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-429",
+    "title": "HTTP429 vira erro seguro unknown",
+    "steps": "Responder HTTP429 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-500",
+    "title": "HTTP500 vira erro seguro server",
+    "steps": "Responder HTTP500 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "HTTP-503",
+    "title": "HTTP503 vira erro seguro server",
+    "steps": "Responder HTTP503 com detalhe bruto e solicitar endpoint.",
+    "expected": "Preserva status/kind; não exibe detalhe bruto; apenas uma tentativa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-04",
+    "title": "Campos de validação em array",
+    "steps": "Responder422 com errors:[{field:username},null,{message:...}].",
+    "expected": "fields contém apenas username.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-05",
+    "title": "Campos de validação em objeto",
+    "steps": "Responder400 com errors objeto images[1].",
+    "expected": "Nome de campo mantido; texto bruto não exibido.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-06",
+    "title": "JSON inválido em resposta de sucesso",
+    "steps": "Responder200 com HTML.",
+    "expected": "invalidResponse, sem classificar como falha de rede.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-07",
+    "title": "Erro HTTP com corpo não JSON",
+    "steps": "Responder503 com HTML.",
+    "expected": "Preserva503/server; não exibe HTML.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-08",
+    "title": "Rede indisponível não repete POST",
+    "steps": "fetch rejeita com TypeError.",
+    "expected": "network, uma chamada, sem detalhe bruto.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-09",
+    "title": "Cancelamento anterior não chama fetch",
+    "steps": "Abortar signal antes da requisição.",
+    "expected": "cancelled e zero chamadas.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-F-ABORT",
+    "title": "Cancelamento durante fetch",
+    "steps": "Suspender fetch; acionar signal externo.",
+    "expected": "cancelled; timer/listener removidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-F-TIME",
+    "title": "Timeout durante fetch",
+    "steps": "Suspender fetch; acionar timer60s simulado.",
+    "expected": "timeout; timer/listener removidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-B-ABORT",
+    "title": "Cancelamento durante body",
+    "steps": "Suspender body; acionar signal externo.",
+    "expected": "cancelled; timer/listener removidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-B-TIME",
+    "title": "Timeout durante body",
+    "steps": "Suspender body; acionar timer60s simulado.",
+    "expected": "timeout; timer/listener removidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "API-10",
+    "title": "Erros desconhecidos não vazam texto",
+    "steps": "Converter Error com conteúdo arbitrário.",
+    "expected": "Mensagem do catálogo unknown, sem dados brutos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-01",
+    "title": "Validação local do login 01",
+    "steps": "Informar campos vazios/espaços e validar formulário.",
+    "expected": "Rejeitar e destacar identifier, password.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-02",
+    "title": "Validação local do login 02",
+    "steps": "Informar campos vazios/espaços e validar formulário.",
+    "expected": "Rejeitar e destacar identifier.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-03",
+    "title": "Validação local do login 03",
+    "steps": "Informar campos vazios/espaços e validar formulário.",
+    "expected": "Rejeitar e destacar password.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-04",
+    "title": "Validação local do login 04",
+    "steps": "Informar 256 caracteres e validar formulário.",
+    "expected": "Rejeitar e destacar identifier.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-05",
+    "title": "Validação local do login 05",
+    "steps": "Informar 256 caracteres e validar formulário.",
+    "expected": "Rejeitar e destacar password.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-06",
+    "title": "Username não exige e-mail; senha não é alterada",
+    "steps": "Validar username com espaços laterais e senha com espaços.",
+    "expected": "Trim somente username; senha intacta; aceita255 caracteres.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-07",
+    "title": "Login válido retorna somente sessão VIEWER",
+    "steps": "Responder authenticated:true com sessão e dados extras sensíveis fictícios.",
+    "expected": "Retorna dados mínimos; remove password/token extras.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-08",
+    "title": "Recusar resposta de login invalidCredentials",
+    "steps": "API simulada retorna invalidCredentials.",
+    "expected": "Não iniciar sessão; erro seguro correspondente.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-09",
+    "title": "Recusar resposta de login viewerOnly",
+    "steps": "API simulada retorna viewerOnly.",
+    "expected": "Não iniciar sessão; erro seguro correspondente.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-10",
+    "title": "Recusar resposta de login invalidResponse",
+    "steps": "API simulada retorna invalidResponse.",
+    "expected": "Não iniciar sessão; erro seguro correspondente.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-11",
+    "title": "Recusar resposta de login invalidResponse",
+    "steps": "API simulada retorna invalidResponse.",
+    "expected": "Não iniciar sessão; erro seguro correspondente.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-12",
+    "title": "Credenciais incorretas destacam os dois campos",
+    "steps": "Converter HTTP400 sem fields para feedback.",
+    "expected": "Alerta de credenciais; identifier/password destacados.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-13",
+    "title": "Validação da API destaca campo correspondente",
+    "steps": "Converter422 com username e campo desconhecido.",
+    "expected": "Destaca somente identifier; cancelamento não cria alerta.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-14",
+    "title": "Formulário inválido não chama serviço",
+    "steps": "Enviar hook com campos vazios.",
+    "expected": "Feedback obrigatório; zero chamadas.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-15",
+    "title": "Login bloqueia duplicação e limpa senha",
+    "steps": "Enviar duas vezes enquanto serviço está pendente; confirmar sucesso.",
+    "expected": "Uma chamada; campos bloqueados; sessão iniciada e senha limpa.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-16",
+    "title": "Falha ao guardar sessão impede conexão",
+    "steps": "Serviço autentica, armazenamento recusa gravação.",
+    "expected": "Sem conexão; mensagem segura e dados recuperáveis.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "AUTH-17",
+    "title": "Desmontagem cancela login pendente",
+    "steps": "Iniciar login, desmontar hook e resolver depois.",
+    "expected": "Signal abortado; não inicia sessão após desmontar.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "SESSION-01",
+    "title": "Sessão web permanece apenas em memória",
+    "steps": "Salvar/ler/limpar no adaptador web; carregar nova instância do módulo.",
+    "expected": "Sessão disponível na visita; limpa no logout e não persiste em nova instância.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "SESSION-02",
+    "title": "Sessão nativa válida usa SecureStore",
+    "steps": "Salvar com adaptador nativo simulado e reler.",
+    "expected": "Chave correta e WHEN_UNLOCKED_THIS_DEVICE_ONLY; sessão válida.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "SESSION-03",
+    "title": "Sessão nativa corrompida é descartada",
+    "steps": "Ler registro inválido no armazenamento simulado.",
+    "expected": "Retorna null e remove registro; não restaura acesso.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "SESSION-04",
+    "title": "Sessão nativa corrompida é descartada",
+    "steps": "Ler registro inválido no armazenamento simulado.",
+    "expected": "Retorna null e remove registro; não restaura acesso.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-01",
+    "title": "Busca de material ignora acentos e caixa",
+    "steps": "Buscar ALCOOL com espaços.",
+    "expected": "Encontra Álcool; termo inexistente retorna vazio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-02",
+    "title": "Busca vazia e contagem singular/plural",
+    "steps": "Buscar espaços e montar contador1/2.",
+    "expected": "Retorna catálogo sem alterar coleção; rótulos corretos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-03",
+    "title": "Catálogo percorre páginas e omite inativos",
+    "steps": "Responder duas páginas com um ativo e um inativo.",
+    "expected": "Duas chamadas com VIEWER; somente material ativo no resultado.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-04",
+    "title": "Catálogo vazio é válido",
+    "steps": "Responder content:[] e totalPages:0.",
+    "expected": "Resultado vazio, sem erro de contrato.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-05",
+    "title": "Resposta de material inválida é recusada",
+    "steps": "Responder estoque negativo ou estrutura inesperada.",
+    "expected": "invalidResponse, sem renderizar dados inválidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-06",
+    "title": "Catálogo maior que dez páginas é consultado integralmente",
+    "steps": "Responder11 páginas válidas de100 materiais ativos e buscar Material1100.",
+    "expected": "Retorna1100 materiais em11 chamadas; busca encontra o último item; erro não conta como aprovação.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-07",
+    "title": "Catálogo com exatamente dez páginas continua completo",
+    "steps": "Responder10 páginas de100 materiais.",
+    "expected": "Retorna1000 em10 chamadas, sem chamada extra.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-08",
+    "title": "Página repetida mesmo sem índice",
+    "steps": "Responder primeira página válida e depois metadados/IDs inconsistentes.",
+    "expected": "Falha explícita invalidResponse na segunda chamada; não retorna catálogo parcial nem consulta indefinidamente.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-09",
+    "title": "Índice retornado não acompanha página solicitada",
+    "steps": "Responder primeira página válida e depois metadados/IDs inconsistentes.",
+    "expected": "Falha explícita invalidResponse na segunda chamada; não retorna catálogo parcial nem consulta indefinidamente.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-10",
+    "title": "Total de páginas muda durante consulta",
+    "steps": "Responder primeira página válida e depois metadados/IDs inconsistentes.",
+    "expected": "Falha explícita invalidResponse na segunda chamada; não retorna catálogo parcial nem consulta indefinidamente.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-11",
+    "title": "Página vazia antes do fim",
+    "steps": "Responder paginação inconsistente no primeiro resultado.",
+    "expected": "invalidResponse, uma chamada e nenhum sucesso parcial.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-12",
+    "title": "Conteúdo presente em catálogo de zero páginas",
+    "steps": "Responder paginação inconsistente no primeiro resultado.",
+    "expected": "invalidResponse, uma chamada e nenhum sucesso parcial.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-13",
+    "title": "Total de páginas fracionário",
+    "steps": "Responder paginação inconsistente no primeiro resultado.",
+    "expected": "invalidResponse, uma chamada e nenhum sucesso parcial.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-14",
+    "title": "Material duplicado dentro da mesma página",
+    "steps": "Responder paginação inconsistente no primeiro resultado.",
+    "expected": "invalidResponse, uma chamada e nenhum sucesso parcial.",
+    "priority": "Média",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-15",
+    "title": "Cancelamento durante segunda página interrompe catálogo",
+    "steps": "Abortar signal ao iniciar a segunda resposta de três páginas.",
+    "expected": "Rejeita cancelled; não devolve página1 como sucesso nem solicita página3.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-401",
+    "title": "Materiais trata HTTP401",
+    "steps": "Injetar erro401 no resultado do useQuery.",
+    "expected": "Encerra sessão uma vez com aviso.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "MAT-403",
+    "title": "Materiais trata HTTP403",
+    "steps": "Injetar erro403 no resultado do useQuery.",
+    "expected": "Mantém sessão; acesso negado com texto.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-01",
+    "title": "Busca de equipe por nome e código",
+    "steps": "Buscar producao e pr-01.",
+    "expected": "Encontra equipe sem exigir acento/caixa; ausente retorna vazio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "CAL-01",
+    "title": "Horários inválidos não geram expediente",
+    "steps": "Usar25:00, horário invertido e campos vazios.",
+    "expected": "Retorna null; equipe sem janela é omitida.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "CAL-02",
+    "title": "Calendário monta intervalos e sobreposições",
+    "steps": "Equipe08-09 e outra08:30-09:30.",
+    "expected": "Três linhas30min; ambas na linha08:30; nenhuma linha além do fim.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "CAL-03",
+    "title": "Estado temporal respeita bordas do intervalo",
+    "steps": "Consultar08:00 às07:59/08:00/08:29/08:30.",
+    "expected": "future/current/current/past, respectivamente.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "CAL-04",
+    "title": "Sábado e domingo não são dias úteis",
+    "steps": "Consultar sábado/domingo/segunda em horário local.",
+    "expected": "false/false/true.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-02",
+    "title": "Serviço pagina equipes e separa representantes",
+    "steps": "Responder duas páginas de equipes com representantes em texto.",
+    "expected": "Busca ambas, converte representantes e prepara rótulos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-03",
+    "title": "Atualização de status usa PATCH e retorno confirmado",
+    "steps": "Enviar NOT_DOING_5S e responder status confirmado.",
+    "expected": "PATCH com VIEWER e corpo correto; retorna status confirmado.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-401-initial",
+    "title": "Sessão expirada em equipes: initial",
+    "steps": "Responder401 durante initial.",
+    "expected": "endSession uma vez; não mantém acesso ativo.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-401-refresh",
+    "title": "Sessão expirada em equipes: refresh",
+    "steps": "Responder401 durante refresh.",
+    "expected": "endSession uma vez; não mantém acesso ativo.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-401-patch",
+    "title": "Sessão expirada em equipes: patch",
+    "steps": "Responder401 durante patch.",
+    "expected": "endSession uma vez; não mantém acesso ativo.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-403",
+    "title": "Acesso negado preserva status confirmado",
+    "steps": "PATCH devolve403.",
+    "expected": "Sessão mantida; status anterior e mensagem de erro.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-04",
+    "title": "Sem sessão não consulta nem altera",
+    "steps": "Montar hook sem usuário e acionar refresh/status.",
+    "expected": "Zero requisições.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "TEAM-05",
+    "title": "Resposta tardia não atualiza tela desmontada",
+    "steps": "Suspender consulta, desmontar e resolver.",
+    "expected": "Coleção não recebe resposta tardia.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-01",
+    "title": "/home → /home pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão home na moldura real.",
+    "expected": "Não duplica navegação para destino atual.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-02",
+    "title": "/home → /ocorrencias pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão occurrences na moldura real.",
+    "expected": "Callback navega para /ocorrencias, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-03",
+    "title": "/home → /equipes pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão teams na moldura real.",
+    "expected": "Callback navega para /equipes, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-04",
+    "title": "/home → /materiais pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão materials na moldura real.",
+    "expected": "Callback navega para /materiais, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-05",
+    "title": "/ocorrencias → /home pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão home na moldura real.",
+    "expected": "Callback navega para /home, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-06",
+    "title": "/ocorrencias → /ocorrencias pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão occurrences na moldura real.",
+    "expected": "Não duplica navegação para destino atual.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-07",
+    "title": "/ocorrencias → /equipes pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão teams na moldura real.",
+    "expected": "Callback navega para /equipes, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-08",
+    "title": "/ocorrencias → /materiais pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão materials na moldura real.",
+    "expected": "Callback navega para /materiais, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-09",
+    "title": "/materiais → /home pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão home na moldura real.",
+    "expected": "Callback navega para /home, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-10",
+    "title": "/materiais → /ocorrencias pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão occurrences na moldura real.",
+    "expected": "Callback navega para /ocorrencias, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-11",
+    "title": "/materiais → /equipes pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão teams na moldura real.",
+    "expected": "Callback navega para /equipes, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-12",
+    "title": "/materiais → /materiais pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão materials na moldura real.",
+    "expected": "Não duplica navegação para destino atual.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-13",
+    "title": "/equipes → /home pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão home na moldura real.",
+    "expected": "Callback navega para /home, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-14",
+    "title": "/equipes → /ocorrencias pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão occurrences na moldura real.",
+    "expected": "Callback navega para /ocorrencias, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-15",
+    "title": "/equipes → /equipes pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão teams na moldura real.",
+    "expected": "Não duplica navegação para destino atual.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-16",
+    "title": "/equipes → /materiais pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão materials na moldura real.",
+    "expected": "Callback navega para /materiais, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-17",
+    "title": "/equipes/calendario → /home pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão home na moldura real.",
+    "expected": "Callback navega para /home, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-18",
+    "title": "/equipes/calendario → /ocorrencias pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão occurrences na moldura real.",
+    "expected": "Callback navega para /ocorrencias, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-19",
+    "title": "/equipes/calendario → /equipes pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão teams na moldura real.",
+    "expected": "Callback navega para /equipes, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-20",
+    "title": "/equipes/calendario → /materiais pelo menu",
+    "steps": "Abrir origem autenticada e acionar botão materials na moldura real.",
+    "expected": "Callback navega para /materiais, sem passar pelo login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-21",
+    "title": "Logo volta à Home com controle acessível",
+    "steps": "Acionar a logo a partir de Equipes.",
+    "expected": "Navega /home; role button, nome acessível e alvo48.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-22",
+    "title": "Calendário mantém Equipes selecionado",
+    "steps": "Renderizar moldura em /equipes/calendario.",
+    "expected": "Um menu, quatro destinos, somente Equipes selecionado.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-23",
+    "title": "Logout limpa sessão antes da rota de login",
+    "steps": "Acionar Sair em calendário e avaliar guarda novamente.",
+    "expected": "endSession+replace(/); sem sessão, Redirect(/).",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-24",
+    "title": "Links protegidos sem sessão redirecionam",
+    "steps": "Avaliar grupo sem sessão para todas as rotas privadas.",
+    "expected": "Não renderiza a moldura; redireciona ao login.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-25",
+    "title": "Restauração de sessão não mostra conteúdo privado",
+    "steps": "Avaliar grupo com restoring:true.",
+    "expected": "Exibe carregamento, sem menu nem Slot privado.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-26",
+    "title": "Envio de ocorrência bloqueia navegação e saída",
+    "steps": "Simular mutação occurrence-create pendente e acionar todos callbacks.",
+    "expected": "Menu/logo/Sair disabled e nenhum evento de navegação ou logout.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-27",
+    "title": "Logout pendente bloqueia cliques adicionais",
+    "steps": "Suspender limpeza de sessão e acionar logo/menu.",
+    "expected": "Sem navegação adicional até limpeza terminar.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-28",
+    "title": "Equipes e calendário estão no grupo protegido",
+    "steps": "Inspecionar estrutura de rotas compilada no projeto.",
+    "expected": "Arquivos sob(app), sem cópias antigas/menu paralelo.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "NAV-29",
+    "title": "Alternância Lista/Calendário preserva URLs",
+    "steps": "Invocar callbacks das duas rotas reais.",
+    "expected": "Lista abre /equipes/calendario; calendário abre /equipes.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-01",
+    "title": "Campos obrigatórios e UUIDs",
+    "steps": "Validar formulário vazio e IDs inválidos.",
+    "expected": "Schema recusa problema/material ausentes ou IDs inválidos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-Q-0",
+    "title": "Quantidade fora da faixa permitida",
+    "steps": "Informar affectedQuantity=0.",
+    "expected": "Recusa; só inteiro1..999 é aceito.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-Q--1",
+    "title": "Quantidade fora da faixa permitida",
+    "steps": "Informar affectedQuantity=-1.",
+    "expected": "Recusa; só inteiro1..999 é aceito.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-Q-1.5",
+    "title": "Quantidade fora da faixa permitida",
+    "steps": "Informar affectedQuantity=1.5.",
+    "expected": "Recusa; só inteiro1..999 é aceito.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-Q-1000",
+    "title": "Quantidade fora da faixa permitida",
+    "steps": "Informar affectedQuantity=1000.",
+    "expected": "Recusa; só inteiro1..999 é aceito.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-02",
+    "title": "Quantidade nos limites",
+    "steps": "Validar1 e999.",
+    "expected": "Ambos aceitos pelo schema.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-01",
+    "title": "JPG/PNG e cinco fotos válidas",
+    "steps": "Validar cinco fotos JPG/PNG com tamanho conhecido.",
+    "expected": "Coleção válida; soma calculada pelos tamanhos reais.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-02",
+    "title": "Recusar anexo: invalidImageType",
+    "steps": "Selecionar GIF.",
+    "expected": "Código invalidImageType; impede envio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-03",
+    "title": "Recusar anexo: invalidImageSize",
+    "steps": "Selecionar arquivo com tamanho zero/desconhecido.",
+    "expected": "Código invalidImageSize; impede envio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-04",
+    "title": "Recusar anexo: imageTooLarge",
+    "steps": "Selecionar foto com5MB+1byte.",
+    "expected": "Código imageTooLarge; impede envio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-05",
+    "title": "Recusar anexo: tooManyImages",
+    "steps": "Selecionar seis fotos.",
+    "expected": "Código tooManyImages; impede envio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-06",
+    "title": "Recusar anexo: attachmentsTooLarge",
+    "steps": "Somar20MB+1byte com arquivos individualmente válidos.",
+    "expected": "Código attachmentsTooLarge; impede envio.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-07",
+    "title": "Limite exato20MB é aceito",
+    "steps": "Validar4x5MB e5x4MB.",
+    "expected": "Ambas coleções aceitas; nenhum arredondamento do limite.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-08",
+    "title": "File real prevalece sobre metadados",
+    "steps": "Metadados indicam1byte, File tem5MB+1byte.",
+    "expected": "Recusa imageTooLarge pelo tamanho real.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-09",
+    "title": "Tamanhos não finitos são rejeitados",
+    "steps": "ValidarNaN,Infinity e tamanho negativo.",
+    "expected": "invalidImageSize em todos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-10",
+    "title": "Galeria múltipla retorna todos os assets",
+    "steps": "Simular picker com duas fotos e conferir opções.",
+    "expected": "allowsMultipleSelection true;selectionLimit5; mantém ambas.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-11",
+    "title": "Cancelamento da galeria não adiciona foto",
+    "steps": "Picker retorna canceled:true.",
+    "expected": "Retorna coleção vazia, sem erro.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "IMG-12",
+    "title": "Permissão de câmera negada tem feedback",
+    "steps": "Simular Android com granted:false.",
+    "expected": "cameraPermissionDenied; câmera não é aberta.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-SEND-0",
+    "title": "Criação com0 fotos em um POST",
+    "steps": "Enviar quatro campos obrigatórios e fotos, respondendo201 vazio.",
+    "expected": "Um multipart /occurrences; sem rota de upload/IDs; usuário da sessão.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-SEND-1",
+    "title": "Criação com1 fotos em um POST",
+    "steps": "Enviar quatro campos obrigatórios e fotos, respondendo201 vazio.",
+    "expected": "Um multipart /occurrences; sem rota de upload/IDs; usuário da sessão.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-SEND-3",
+    "title": "Criação com3 fotos em um POST",
+    "steps": "Enviar quatro campos obrigatórios e fotos, respondendo201 vazio.",
+    "expected": "Um multipart /occurrences; sem rota de upload/IDs; usuário da sessão.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-SEND-5",
+    "title": "Criação com5 fotos em um POST",
+    "steps": "Enviar quatro campos obrigatórios e fotos, respondendo201 vazio.",
+    "expected": "Um multipart /occurrences; sem rota de upload/IDs; usuário da sessão.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-03",
+    "title": "Dados inválidos impedem chamada",
+    "steps": "Criar ocorrência com usuário não UUID e com seis fotos.",
+    "expected": "Valida antes da rede; zero chamadas.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "OCC-04",
+    "title": "Opções inválidas não são usadas",
+    "steps": "GET options retorna objeto incompatível.",
+    "expected": "invalidResponse; nomes de campos de imagens são mapeados.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-01",
+    "title": "Formulário incompleto não envia",
+    "steps": "Enviar sem preencher ou com problema fora das opções.",
+    "expected": "Feedback e zero chamadas; progresso não chega a3.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-02",
+    "title": "Adicionar, remover e cancelar mantém coleção",
+    "steps": "Adicionar duas fotos, adicionar terceira, remover segunda e cancelar seleção.",
+    "expected": "Ordem1/3 preservada; cancelamento não apaga anexos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-03",
+    "title": "Lote inválido preserva fotos anteriores",
+    "steps": "Após foto válida, adicionar arquivo acima5MB.",
+    "expected": "Mantém coleção anterior e apresenta erro.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-04",
+    "title": "Envio pendente bloqueia duplicação e edição",
+    "steps": "Preencher, anexar e enviar; clicar enviar de novo e tentar editar/remover.",
+    "expected": "Uma chamada; valores/fotos preservados enquanto envia.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-05",
+    "title": "Sucesso limpa rascunho e permite novo cadastro",
+    "steps": "Confirmar envio, acionar criar outra ocorrência.",
+    "expected": "completed true após sucesso; depois campos/fotos/progresso zerados.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-400",
+    "title": "Erro400 mantém rascunho",
+    "steps": "Enviar formulário válido com foto e resposta de erro simulada.",
+    "expected": "Sem sucesso; mantém valores/fotos;413 destaca anexos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-413",
+    "title": "Erro413 mantém rascunho",
+    "steps": "Enviar formulário válido com foto e resposta de erro simulada.",
+    "expected": "Sem sucesso; mantém valores/fotos;413 destaca anexos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-403",
+    "title": "Erro403 mantém rascunho",
+    "steps": "Enviar formulário válido com foto e resposta de erro simulada.",
+    "expected": "Sem sucesso; mantém valores/fotos;413 destaca anexos.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-401",
+    "title": "401 no envio encerra sessão",
+    "steps": "Enviar e receber401.",
+    "expected": "Sessão limpa, sem confirmação de sucesso.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-UNCERTAIN-network",
+    "title": "Resultado incerto apósnetwork",
+    "steps": "Enviar e falhar; tentar novamente antes/depois de confirmar conferência.",
+    "expected": "Bloqueia reenvio automático; só libera após acknowledgeRetry; mantém foto.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-UNCERTAIN-timeout",
+    "title": "Resultado incerto apóstimeout",
+    "steps": "Enviar e falhar; tentar novamente antes/depois de confirmar conferência.",
+    "expected": "Bloqueia reenvio automático; só libera após acknowledgeRetry; mantém foto.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-UNCERTAIN-503",
+    "title": "Resultado incerto após503",
+    "steps": "Enviar e falhar; tentar novamente antes/depois de confirmar conferência.",
+    "expected": "Bloqueia reenvio automático; só libera após acknowledgeRetry; mantém foto.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "FLOW-OCC-06",
+    "title": "401 no carregamento das opções encerra sessão",
+    "steps": "Simular erro401 nas opções antes de preencher.",
+    "expected": "endSession, sem criar ocorrência.",
+    "priority": "Alta",
+    "level": "Automatizado lógico/contrato com mocks"
+  },
+  {
+    "id": "UI-01",
+    "title": "Login: layout e mensagens visíveis",
+    "steps": "Abrir tablet834x1194; enviar vazio, apenas usuário, apenas senha e corrigir.",
+    "expected": "Campos e Alert corretos, sem corte; erro não depende apenas de cor.",
+    "requirement": "RF001",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1420938Z"
+  },
+  {
+    "id": "UI-02",
+    "title": "Senha e teclado",
+    "steps": "Digitar senha, mostrar/ocultar, usar Tab e Enter em usuário/senha.",
+    "expected": "Preserva valor, foco visível e envio único; teclado não oculta ação.",
+    "requirement": "RF001/acessibilidade",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1493762Z"
+  },
+  {
+    "id": "UI-03",
+    "title": "Menu e logo no tablet",
+    "steps": "Login fixture; Home→Equipes→Materiais→Ocorrências; abrir Calendário e clicar logo.",
+    "expected": "Uma barra; cada tela abre, item ativo correto, logo voltaHome.",
+    "requirement": "RF001/navegação",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494478Z"
+  },
+  {
+    "id": "UI-04",
+    "title": "Logout, voltar e links privados",
+    "steps": "Sair em Equipes/Calendário; usar Voltar e abrir URLs privadas diretamente.",
+    "expected": "Conteúdo privado não reaparece; login pede nova sessão.",
+    "requirement": "RF002/NF002",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494615Z"
+  },
+  {
+    "id": "UI-05",
+    "title": "Materiais: estados e detalhes",
+    "steps": "Simular loading/vazio/erro/retry; buscar com acento; abrir detalhe e fechar X/fundo/Escape.",
+    "expected": "Lista recupera, dados corretos, modal fecha e foco permanece utilizável.",
+    "requirement": "RF032/RF033",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.149477Z"
+  },
+  {
+    "id": "UI-06",
+    "title": "Equipes: estados, status e detalhes",
+    "steps": "Simular loading/vazio/erro/retry; buscar; abrir detalhe; alterar status com sucesso/403/503.",
+    "expected": "Sem status otimista incorreto; mensagens claras, modal e lista acessíveis.",
+    "requirement": "RF023/RF024/RF025",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494876Z"
+  },
+  {
+    "id": "UI-07",
+    "title": "Calendário no tablet",
+    "steps": "Alternar Lista/Calendário, rolar horários e simular dia útil/fim de semana.",
+    "expected": "Slots e legenda legíveis, sem overflow; equipe segue ativa no menu.",
+    "requirement": "RF026",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495008Z"
+  },
+  {
+    "id": "UI-08",
+    "title": "Origem das fotos e galeria",
+    "steps": "Abrir painel; escolher múltiplas fotos; adicionar até5, abrir+1, remover e cancelar.",
+    "expected": "Painel/galeria fecham sem perder anexos; contador, limites e miniaturas corretos.",
+    "requirement": "RF015/RN013",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495296Z"
+  },
+  {
+    "id": "UI-09",
+    "title": "Ocorrência: progresso, erros e sucesso",
+    "steps": "Preencher campos/quantidade; simular400/413/401 e201; criar outra e voltarHome.",
+    "expected": "Progresso0..3, erros preservam rascunho; sucesso somente após201, novo cadastro limpo.",
+    "requirement": "RF014/RF016",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495432Z"
+  },
+  {
+    "id": "UI-10",
+    "title": "Bloqueio e resultado incerto",
+    "steps": "AtrasarPOST; tocar duas vezes, logo, menu, Sair e Voltar; depois desconectar.",
+    "expected": "Sem duplicação por interação; saída bloqueada; alerta de incerteza exige conferência.",
+    "requirement": "RF016/NF004",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495532Z"
+  },
+  {
+    "id": "UI-11",
+    "title": "Acessibilidade e rolagem",
+    "steps": "Navegar só por teclado, ampliar texto, verificar nomes/alvos48 e rolagem de modal/tela.",
+    "expected": "Foco e texto visíveis, sem sobreposição/overflow ou informação só por hover/cor.",
+    "requirement": "NF/acessibilidade",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495657Z"
+  },
+  {
+    "id": "DEVICE-01",
+    "title": "Câmera física e permissão real",
+    "steps": "Em tablet físico, negar/permissão e capturar foto; retornar ao app.",
+    "expected": "Negação recuperável; foto válida adicionada sem perder formulário.",
+    "requirement": "RF015",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Sem tablet físico/development build conectado para esta execução.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495751Z"
+  },
+  {
+    "id": "DEVICE-02",
+    "title": "SecureStore real e reinício",
+    "steps": "Login em development build; fechar/reabrir app e sair; verificar acesso salvo.",
+    "expected": "Sessão válida restaurada; logout remove acesso; sem senha persistida.",
+    "requirement": "RF001/RF002",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. SecureStore foi testado com adaptador simulado; execução física indisponível.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495877Z"
+  },
+  {
+    "id": "LIVE-01",
+    "title": "Login e leitura na API real/CORS",
+    "steps": "Usar conta VIEWER de homologação, origem autorizada e consultar materiais/equipes/opções.",
+    "expected": "Login e consultas reais sem CORS/contrato incompatível.",
+    "requirement": "Integração real",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Nenhuma conta VIEWER de homologação fornecida. Não usar credenciais pessoais nem registrar senha.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495995Z"
+  },
+  {
+    "id": "LIVE-02",
+    "title": "Envio real com fotos em homologação",
+    "steps": "Com ambiente/contatos de teste autorizados, enviar ocorrência com0/1/5 fotos e conferir registro.",
+    "expected": "Um registro com dados/fotos corretos;201 não equivale a entrega de e-mail.",
+    "requirement": "RF016",
+    "priority": "Alta",
+    "level": "Manual/E2E em tablet",
+    "status": "BLOQUEADO",
+    "reason": "Pendência herdada da rodada inicial, sem nova execução de UI/dispositivo/API neste reteste de serviço. Não foi autorizado criar registros/disparar e-mails em produção; falta ambiente/contatos de homologação.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1496089Z"
+  }
+]

@@ -77,6 +77,7 @@ Regras: tudo nasce na feature; ao ser usado por uma segunda feature, sobe para `
 - `docs/data-model.md` - entidades e regras de validação
 - `docs/security.md` - sessão, permissões, segredos
 - `docs/coding-standards.md` / `docs/testing.md` - padrões e checks
+- `docs/test-plan.md` / `docs/test-report-2026-10-27.md` / `docs/test-report-2026-10-27-pagination-fix.md` (reteste em `docs/test-evidence/2026-10-27-pagination-fix/`) / `docs/test-defects.md` - planejamento, execução e achados do front-end; evidências em `docs/test-evidence/2026-10-27/`. `npm run test:frontend` executa a suíte sem rede real (autorizada em2026-10-27).
 - `docs/ai-workflow.md` - como trabalhar e fechar tarefas
 - `docs/implementation-plan.md` / `docs/issues.md` - plano e estado vivo
 - `docs/deployment-log.md` / `docs/decision-log.md` - entregas e decisões

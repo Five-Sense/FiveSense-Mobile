@@ -2,7 +2,19 @@
 
 ## Estratégia
 
-Projeto enxuto: os checks obrigatórios são estáticos e manuais. Testes automatizados só entram se o humano pedir (decisão pendente, ver `decision-log.md`).
+Em2026-10-27, o humano solicitou planejamento, execução e registro de testes. A suíte reproduzível passa a fazer parte do projeto, sem novas dependências: `npm run test:frontend`. Testes lógicos/contratos usam módulos reais e mocks de transporte/plataforma; não substituem UI/E2E/integração real.
+
+## Rodada atual e documentos canônicos
+
+- [Plano de testes](test-plan.md):143 casos automatizados e15 manuais/integrados, com pré-condições/passos/esperados/prioridades.
+- [Reteste da paginação](test-report-2026-10-27-pagination-fix.md):143 aprovados, zero reprovados;15 pendências manuais herdadas, sem nova execução de UI/dispositivo/API. TypeScript/lint/export web aprovados.
+- [Rodada inicial preservada](test-report-2026-10-27.md):133 aprovados e1 reprovado (MAT-06), antes do reparo autorizado. Não reescrever esse resultado histórico.
+- [Defeitos](test-defects.md):DEF-001 corrigido e retestado; DEF-002 (favicon ausente) continua aberto.
+- [Evidências do reteste](test-evidence/2026-10-27-pagination-fix/results.json):JSON/CSV/TAP, fingerprint e logs. Houve alteração autorizada em service/schema de materiais; sem POST/PATCH real.
+
+Reproduzir a suíte atual sem sobrescrever a rodada inicial: npm run test:frontend -- --date 2026-10-27 --run minha-rodada. Escolher nome novo para cada execução preservada. O runner aceita --run e mantém evidências/relatório separados. MAT-06 agora exige todos os1100 itens válidos e busca do último; erro genérico não conta como aprovação. MAT-07..15 cobrem dez páginas, repetição/índice/total incoerentes, vazio prematuro, duplicidade e cancelamento.
+
+Casos bloqueados NÃO contam como aprovados. Testes lógicos não homologam interface/tablet ou backend. Instruções históricas abaixo não são execução deste reteste.
 
 ## Comandos oficiais
 
