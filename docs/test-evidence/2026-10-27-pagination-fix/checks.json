@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-27",
+  "runId": "2026-10-27-pagination-fix",
+  "checks": [
+    {
+      "name": "typescript",
+      "exitCode": 0,
+      "evidence": "typescript.log"
+    },
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "evidence": "lint.log"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "evidence": "build.log"
+    }
+  ],
+  "notes": [
+    "Build mantém aviso preexistente de favicon ausente (DEF-002).",
+    "Sem execução de interface ou API real neste reteste."
+  ]
+}

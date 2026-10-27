@@ -17,6 +17,24 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-27] - Correção autorizada de DEF-001 e reteste da paginação
+
+- **Fase/escopo:** Fase6, reparo solicitado após QA, branch feature/tests-plan. Limite de10 páginas pretendia evitar loop; devolver catálogo incompleto como sucesso foi erro de implementação, sem requisito para corte em1000 itens.
+- **Código:** materials-service percorre todas as páginas do total inicial, preserva ativos/VIEWER/signal/PAGE_SIZE100/requestJson; valida total estável, number opcional, IDs repetidos e vazio antes do fim com AppError invalidResponse. Schema permite validar number sem obrigá-lo. Sem UI/endpoint/dependência novos.
+- **Testes:** MAT-06 estrito para1100 materiais/11 chamadas/busca do último; MAT-03 com IDs únicos por material; nove regressõesMAT-07..15.143 aprovados, zero falhas. TypeScript/lint/export web/diff aprovados. Sem API real ou nova execução visual.
+- **Registro:** runner --run separa evidências/relatórios. test-report-2026-10-27-pagination-fix.md e test-evidence/2026-10-27-pagination-fix; resultado inicial133/1 preservado. Índices, arquitetura, testing, issues/plano e defeitos sincronizados; DEF-001 encerrado.
+- **Limites:**15 manuais/integrados ainda bloqueados; DEF-002 favicon ausente permanece como aviso de build. Homologação integral e fase6 abertas; sem commit/push.
+
+
+## [2026-10-27] - QA: planejamento, execução e registro do front-end
+
+- **Escopo:** pedido humano de plano+execução+registro; branch feature/tests-plan inicialmente limpa. Spec antes da suíte; leitura do código e docs atuais. Sem alteração do produto emsrc.
+- **Artefatos:** docs/test-plan.md, test-report-2026-10-27.md, test-defects.md e test-evidence/2026-10-27 (catálogo, resultadosJSON/CSV/TAP, hashes, checks e bloqueios). tests/frontend/*.cjs e scripts/test-frontend.cjs, comando npm run test:frontend empackage.json; sem dependência ou mudança no lockfile. README/AGENTS/índice/testing/issues/plano/decisão0017 atualizados.
+- **Execução:**134 casos automatizados,133 aprovados e1 reprovado;15 manuais/integrados bloqueados. Cobertura de cenários:login/sessão, clienteHTTP/status/abort/timeout, menu/logo/logout/guards, materiais/paginação/busca, equipes/status/calendário, ocorrência/fotos/limites/erros/reenvio/sucesso. Não confundir com cobertura de linhas nem E2E.
+- **Achados:**DEF-001/MAT-06,Média: catálogo11×100 ativos devolve1000 de1100 sem sinalizar truncamento; preservado teste reprovado/exit1 e registrado reparo recomendado. DEF-002,Baixa: favicon inexistente confirmado pelo build. Nenhum defeito de produto corrigido silenciosamente.
+- **Checks:**TypeScript/lint/exportweb aprovados (13 rotas; aviso favicon preexistente). Saídas eexitcodes salvos. Rede de negócios bloqueada na suíte; consulta pública OpenAPI não concluiu em20s. Sem login/POST/PATCH/e-mail real.
+- **Limites:**Computer Use interrompeu captura do Chrome por não identificar URL com segurança;UI não executada, sem contorno. Câmera/SecureStore físicos e conta/ambiente de homologação indisponíveis. Evidências antigas não reaproveitadas como execução nova. Homologação integral não concedida;fase6 aberta. Build exportado fora do app. Sem commit/push.
+
 ## [2026-10-23] - Correção: ISSUE-002 - (2026-10-23 08:34:44) (Tipografia e rem no nativo)
 
 - **Fase:** Fase 1 - Scaffold técnico (tema). Branch `fix/native-typography-rem`, criada a partir de `b62d7ec`.

@@ -1,0 +1,22 @@
+[
+  {
+    "severity": "Média",
+    "evidence": "automated.tap",
+    "actual": 1000,
+    "expected": 1100,
+    "line": 19,
+    "id": "DEF-001",
+    "file": "src/features/materials/services/materials-service.ts",
+    "caseId": "MAT-06",
+    "status": "Aberto"
+  },
+  {
+    "id": "DEF-002",
+    "status": "Aberto",
+    "caseId": "CHECK-BUILD",
+    "file": "app.json",
+    "severity": "Baixa",
+    "evidence": "build.log",
+    "detail": "web.favicon aponta para arquivo inexistente; build exit0"
+  }
+]

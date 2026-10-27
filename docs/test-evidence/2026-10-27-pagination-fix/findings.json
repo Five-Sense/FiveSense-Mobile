@@ -1,0 +1,25 @@
+[
+  {
+    "id": "DEF-001",
+    "status": "CORRIGIDO E RETESTADO",
+    "cases": [
+      "MAT-06",
+      "MAT-07",
+      "MAT-08",
+      "MAT-09",
+      "MAT-10",
+      "MAT-11",
+      "MAT-12",
+      "MAT-13",
+      "MAT-14",
+      "MAT-15"
+    ],
+    "evidence": "automated.tap"
+  },
+  {
+    "id": "DEF-002",
+    "status": "ABERTO",
+    "severity": "Baixa",
+    "evidence": "build.log"
+  }
+]

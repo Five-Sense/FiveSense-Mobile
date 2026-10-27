@@ -33,3 +33,15 @@ O projeto usa SpecFirst: a documentação é escrita e aprovada antes do código
 - `docs/README.md`: índice dos documentos.
 - Fluxo de trabalho e fechamento de tarefas: `docs/ai-workflow.md`.
 - Estado atual do trabalho: `docs/issues.md` e `docs/implementation-plan.md`.
+
+## Testes do front-end
+
+```bash
+npm run test:frontend
+```
+
+A suíte usa Node24 e dependências já instaladas; não precisa de credenciais nem faz chamadas reais de rede. Para executar a suíte atual em uma rodada identificada: `npm run test:frontend -- --date 2026-10-27 --run minha-rodada`. A rodada inicial documentada é histórica e conserva o defeito detectado antes do reparo. O comando registra o plano antes de executar e gera relatório/JSON/CSV/TAP emdocs. TypeScript/lint/build são checks adicionais, registrados separadamente.
+
+- [Plano](docs/test-plan.md), [relatório da rodada](docs/test-report-2026-10-27.md) e [defeitos](docs/test-defects.md).
+- Paginação corrigida (DEF-001/MAT-06): reteste com143 aprovados, zero falhas. [Relatório do reparo](docs/test-report-2026-10-27-pagination-fix.md); evidência inicial reprovada preservada. Repetir em rodada separada: `npm run test:frontend -- --date 2026-10-27 --run pagination-fix`. Use outro nome em --run para manter cada execução.
+- Testes lógicos não equivalem a homologação em tablet/conta real. Os15 casos bloqueados têm roteiro e pré-condições no plano.
