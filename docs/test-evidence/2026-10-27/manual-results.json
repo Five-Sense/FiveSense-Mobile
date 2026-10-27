@@ -1,0 +1,92 @@
+[
+  {
+    "id": "UI-01",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1420938Z"
+  },
+  {
+    "id": "UI-02",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1493762Z"
+  },
+  {
+    "id": "UI-03",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494478Z"
+  },
+  {
+    "id": "UI-04",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494615Z"
+  },
+  {
+    "id": "UI-05",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494770Z"
+  },
+  {
+    "id": "UI-06",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1494876Z"
+  },
+  {
+    "id": "UI-07",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495008Z"
+  },
+  {
+    "id": "UI-08",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495296Z"
+  },
+  {
+    "id": "UI-09",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495432Z"
+  },
+  {
+    "id": "UI-10",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495532Z"
+  },
+  {
+    "id": "UI-11",
+    "status": "BLOQUEADO",
+    "reason": "Computer Use interrompeu a inspeção do Chrome nesta rodada: não conseguiu determinar a URL atual com confiança suficiente para aplicar a política. Nenhuma interação posterior foi realizada; layout/toque/histórico real não executados.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495657Z"
+  },
+  {
+    "id": "DEVICE-01",
+    "status": "BLOQUEADO",
+    "reason": "Sem tablet físico/development build conectado para esta execução.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495751Z"
+  },
+  {
+    "id": "DEVICE-02",
+    "status": "BLOQUEADO",
+    "reason": "SecureStore foi testado com adaptador simulado; execução física indisponível.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495877Z"
+  },
+  {
+    "id": "LIVE-01",
+    "status": "BLOQUEADO",
+    "reason": "Nenhuma conta VIEWER de homologação fornecida. Não usar credenciais pessoais nem registrar senha.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1495995Z"
+  },
+  {
+    "id": "LIVE-02",
+    "status": "BLOQUEADO",
+    "reason": "Não foi autorizado criar registros/disparar e-mails em produção; falta ambiente/contatos de homologação.",
+    "recordedAtUtc": "2026-10-27T11:08:14.1496089Z"
+  }
+]

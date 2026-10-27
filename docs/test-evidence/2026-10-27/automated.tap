@@ -1,0 +1,868 @@
+TAP version 13
+# Subtest: [CFG-01] Configuração ausente bloqueia a rede
+ok 1 - [CFG-01] Configuração ausente bloqueia a rede
+  ---
+  duration_ms: 3.0484
+  type: 'test'
+  ...
+# Subtest: [CFG-02] Host e prefixo não duplicam barras
+ok 2 - [CFG-02] Host e prefixo não duplicam barras
+  ---
+  duration_ms: 12.2713
+  type: 'test'
+  ...
+# Subtest: [API-01] JSON do login preserva senha e não envia perfil
+ok 3 - [API-01] JSON do login preserva senha e não envia perfil
+  ---
+  duration_ms: 1.0593
+  type: 'test'
+  ...
+# Subtest: [API-02] Query escapada e perfil nas rotas protegidas
+ok 4 - [API-02] Query escapada e perfil nas rotas protegidas
+  ---
+  duration_ms: 0.5135
+  type: 'test'
+  ...
+# Subtest: [API-03] Compatibilidade apiRequest e resposta 204
+ok 5 - [API-03] Compatibilidade apiRequest e resposta 204
+  ---
+  duration_ms: 2.9677
+  type: 'test'
+  ...
+# Subtest: [HTTP-400] HTTP400 vira erro seguro validation
+ok 6 - [HTTP-400] HTTP400 vira erro seguro validation
+  ---
+  duration_ms: 0.5884
+  type: 'test'
+  ...
+# Subtest: [HTTP-401] HTTP401 vira erro seguro unauthorized
+ok 7 - [HTTP-401] HTTP401 vira erro seguro unauthorized
+  ---
+  duration_ms: 0.3389
+  type: 'test'
+  ...
+# Subtest: [HTTP-403] HTTP403 vira erro seguro forbidden
+ok 8 - [HTTP-403] HTTP403 vira erro seguro forbidden
+  ---
+  duration_ms: 0.2363
+  type: 'test'
+  ...
+# Subtest: [HTTP-404] HTTP404 vira erro seguro notFound
+ok 9 - [HTTP-404] HTTP404 vira erro seguro notFound
+  ---
+  duration_ms: 0.2402
+  type: 'test'
+  ...
+# Subtest: [HTTP-409] HTTP409 vira erro seguro conflict
+ok 10 - [HTTP-409] HTTP409 vira erro seguro conflict
+  ---
+  duration_ms: 0.3001
+  type: 'test'
+  ...
+# Subtest: [HTTP-413] HTTP413 vira erro seguro validation
+ok 11 - [HTTP-413] HTTP413 vira erro seguro validation
+  ---
+  duration_ms: 0.2511
+  type: 'test'
+  ...
+# Subtest: [HTTP-422] HTTP422 vira erro seguro validation
+ok 12 - [HTTP-422] HTTP422 vira erro seguro validation
+  ---
+  duration_ms: 0.2267
+  type: 'test'
+  ...
+# Subtest: [HTTP-429] HTTP429 vira erro seguro unknown
+ok 13 - [HTTP-429] HTTP429 vira erro seguro unknown
+  ---
+  duration_ms: 0.1627
+  type: 'test'
+  ...
+# Subtest: [HTTP-500] HTTP500 vira erro seguro server
+ok 14 - [HTTP-500] HTTP500 vira erro seguro server
+  ---
+  duration_ms: 0.1674
+  type: 'test'
+  ...
+# Subtest: [HTTP-503] HTTP503 vira erro seguro server
+ok 15 - [HTTP-503] HTTP503 vira erro seguro server
+  ---
+  duration_ms: 0.152
+  type: 'test'
+  ...
+# Subtest: [API-04] Campos de validação em array
+ok 16 - [API-04] Campos de validação em array
+  ---
+  duration_ms: 0.2792
+  type: 'test'
+  ...
+# Subtest: [API-05] Campos de validação em objeto
+ok 17 - [API-05] Campos de validação em objeto
+  ---
+  duration_ms: 0.2612
+  type: 'test'
+  ...
+# Subtest: [API-06] JSON inválido em resposta de sucesso
+ok 18 - [API-06] JSON inválido em resposta de sucesso
+  ---
+  duration_ms: 0.2298
+  type: 'test'
+  ...
+# Subtest: [API-07] Erro HTTP com corpo não JSON
+ok 19 - [API-07] Erro HTTP com corpo não JSON
+  ---
+  duration_ms: 0.1936
+  type: 'test'
+  ...
+# Subtest: [API-08] Rede indisponível não repete POST
+ok 20 - [API-08] Rede indisponível não repete POST
+  ---
+  duration_ms: 0.1809
+  type: 'test'
+  ...
+# Subtest: [API-09] Cancelamento anterior não chama fetch
+ok 21 - [API-09] Cancelamento anterior não chama fetch
+  ---
+  duration_ms: 0.1354
+  type: 'test'
+  ...
+# Subtest: [API-F-ABORT] Cancelamento durante fetch
+ok 22 - [API-F-ABORT] Cancelamento durante fetch
+  ---
+  duration_ms: 0.3523
+  type: 'test'
+  ...
+# Subtest: [API-F-TIME] Timeout durante fetch
+ok 23 - [API-F-TIME] Timeout durante fetch
+  ---
+  duration_ms: 0.1626
+  type: 'test'
+  ...
+# Subtest: [API-B-ABORT] Cancelamento durante body
+ok 24 - [API-B-ABORT] Cancelamento durante body
+  ---
+  duration_ms: 0.2285
+  type: 'test'
+  ...
+# Subtest: [API-B-TIME] Timeout durante body
+ok 25 - [API-B-TIME] Timeout durante body
+  ---
+  duration_ms: 0.1142
+  type: 'test'
+  ...
+# Subtest: [API-10] Erros desconhecidos não vazam texto
+ok 26 - [API-10] Erros desconhecidos não vazam texto
+  ---
+  duration_ms: 0.1344
+  type: 'test'
+  ...
+# Subtest: [AUTH-01] Validação local do login 01
+ok 27 - [AUTH-01] Validação local do login 01
+  ---
+  duration_ms: 1.5682
+  type: 'test'
+  ...
+# Subtest: [AUTH-02] Validação local do login 02
+ok 28 - [AUTH-02] Validação local do login 02
+  ---
+  duration_ms: 0.1618
+  type: 'test'
+  ...
+# Subtest: [AUTH-03] Validação local do login 03
+ok 29 - [AUTH-03] Validação local do login 03
+  ---
+  duration_ms: 0.1338
+  type: 'test'
+  ...
+# Subtest: [AUTH-04] Validação local do login 04
+ok 30 - [AUTH-04] Validação local do login 04
+  ---
+  duration_ms: 0.2247
+  type: 'test'
+  ...
+# Subtest: [AUTH-05] Validação local do login 05
+ok 31 - [AUTH-05] Validação local do login 05
+  ---
+  duration_ms: 0.1177
+  type: 'test'
+  ...
+# Subtest: [AUTH-06] Username não exige e-mail; senha não é alterada
+ok 32 - [AUTH-06] Username não exige e-mail; senha não é alterada
+  ---
+  duration_ms: 0.1383
+  type: 'test'
+  ...
+# Subtest: [AUTH-07] Login válido retorna somente sessão VIEWER
+ok 33 - [AUTH-07] Login válido retorna somente sessão VIEWER
+  ---
+  duration_ms: 1.0951
+  type: 'test'
+  ...
+# Subtest: [AUTH-08] Recusar resposta de login invalidCredentials
+ok 34 - [AUTH-08] Recusar resposta de login invalidCredentials
+  ---
+  duration_ms: 0.2571
+  type: 'test'
+  ...
+# Subtest: [AUTH-09] Recusar resposta de login viewerOnly
+ok 35 - [AUTH-09] Recusar resposta de login viewerOnly
+  ---
+  duration_ms: 0.1851
+  type: 'test'
+  ...
+# Subtest: [AUTH-10] Recusar resposta de login invalidResponse
+ok 36 - [AUTH-10] Recusar resposta de login invalidResponse
+  ---
+  duration_ms: 0.24
+  type: 'test'
+  ...
+# Subtest: [AUTH-11] Recusar resposta de login invalidResponse
+ok 37 - [AUTH-11] Recusar resposta de login invalidResponse
+  ---
+  duration_ms: 0.2746
+  type: 'test'
+  ...
+# Subtest: [AUTH-12] Credenciais incorretas destacam os dois campos
+ok 38 - [AUTH-12] Credenciais incorretas destacam os dois campos
+  ---
+  duration_ms: 0.171
+  type: 'test'
+  ...
+# Subtest: [AUTH-13] Validação da API destaca campo correspondente
+ok 39 - [AUTH-13] Validação da API destaca campo correspondente
+  ---
+  duration_ms: 0.1217
+  type: 'test'
+  ...
+# Subtest: [AUTH-14] Formulário inválido não chama serviço
+ok 40 - [AUTH-14] Formulário inválido não chama serviço
+  ---
+  duration_ms: 8.8389
+  type: 'test'
+  ...
+# Subtest: [AUTH-15] Login bloqueia duplicação e limpa senha
+ok 41 - [AUTH-15] Login bloqueia duplicação e limpa senha
+  ---
+  duration_ms: 8.4265
+  type: 'test'
+  ...
+# Subtest: [AUTH-16] Falha ao guardar sessão impede conexão
+ok 42 - [AUTH-16] Falha ao guardar sessão impede conexão
+  ---
+  duration_ms: 11.0982
+  type: 'test'
+  ...
+# Subtest: [AUTH-17] Desmontagem cancela login pendente
+ok 43 - [AUTH-17] Desmontagem cancela login pendente
+  ---
+  duration_ms: 10.6774
+  type: 'test'
+  ...
+# Subtest: [SESSION-01] Sessão web permanece apenas em memória
+ok 44 - [SESSION-01] Sessão web permanece apenas em memória
+  ---
+  duration_ms: 2.5089
+  type: 'test'
+  ...
+# Subtest: [SESSION-02] Sessão nativa válida usa SecureStore
+ok 45 - [SESSION-02] Sessão nativa válida usa SecureStore
+  ---
+  duration_ms: 4.6284
+  type: 'test'
+  ...
+# Subtest: [SESSION-03] Sessão nativa corrompida é descartada
+ok 46 - [SESSION-03] Sessão nativa corrompida é descartada
+  ---
+  duration_ms: 4.7722
+  type: 'test'
+  ...
+# Subtest: [SESSION-04] Sessão nativa corrompida é descartada
+ok 47 - [SESSION-04] Sessão nativa corrompida é descartada
+  ---
+  duration_ms: 3.7271
+  type: 'test'
+  ...
+# Subtest: [MAT-01] Busca de material ignora acentos e caixa
+ok 48 - [MAT-01] Busca de material ignora acentos e caixa
+  ---
+  duration_ms: 0.2764
+  type: 'test'
+  ...
+# Subtest: [MAT-02] Busca vazia e contagem singular/plural
+ok 49 - [MAT-02] Busca vazia e contagem singular/plural
+  ---
+  duration_ms: 0.17
+  type: 'test'
+  ...
+# Subtest: [MAT-03] Catálogo percorre páginas e omite inativos
+ok 50 - [MAT-03] Catálogo percorre páginas e omite inativos
+  ---
+  duration_ms: 1.3135
+  type: 'test'
+  ...
+# Subtest: [MAT-04] Catálogo vazio é válido
+ok 51 - [MAT-04] Catálogo vazio é válido
+  ---
+  duration_ms: 0.2289
+  type: 'test'
+  ...
+# Subtest: [MAT-05] Resposta de material inválida é recusada
+ok 52 - [MAT-05] Resposta de material inválida é recusada
+  ---
+  duration_ms: 0.3717
+  type: 'test'
+  ...
+# Subtest: [MAT-06] Catálogo maior que dez páginas é consultado integralmente
+ok 53 - [MAT-06] Catálogo maior que dez páginas é consultado integralmente
+  ---
+  duration_ms: 4.0684
+  type: 'test'
+  ...
+# Subtest: [MAT-07] Catálogo com exatamente dez páginas continua completo
+ok 54 - [MAT-07] Catálogo com exatamente dez páginas continua completo
+  ---
+  duration_ms: 2.2042
+  type: 'test'
+  ...
+# Subtest: [MAT-08] Página repetida mesmo sem índice
+ok 55 - [MAT-08] Página repetida mesmo sem índice
+  ---
+  duration_ms: 0.3916
+  type: 'test'
+  ...
+# Subtest: [MAT-09] Índice retornado não acompanha página solicitada
+ok 56 - [MAT-09] Índice retornado não acompanha página solicitada
+  ---
+  duration_ms: 0.2419
+  type: 'test'
+  ...
+# Subtest: [MAT-10] Total de páginas muda durante consulta
+ok 57 - [MAT-10] Total de páginas muda durante consulta
+  ---
+  duration_ms: 0.2087
+  type: 'test'
+  ...
+# Subtest: [MAT-11] Página vazia antes do fim
+ok 58 - [MAT-11] Página vazia antes do fim
+  ---
+  duration_ms: 0.2125
+  type: 'test'
+  ...
+# Subtest: [MAT-12] Conteúdo presente em catálogo de zero páginas
+ok 59 - [MAT-12] Conteúdo presente em catálogo de zero páginas
+  ---
+  duration_ms: 0.1512
+  type: 'test'
+  ...
+# Subtest: [MAT-13] Total de páginas fracionário
+ok 60 - [MAT-13] Total de páginas fracionário
+  ---
+  duration_ms: 0.1793
+  type: 'test'
+  ...
+# Subtest: [MAT-14] Material duplicado dentro da mesma página
+ok 61 - [MAT-14] Material duplicado dentro da mesma página
+  ---
+  duration_ms: 0.1383
+  type: 'test'
+  ...
+# Subtest: [MAT-15] Cancelamento durante segunda página interrompe catálogo
+ok 62 - [MAT-15] Cancelamento durante segunda página interrompe catálogo
+  ---
+  duration_ms: 0.3244
+  type: 'test'
+  ...
+# Subtest: [MAT-401] Materiais trata HTTP401
+ok 63 - [MAT-401] Materiais trata HTTP401
+  ---
+  duration_ms: 23.97
+  type: 'test'
+  ...
+# Subtest: [MAT-403] Materiais trata HTTP403
+ok 64 - [MAT-403] Materiais trata HTTP403
+  ---
+  duration_ms: 10.5165
+  type: 'test'
+  ...
+# Subtest: [TEAM-01] Busca de equipe por nome e código
+ok 65 - [TEAM-01] Busca de equipe por nome e código
+  ---
+  duration_ms: 0.2462
+  type: 'test'
+  ...
+# Subtest: [CAL-01] Horários inválidos não geram expediente
+ok 66 - [CAL-01] Horários inválidos não geram expediente
+  ---
+  duration_ms: 0.318
+  type: 'test'
+  ...
+# Subtest: [CAL-02] Calendário monta intervalos e sobreposições
+ok 67 - [CAL-02] Calendário monta intervalos e sobreposições
+  ---
+  duration_ms: 0.2316
+  type: 'test'
+  ...
+# Subtest: [CAL-03] Estado temporal respeita bordas do intervalo
+ok 68 - [CAL-03] Estado temporal respeita bordas do intervalo
+  ---
+  duration_ms: 0.5502
+  type: 'test'
+  ...
+# Subtest: [CAL-04] Sábado e domingo não são dias úteis
+ok 69 - [CAL-04] Sábado e domingo não são dias úteis
+  ---
+  duration_ms: 0.1832
+  type: 'test'
+  ...
+# Subtest: [TEAM-02] Serviço pagina equipes e separa representantes
+ok 70 - [TEAM-02] Serviço pagina equipes e separa representantes
+  ---
+  duration_ms: 0.9085
+  type: 'test'
+  ...
+# Subtest: [TEAM-03] Atualização de status usa PATCH e retorno confirmado
+ok 71 - [TEAM-03] Atualização de status usa PATCH e retorno confirmado
+  ---
+  duration_ms: 0.2874
+  type: 'test'
+  ...
+# Subtest: [TEAM-401-initial] Sessão expirada em equipes: initial
+ok 72 - [TEAM-401-initial] Sessão expirada em equipes: initial
+  ---
+  duration_ms: 6.1684
+  type: 'test'
+  ...
+# Subtest: [TEAM-401-refresh] Sessão expirada em equipes: refresh
+ok 73 - [TEAM-401-refresh] Sessão expirada em equipes: refresh
+  ---
+  duration_ms: 4.6963
+  type: 'test'
+  ...
+# Subtest: [TEAM-401-patch] Sessão expirada em equipes: patch
+ok 74 - [TEAM-401-patch] Sessão expirada em equipes: patch
+  ---
+  duration_ms: 8.1232
+  type: 'test'
+  ...
+# Subtest: [TEAM-403] Acesso negado preserva status confirmado
+ok 75 - [TEAM-403] Acesso negado preserva status confirmado
+  ---
+  duration_ms: 4.677
+  type: 'test'
+  ...
+# Subtest: [TEAM-04] Sem sessão não consulta nem altera
+ok 76 - [TEAM-04] Sem sessão não consulta nem altera
+  ---
+  duration_ms: 3.9481
+  type: 'test'
+  ...
+# Subtest: [TEAM-05] Resposta tardia não atualiza tela desmontada
+ok 77 - [TEAM-05] Resposta tardia não atualiza tela desmontada
+  ---
+  duration_ms: 3.7378
+  type: 'test'
+  ...
+# Subtest: [NAV-01] /home → /home pelo menu
+ok 78 - [NAV-01] /home → /home pelo menu
+  ---
+  duration_ms: 17.0943
+  type: 'test'
+  ...
+# Subtest: [NAV-02] /home → /ocorrencias pelo menu
+ok 79 - [NAV-02] /home → /ocorrencias pelo menu
+  ---
+  duration_ms: 13.2066
+  type: 'test'
+  ...
+# Subtest: [NAV-03] /home → /equipes pelo menu
+ok 80 - [NAV-03] /home → /equipes pelo menu
+  ---
+  duration_ms: 10.7859
+  type: 'test'
+  ...
+# Subtest: [NAV-04] /home → /materiais pelo menu
+ok 81 - [NAV-04] /home → /materiais pelo menu
+  ---
+  duration_ms: 10.9626
+  type: 'test'
+  ...
+# Subtest: [NAV-05] /ocorrencias → /home pelo menu
+ok 82 - [NAV-05] /ocorrencias → /home pelo menu
+  ---
+  duration_ms: 14.2095
+  type: 'test'
+  ...
+# Subtest: [NAV-06] /ocorrencias → /ocorrencias pelo menu
+ok 83 - [NAV-06] /ocorrencias → /ocorrencias pelo menu
+  ---
+  duration_ms: 9.1327
+  type: 'test'
+  ...
+# Subtest: [NAV-07] /ocorrencias → /equipes pelo menu
+ok 84 - [NAV-07] /ocorrencias → /equipes pelo menu
+  ---
+  duration_ms: 9.3312
+  type: 'test'
+  ...
+# Subtest: [NAV-08] /ocorrencias → /materiais pelo menu
+ok 85 - [NAV-08] /ocorrencias → /materiais pelo menu
+  ---
+  duration_ms: 9.4795
+  type: 'test'
+  ...
+# Subtest: [NAV-09] /materiais → /home pelo menu
+ok 86 - [NAV-09] /materiais → /home pelo menu
+  ---
+  duration_ms: 16.5556
+  type: 'test'
+  ...
+# Subtest: [NAV-10] /materiais → /ocorrencias pelo menu
+ok 87 - [NAV-10] /materiais → /ocorrencias pelo menu
+  ---
+  duration_ms: 9.2888
+  type: 'test'
+  ...
+# Subtest: [NAV-11] /materiais → /equipes pelo menu
+ok 88 - [NAV-11] /materiais → /equipes pelo menu
+  ---
+  duration_ms: 9.1423
+  type: 'test'
+  ...
+# Subtest: [NAV-12] /materiais → /materiais pelo menu
+ok 89 - [NAV-12] /materiais → /materiais pelo menu
+  ---
+  duration_ms: 8.545
+  type: 'test'
+  ...
+# Subtest: [NAV-13] /equipes → /home pelo menu
+ok 90 - [NAV-13] /equipes → /home pelo menu
+  ---
+  duration_ms: 9.0782
+  type: 'test'
+  ...
+# Subtest: [NAV-14] /equipes → /ocorrencias pelo menu
+ok 91 - [NAV-14] /equipes → /ocorrencias pelo menu
+  ---
+  duration_ms: 8.4339
+  type: 'test'
+  ...
+# Subtest: [NAV-15] /equipes → /equipes pelo menu
+ok 92 - [NAV-15] /equipes → /equipes pelo menu
+  ---
+  duration_ms: 9.3428
+  type: 'test'
+  ...
+# Subtest: [NAV-16] /equipes → /materiais pelo menu
+ok 93 - [NAV-16] /equipes → /materiais pelo menu
+  ---
+  duration_ms: 8.6809
+  type: 'test'
+  ...
+# Subtest: [NAV-17] /equipes/calendario → /home pelo menu
+ok 94 - [NAV-17] /equipes/calendario → /home pelo menu
+  ---
+  duration_ms: 8.4717
+  type: 'test'
+  ...
+# Subtest: [NAV-18] /equipes/calendario → /ocorrencias pelo menu
+ok 95 - [NAV-18] /equipes/calendario → /ocorrencias pelo menu
+  ---
+  duration_ms: 8.8274
+  type: 'test'
+  ...
+# Subtest: [NAV-19] /equipes/calendario → /equipes pelo menu
+ok 96 - [NAV-19] /equipes/calendario → /equipes pelo menu
+  ---
+  duration_ms: 8.44
+  type: 'test'
+  ...
+# Subtest: [NAV-20] /equipes/calendario → /materiais pelo menu
+ok 97 - [NAV-20] /equipes/calendario → /materiais pelo menu
+  ---
+  duration_ms: 7.8906
+  type: 'test'
+  ...
+# Subtest: [NAV-21] Logo volta à Home com controle acessível
+ok 98 - [NAV-21] Logo volta à Home com controle acessível
+  ---
+  duration_ms: 16.0035
+  type: 'test'
+  ...
+# Subtest: [NAV-22] Calendário mantém Equipes selecionado
+ok 99 - [NAV-22] Calendário mantém Equipes selecionado
+  ---
+  duration_ms: 8.154
+  type: 'test'
+  ...
+# Subtest: [NAV-23] Logout limpa sessão antes da rota de login
+ok 100 - [NAV-23] Logout limpa sessão antes da rota de login
+  ---
+  duration_ms: 9.6005
+  type: 'test'
+  ...
+# Subtest: [NAV-24] Links protegidos sem sessão redirecionam
+ok 101 - [NAV-24] Links protegidos sem sessão redirecionam
+  ---
+  duration_ms: 40.5412
+  type: 'test'
+  ...
+# Subtest: [NAV-25] Restauração de sessão não mostra conteúdo privado
+ok 102 - [NAV-25] Restauração de sessão não mostra conteúdo privado
+  ---
+  duration_ms: 7.861
+  type: 'test'
+  ...
+# Subtest: [NAV-26] Envio de ocorrência bloqueia navegação e saída
+ok 103 - [NAV-26] Envio de ocorrência bloqueia navegação e saída
+  ---
+  duration_ms: 17.6703
+  type: 'test'
+  ...
+# Subtest: [NAV-27] Logout pendente bloqueia cliques adicionais
+ok 104 - [NAV-27] Logout pendente bloqueia cliques adicionais
+  ---
+  duration_ms: 7.014
+  type: 'test'
+  ...
+# Subtest: [NAV-28] Equipes e calendário estão no grupo protegido
+ok 105 - [NAV-28] Equipes e calendário estão no grupo protegido
+  ---
+  duration_ms: 0.2874
+  type: 'test'
+  ...
+# Subtest: [NAV-29] Alternância Lista/Calendário preserva URLs
+ok 106 - [NAV-29] Alternância Lista/Calendário preserva URLs
+  ---
+  duration_ms: 9.4304
+  type: 'test'
+  ...
+# Subtest: [OCC-01] Campos obrigatórios e UUIDs
+ok 107 - [OCC-01] Campos obrigatórios e UUIDs
+  ---
+  duration_ms: 1.069
+  type: 'test'
+  ...
+# Subtest: [OCC-Q-0] Quantidade fora da faixa permitida
+ok 108 - [OCC-Q-0] Quantidade fora da faixa permitida
+  ---
+  duration_ms: 0.1224
+  type: 'test'
+  ...
+# Subtest: [OCC-Q--1] Quantidade fora da faixa permitida
+ok 109 - [OCC-Q--1] Quantidade fora da faixa permitida
+  ---
+  duration_ms: 0.0689
+  type: 'test'
+  ...
+# Subtest: [OCC-Q-1.5] Quantidade fora da faixa permitida
+ok 110 - [OCC-Q-1.5] Quantidade fora da faixa permitida
+  ---
+  duration_ms: 0.057
+  type: 'test'
+  ...
+# Subtest: [OCC-Q-1000] Quantidade fora da faixa permitida
+ok 111 - [OCC-Q-1000] Quantidade fora da faixa permitida
+  ---
+  duration_ms: 0.0652
+  type: 'test'
+  ...
+# Subtest: [OCC-02] Quantidade nos limites
+ok 112 - [OCC-02] Quantidade nos limites
+  ---
+  duration_ms: 0.1202
+  type: 'test'
+  ...
+# Subtest: [IMG-01] JPG/PNG e cinco fotos válidas
+ok 113 - [IMG-01] JPG/PNG e cinco fotos válidas
+  ---
+  duration_ms: 0.145
+  type: 'test'
+  ...
+# Subtest: [IMG-02] Recusar anexo: invalidImageType
+ok 114 - [IMG-02] Recusar anexo: invalidImageType
+  ---
+  duration_ms: 0.108
+  type: 'test'
+  ...
+# Subtest: [IMG-03] Recusar anexo: invalidImageSize
+ok 115 - [IMG-03] Recusar anexo: invalidImageSize
+  ---
+  duration_ms: 0.0537
+  type: 'test'
+  ...
+# Subtest: [IMG-04] Recusar anexo: imageTooLarge
+ok 116 - [IMG-04] Recusar anexo: imageTooLarge
+  ---
+  duration_ms: 0.0782
+  type: 'test'
+  ...
+# Subtest: [IMG-05] Recusar anexo: tooManyImages
+ok 117 - [IMG-05] Recusar anexo: tooManyImages
+  ---
+  duration_ms: 0.055
+  type: 'test'
+  ...
+# Subtest: [IMG-06] Recusar anexo: attachmentsTooLarge
+ok 118 - [IMG-06] Recusar anexo: attachmentsTooLarge
+  ---
+  duration_ms: 0.0787
+  type: 'test'
+  ...
+# Subtest: [IMG-07] Limite exato20MB é aceito
+ok 119 - [IMG-07] Limite exato20MB é aceito
+  ---
+  duration_ms: 0.1032
+  type: 'test'
+  ...
+# Subtest: [IMG-08] File real prevalece sobre metadados
+ok 120 - [IMG-08] File real prevalece sobre metadados
+  ---
+  duration_ms: 1.5934
+  type: 'test'
+  ...
+# Subtest: [IMG-09] Tamanhos não finitos são rejeitados
+ok 121 - [IMG-09] Tamanhos não finitos são rejeitados
+  ---
+  duration_ms: 0.1357
+  type: 'test'
+  ...
+# Subtest: [IMG-10] Galeria múltipla retorna todos os assets
+ok 122 - [IMG-10] Galeria múltipla retorna todos os assets
+  ---
+  duration_ms: 5.1066
+  type: 'test'
+  ...
+# Subtest: [IMG-11] Cancelamento da galeria não adiciona foto
+ok 123 - [IMG-11] Cancelamento da galeria não adiciona foto
+  ---
+  duration_ms: 4.0691
+  type: 'test'
+  ...
+# Subtest: [IMG-12] Permissão de câmera negada tem feedback
+ok 124 - [IMG-12] Permissão de câmera negada tem feedback
+  ---
+  duration_ms: 3.7158
+  type: 'test'
+  ...
+# Subtest: [OCC-SEND-0] Criação com0 fotos em um POST
+ok 125 - [OCC-SEND-0] Criação com0 fotos em um POST
+  ---
+  duration_ms: 0.8728
+  type: 'test'
+  ...
+# Subtest: [OCC-SEND-1] Criação com1 fotos em um POST
+ok 126 - [OCC-SEND-1] Criação com1 fotos em um POST
+  ---
+  duration_ms: 0.2959
+  type: 'test'
+  ...
+# Subtest: [OCC-SEND-3] Criação com3 fotos em um POST
+ok 127 - [OCC-SEND-3] Criação com3 fotos em um POST
+  ---
+  duration_ms: 0.1984
+  type: 'test'
+  ...
+# Subtest: [OCC-SEND-5] Criação com5 fotos em um POST
+ok 128 - [OCC-SEND-5] Criação com5 fotos em um POST
+  ---
+  duration_ms: 0.1983
+  type: 'test'
+  ...
+# Subtest: [OCC-03] Dados inválidos impedem chamada
+ok 129 - [OCC-03] Dados inválidos impedem chamada
+  ---
+  duration_ms: 0.2492
+  type: 'test'
+  ...
+# Subtest: [OCC-04] Opções inválidas não são usadas
+ok 130 - [OCC-04] Opções inválidas não são usadas
+  ---
+  duration_ms: 0.3579
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-01] Formulário incompleto não envia
+ok 131 - [FLOW-OCC-01] Formulário incompleto não envia
+  ---
+  duration_ms: 11.8029
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-02] Adicionar, remover e cancelar mantém coleção
+ok 132 - [FLOW-OCC-02] Adicionar, remover e cancelar mantém coleção
+  ---
+  duration_ms: 11.1465
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-03] Lote inválido preserva fotos anteriores
+ok 133 - [FLOW-OCC-03] Lote inválido preserva fotos anteriores
+  ---
+  duration_ms: 8.902
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-04] Envio pendente bloqueia duplicação e edição
+ok 134 - [FLOW-OCC-04] Envio pendente bloqueia duplicação e edição
+  ---
+  duration_ms: 9.9613
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-05] Sucesso limpa rascunho e permite novo cadastro
+ok 135 - [FLOW-OCC-05] Sucesso limpa rascunho e permite novo cadastro
+  ---
+  duration_ms: 22.7293
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-400] Erro400 mantém rascunho
+ok 136 - [FLOW-OCC-400] Erro400 mantém rascunho
+  ---
+  duration_ms: 10.018
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-413] Erro413 mantém rascunho
+ok 137 - [FLOW-OCC-413] Erro413 mantém rascunho
+  ---
+  duration_ms: 9.505
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-403] Erro403 mantém rascunho
+ok 138 - [FLOW-OCC-403] Erro403 mantém rascunho
+  ---
+  duration_ms: 8.8495
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-401] 401 no envio encerra sessão
+ok 139 - [FLOW-OCC-401] 401 no envio encerra sessão
+  ---
+  duration_ms: 9.4995
+  type: 'test'
+  ...
+# Subtest: [FLOW-UNCERTAIN-network] Resultado incerto apósnetwork
+ok 140 - [FLOW-UNCERTAIN-network] Resultado incerto apósnetwork
+  ---
+  duration_ms: 10.0487
+  type: 'test'
+  ...
+# Subtest: [FLOW-UNCERTAIN-timeout] Resultado incerto apóstimeout
+ok 141 - [FLOW-UNCERTAIN-timeout] Resultado incerto apóstimeout
+  ---
+  duration_ms: 9.104
+  type: 'test'
+  ...
+# Subtest: [FLOW-UNCERTAIN-503] Resultado incerto após503
+ok 142 - [FLOW-UNCERTAIN-503] Resultado incerto após503
+  ---
+  duration_ms: 10.2181
+  type: 'test'
+  ...
+# Subtest: [FLOW-OCC-06] 401 no carregamento das opções encerra sessão
+ok 143 - [FLOW-OCC-06] 401 no carregamento das opções encerra sessão
+  ---
+  duration_ms: 26.3951
+  type: 'test'
+  ...
+1..143
+# tests 143
+# suites 0
+# pass 143
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1048.6105

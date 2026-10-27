@@ -15,6 +15,11 @@
 - `security.md` - sessão, permissões, armazenamento de token.
 - `coding-standards.md` - padrões de código.
 - `testing.md` - checks e critério de pronto.
+- `test-plan.md` - plano, casos, passos e critérios da suíte de front-end.
+- `test-report-2026-10-27.md` - execução individual, contagens, checks e bloqueios da rodada.
+- `test-report-2026-10-27-pagination-fix.md` - correção de DEF-001,143 casos aprovados e pendências preservadas; evidências em `test-evidence/2026-10-27-pagination-fix/`.
+- `test-defects.md` - achados com reprodução, severidade e evidência.
+- `test-evidence/2026-10-27/` - catálogo, resultados JSON/CSV, TAP e logs.
 
 ## Processo
 

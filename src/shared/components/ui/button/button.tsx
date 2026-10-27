@@ -65,7 +65,7 @@ const DISABLED_CLASSES: VariantClasses = {
 };
 
 const BASE_CONTAINER =
-  'w-full min-h-control flex-row items-center justify-center gap-[8px] p-[8px] rounded-control';
+  'w-full min-h-control flex-row items-center justify-center gap-[8px] px-[12px] py-[8px] rounded-control';
 const FOCUS_RING = 'outline-solid outline-2 outline-offset-2 outline-focus-ring';
 
 export function Button({
@@ -116,9 +116,7 @@ export function Button({
           <Icon icon={icon} size={iconSize} className={colors.content} />
         </View>
       ) : null}
-      <Text
-        className={`shrink text-center text-button font-montserrat-semibold ${colors.content}`}
-      >
+      <Text className={`text-center text-button font-montserrat-semibold ${colors.content}`}>
         {label}
       </Text>
       {!loading && icon && iconPosition === 'end' ? (

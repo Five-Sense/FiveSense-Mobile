@@ -190,3 +190,26 @@ Badge de 10 px e vermelho para "Sem fazer 5s" divergem das regras de acessibilid
 - **Contexto:** equipes/calendário tinham rotas fora de(app), menu próprio com callbacks vazios e logout que só trocava URL; AppHeader ignorava props de bloqueio da moldura. Duplicidade causava navegação inconsistente e acesso sem a mesma guarda.
 - **Decisão:** mover equipes para o grupo(app), mantendo URLs; usar AppLayout/menu/header/sessão compartilhados e remover TeamsPageFrame. Screens recebem só troca Lista/Calendário. Logo é botão acessível para Home; menu/logo/saída respeitam envio/logout.401 de equipes alinha endSession das demais features. Área segura migra para a moldura única. Sem nova dependência, rota de demo, mudança de endpoint ou desenho de identidade.
 - **Consequências:** todos os destinos usam os mesmos callbacks/seleção/guarda/logout; calendário mantém Equipes ativo. Erro preexistente de props AppHeader/AppLayout resolvido neste escopo. Verificação visual em tablet foi interrompida por URL não identificada com segurança no Computer Use; usar checks lógicos/build, registrar limite e não afirmar conferência visual concluída.
+
+## 0017 - Tipografia no nativo: altura de linha em razão e rem fixo em 16
+
+- **Data:** 2026-10-23
+- **Estado:** Aceita por pedido humano de diagnosticar e corrigir a diferença de responsividade entre web e emulador de tablet; branch `fix/native-typography-rem`.
+- **Contexto:** no emulador (Medium_Tablet, 1280x800 dp) o menu inferior ocupava 45% da tela e o conteúdo sumia. Medido com `uiautomator`: o rótulo `text-helper` (14/20) tinha 280 dp de altura. O `react-native-css` multiplica o `line-height` pelo tamanho da fonte; os 14 tokens `--text-*--line-height` estavam em `px` (`20px` virava 20 x 14 = 280). Na web o mesmo CSS funciona. Além disso o compilador nativo assume 1rem = 14px (web: 16), deslocando `sm:`/`md:` para 560/672 e reduzindo `text-lg`, `rounded-xl` etc.
+- **Decisão:** (1) todo token de altura de linha em `global.css` é escrito como razão `calc(altura / fonte)`, o mesmo formato dos tokens padrão do Tailwind; nunca em `px`. (2) `metro.config.js` passa `inlineRem: 16` ao `withNativewind`, só para o nativo. Rejeitado `:root { font-size: 16px }` no CSS, que também alteraria a web.
+- **Consequências:** web inalterada (Chrome computa `calc(20 / 14)` a 14px como 20px exato). No nativo as alturas coincidem com o Figma e os breakpoints coincidem com a web (640/768). Utilitários baseados em `rem` passam a ter o valor da web (ex.: `text-lg` de 15,75 para 18). Novos tokens `--text-*` precisam seguir a regra (1), senão o texto volta a ganhar altura multiplicada no nativo. Mudar `metro.config.js` exige reiniciar o Metro com `--clear`.
+
+## 0017 - Suíte reproduzível e evidências de QA
+
+- **Data:**2026-10-27
+- **Estado:**Aceita por pedido humano explícito de planejamento, execução e registro.
+- **Decisão:** testes persistentes com node:test e TypeScript já instalados, sem nova dependência; módulos reais com mocks explícitos de transporte/plataforma. Comando test:frontend registra plano/catálogo antes de executar e produz TAP/JSON/CSV/relatório porID. Sem mutações reais ou dados pessoais de teste. Não alterar código de produto nem expectativa para ocultar falhas.
+- **Consequências:** supera a prática anterior de scripts apenas transitórios para esta suíte. Aprovação lógica não aprova UI/E2E ou backend; testes manuais bloqueados são registrados e não contam como sucesso.133 casos passaram,1 detectou paginação incompleta; teste permanece reprovado até correção. Fase6/homologação integral seguem abertas.
+
+## 0018 - Catálogo completo de materiais com validação de paginação
+
+- **Data:**2026-10-27
+- **Estado:**Aceita pelo pedido humano de resolver DEF-001.
+- **Contexto:** MAX_PAGES=10 protegia contra loop, mas retornava1000 de1100 itens como catálogo completo. O corte não era regra de negócio.
+- **Decisão:** percorrer totalPages inicial validado, sem teto arbitrário; interromper com invalidResponse se total mudar, number opcional divergir, IDs repetirem ou houver vazio antes do fim. Cancelamento/tipagem/cliente compartilhado permanecem. Não apresentar coleção parcial como sucesso.
+- **Consequências:** materiais após página10 entram em lista/busca/contagem; backend inconsistente ou catálogo alterado durante consulta exige nova tentativa em vez de sucesso parcial.143 testes passaram em reteste separado; registro inicial preservado e UI/integração real continuam pendentes.

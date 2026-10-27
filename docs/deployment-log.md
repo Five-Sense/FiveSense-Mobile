@@ -17,6 +17,33 @@ Histórico técnico do que foi entregue. Mais recente no topo. Cada entrada refe
 
 ## Entradas
 
+## [2026-10-27] - Correção autorizada de DEF-001 e reteste da paginação
+
+- **Fase/escopo:** Fase6, reparo solicitado após QA, branch feature/tests-plan. Limite de10 páginas pretendia evitar loop; devolver catálogo incompleto como sucesso foi erro de implementação, sem requisito para corte em1000 itens.
+- **Código:** materials-service percorre todas as páginas do total inicial, preserva ativos/VIEWER/signal/PAGE_SIZE100/requestJson; valida total estável, number opcional, IDs repetidos e vazio antes do fim com AppError invalidResponse. Schema permite validar number sem obrigá-lo. Sem UI/endpoint/dependência novos.
+- **Testes:** MAT-06 estrito para1100 materiais/11 chamadas/busca do último; MAT-03 com IDs únicos por material; nove regressõesMAT-07..15.143 aprovados, zero falhas. TypeScript/lint/export web/diff aprovados. Sem API real ou nova execução visual.
+- **Registro:** runner --run separa evidências/relatórios. test-report-2026-10-27-pagination-fix.md e test-evidence/2026-10-27-pagination-fix; resultado inicial133/1 preservado. Índices, arquitetura, testing, issues/plano e defeitos sincronizados; DEF-001 encerrado.
+- **Limites:**15 manuais/integrados ainda bloqueados; DEF-002 favicon ausente permanece como aviso de build. Homologação integral e fase6 abertas; sem commit/push.
+
+
+## [2026-10-27] - QA: planejamento, execução e registro do front-end
+
+- **Escopo:** pedido humano de plano+execução+registro; branch feature/tests-plan inicialmente limpa. Spec antes da suíte; leitura do código e docs atuais. Sem alteração do produto emsrc.
+- **Artefatos:** docs/test-plan.md, test-report-2026-10-27.md, test-defects.md e test-evidence/2026-10-27 (catálogo, resultadosJSON/CSV/TAP, hashes, checks e bloqueios). tests/frontend/*.cjs e scripts/test-frontend.cjs, comando npm run test:frontend empackage.json; sem dependência ou mudança no lockfile. README/AGENTS/índice/testing/issues/plano/decisão0017 atualizados.
+- **Execução:**134 casos automatizados,133 aprovados e1 reprovado;15 manuais/integrados bloqueados. Cobertura de cenários:login/sessão, clienteHTTP/status/abort/timeout, menu/logo/logout/guards, materiais/paginação/busca, equipes/status/calendário, ocorrência/fotos/limites/erros/reenvio/sucesso. Não confundir com cobertura de linhas nem E2E.
+- **Achados:**DEF-001/MAT-06,Média: catálogo11×100 ativos devolve1000 de1100 sem sinalizar truncamento; preservado teste reprovado/exit1 e registrado reparo recomendado. DEF-002,Baixa: favicon inexistente confirmado pelo build. Nenhum defeito de produto corrigido silenciosamente.
+- **Checks:**TypeScript/lint/exportweb aprovados (13 rotas; aviso favicon preexistente). Saídas eexitcodes salvos. Rede de negócios bloqueada na suíte; consulta pública OpenAPI não concluiu em20s. Sem login/POST/PATCH/e-mail real.
+- **Limites:**Computer Use interrompeu captura do Chrome por não identificar URL com segurança;UI não executada, sem contorno. Câmera/SecureStore físicos e conta/ambiente de homologação indisponíveis. Evidências antigas não reaproveitadas como execução nova. Homologação integral não concedida;fase6 aberta. Build exportado fora do app. Sem commit/push.
+
+## [2026-10-23] - Correção: ISSUE-002 - (2026-10-23 08:34:44) (Tipografia e rem no nativo)
+
+- **Fase:** Fase 1 - Scaffold técnico (tema). Branch `fix/native-typography-rem`, criada a partir de `b62d7ec`.
+- **O que foi feito:** diagnóstico e correção da responsividade errada no emulador de tablet. Causa: os 14 tokens `--text-*--line-height` de `src/shared/global.css` estavam em `px`, e o `react-native-css` trata o valor como multiplicador da fonte (rótulo 14/20 virava 280 dp; menu de 361 dp; texto com altura negativa). Todos passaram a `calc(altura / fonte)`. Segunda causa: o compilador nativo usa 1rem = 14px (web 16); `metro.config.js` agora passa `inlineRem: 16` ao `withNativewind`, só para o nativo (breakpoints sm/md de 560/672 para 640/768; `text-lg` 15,75 para 18; `rounded-xl` 10,5 para 12).
+- **Arquivos modificados:** `src/shared/global.css`, `metro.config.js`, `docs/decision-log.md` (0017), `docs/deployment-log.md`, `docs/issues.md`, `docs/implementation-plan.md`.
+- **Checks:** `npx tsc --noEmit` sem erros; ESLint em `metro.config.js` sem avisos. Emulador Medium_Tablet (1280x800 dp), Metro com `--clear`, medido por `uiautomator` antes e depois: rótulo "Home" 280 para 20 dp; botão do menu 332 para 72; menu 361 para 101; "O que você deseja fazer hoje?" de -372 para 20; "Olá!" 36; título de card 26. Screenshot confirma Home com os três cards e o menu no rodapé. Web: o Chrome computou `calc(h / f)` como a altura exata nos 8 pares do design (20, 20, 24, 24, 26, 32, 36, 40). Compilador nativo conferido com e sem `inlineRem`.
+- **Docs atualizados:** `decision-log.md` (0017), `issues.md`, `implementation-plan.md`, `deployment-log.md`.
+- **Riscos/Débito técnico:** (1) Não rodei a tela de Equipes nem o fluxo de ocorrência no emulador; só a Home (sessão já ativa). (2) A web não foi reexportada de ponta a ponta nem comparada visualmente; a verificação foi do valor de `line-height` no Chrome. (3) Telas que usam `useWindowDimensions` com limites fixos (equipes, calendário, select) não mudam. (4) `rem` 16 altera utilitários do Tailwind baseados em `rem` no nativo para o valor da web; foram poucos usos (`text-lg` x3, `text-sm` x1, `rounded-xl` x1). (5) O servidor Expo do desenvolvedor (porta 8081) segue com o `metro.config.js` antigo em memória: precisa ser reiniciado com `npx expo start --clear` para enxergar a correção. (6) `package-lock.json` está modificado no working tree desde antes desta tarefa (inclui `@react-native-community/cli`); não é desta entrega e não deve ir no commit. (7) Sem commit nem push.
+
 ## [2026-10-21] - Correção: ISSUE-002 (Navegação unificada e logo Home)
 
 - **Escopo:** branch feature/improve-navigation já selecionada/limpa; docs lidos e spec antes de código. Pedido humano: menu Equipes para outros módulos, inconsistências de navegação e logo para Home.
